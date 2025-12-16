@@ -5,15 +5,21 @@ import { Box, Stack, Text } from '@mantine/core';
 const Sidebar: React.FC = () => {
   return (
     <Box
-      sx={{
+      style={{
         width: 250,
         padding: '20px',
         backgroundColor: '#f5f5f5',
         height: '100vh',
       }}
     >
-      <Stack spacing="md">
-        <Text weight={500} size="lg">Menu</Text>
+      <Box
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 16,
+        }}
+      >
         <NavLink to="/" style={{ textDecoration: 'none' }}>
           <Text>Home</Text>
         </NavLink>
@@ -29,7 +35,7 @@ const Sidebar: React.FC = () => {
         <NavLink to="/interactive-strain-explorer" style={{ textDecoration: 'none' }}>
           <Text>Interactive Strain Explorer</Text>
         </NavLink>
-      </Stack>
+      </Box>
     </Box>
   );
 };

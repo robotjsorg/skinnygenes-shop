@@ -5,8 +5,8 @@ const LandingPage: React.FC = () => {
   return (
     <Container>
       <Title order={1}>Welcome to Skinny Genes</Title>
-      <Image src="/images/cannabis.jpg" alt="Cannabis" />
-      <Image src="/images/cannabis-seeds.jpg" alt="Cannabis Seeds" />
+      <Image src="/public/rt_image.png" alt="Cannabis" />
+      <Image src="/public/sq_image.png" alt="Cannabis Seeds" />
     </Container>
   );
 };
