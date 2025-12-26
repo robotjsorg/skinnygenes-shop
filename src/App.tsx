@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Center, Loader } from '@mantine/core';
 import Layout from './components/Layout/Sidebar';
 
@@ -18,23 +18,47 @@ const LoadingFallback = () => (
   </Center>
 );
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Suspense fallback={<LoadingFallback />}><LandingPage /></Suspense>,
+      },
+      {
+        path: "contact",
+        element: <Suspense fallback={<LoadingFallback />}><ContactPage /></Suspense>,
+      },
+      {
+        path: "products",
+        element: <Suspense fallback={<LoadingFallback />}><ProductsPage /></Suspense>,
+      },
+      {
+        path: "products/:id",
+        element: <Suspense fallback={<LoadingFallback />}><ProductDetailPage /></Suspense>,
+      },
+      {
+        path: "strains",
+        element: <Suspense fallback={<LoadingFallback />}><StrainsPage /></Suspense>,
+      },
+      {
+        path: "strains/:id",
+        element: <Suspense fallback={<LoadingFallback />}><StrainDetailPage strainId={''} /></Suspense>,
+      },
+      {
+        path: "interactive-strain-explorer",
+        element: <Suspense fallback={<LoadingFallback />}><InteractiveStrainExplorer /></Suspense>,
+      },
+    ],
+  },
+], {
+  basename: '/skinnygenes.shop/',
+});
+
 const App: React.FC = () => {
-  return (
-    <Router>
-      <Layout />
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/:id" element={<ProductDetailPage />} />
-          <Route path="/strains" element={<StrainsPage />} />
-          <Route path="/strains/:id" element={<StrainDetailPage />} />
-          <Route path="/interactive-strain-explorer" element={<InteractiveStrainExplorer />} />
-        </Routes>
-      </Suspense>
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

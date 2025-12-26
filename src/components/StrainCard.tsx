@@ -13,8 +13,8 @@ const StrainCard: React.FC<StrainCardProps> = ({ strain }) => {
       <Card.Section>
         <Image src={`/images/${strain.name.replace(/\s+/g, '-').toLowerCase()}.jpg`} alt={strain.name} />
       </Card.Section>
-      <Group position="apart" style={{ marginTop: 5 }}>
-        <Text weight={500}>{strain.name}</Text>
+      <Group justify="space-between" style={{ marginTop: 5 }}>
+        <Text fw={500}>{strain.name}</Text>
         <Link to={`/strains/${strain.id}`}>View Details</Link>
       </Group>
       <Text size="sm" color="dimmed" style={{ marginTop: 5 }}>

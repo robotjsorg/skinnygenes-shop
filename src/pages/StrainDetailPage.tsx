@@ -11,7 +11,7 @@ const StrainDetailPage: React.FC<{ strainId: string }> = ({ strainId }) => {
         }
     };
 
-    const strain = strainDetails[strainId] || { name: 'Unknown Strain', description: 'No details available.' };
+    const strain = strainDetails[strainId as keyof typeof strainDetails] || { name: 'Unknown Strain', description: 'No details available.' };
 
     return (
         <div>

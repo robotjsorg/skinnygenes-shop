@@ -12,9 +12,9 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ id, name, description, price, onViewDetails }) => {
   return (
     <Card shadow="sm" padding="lg" style={{ margin: '1rem' }}>
-      <Text weight={500} size="lg">{name}</Text>
+      <Text fw={500} size="lg">{name}</Text>
       <Text size="sm" color="dimmed">{description}</Text>
-      <Text weight={700} size="lg">${price.toFixed(2)}</Text>
+      <Text fw={700} size="lg">${price.toFixed(2)}</Text>
       <Button onClick={() => onViewDetails(id)} variant="outline" style={{ marginTop: '1rem' }}>
         View Details
       </Button>
