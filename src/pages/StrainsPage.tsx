@@ -1,8 +1,9 @@
 import React from 'react';
-import { Container, Title, Text, Grid, Card, Button, Group, Badge, Image } from '@mantine/core';
-import { Link } from 'react-router-dom';
+import { Container, Title, Text, SimpleGrid } from '@mantine/core';
+import StrainCard from '../components/StrainCard';
+import { Strain } from '../types/strain';
 
-const strains = [
+const strains: Strain[] = [
   {
     id: 'chem91-problem-child',
     name: 'Chem 91 x Problem Child',
@@ -53,33 +54,11 @@ const StrainsPage: React.FC = () => {
         Available Strains
       </Title>
 
-      <Grid gutter="lg">
+      <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="lg">
         {strains.map(strain => (
-          <Grid.Col span={{ base: 12, sm: 6, md: 4 }} key={strain.id}>
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={strain.image} height={200} alt={strain.name} />
-              </Card.Section>
-              <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500} size="lg">{strain.name}</Text>
-                <Badge color="blue" variant="light">
-                  {strain.type}
-                </Badge>
-              </Group>
-              <Text size="sm" color="dimmed" mb="md">
-                {strain.description}
-              </Text>
-              <Group gap="xs" mb="md">
-                <Badge variant="outline">THC: {strain.thc}</Badge>
-                <Badge variant="outline">CBD: {strain.cbd}</Badge>
-              </Group>
-              <Button variant="light" color="blue" fullWidth component={Link} to={`/strains/${strain.id}`}>
-                Learn More
-              </Button>
-            </Card>
-          </Grid.Col>
+          <StrainCard key={strain.id} strain={strain} />
         ))}
-      </Grid>
+      </SimpleGrid>
     </Container>
   );
 };

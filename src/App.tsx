@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { Center, Loader } from '@mantine/core';
-import Layout from './components/Layout/Sidebar';
+import Header from './components/Layout/Header';
 
 // Lazy load pages for code splitting
 const LandingPage = React.lazy(() => import('./pages/LandingPage'));
@@ -18,10 +18,19 @@ const LoadingFallback = () => (
   </Center>
 );
 
+const AppLayout = () => (
+  <>
+    <Header />
+    <main>
+      <Outlet />
+    </main>
+  </>
+);
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <AppLayout />,
     children: [
       {
         index: true,
@@ -45,7 +54,7 @@ const router = createBrowserRouter([
       },
       {
         path: "strains/:id",
-        element: <Suspense fallback={<LoadingFallback />}><StrainDetailPage strainId={''} /></Suspense>,
+        element: <Suspense fallback={<LoadingFallback />}><StrainDetailPage /></Suspense>,
       },
       {
         path: "interactive-strain-explorer",
@@ -55,6 +64,9 @@ const router = createBrowserRouter([
   },
 ], {
   basename: '/skinnygenes.shop/',
+  future: {
+    v7_startTransition: true,
+  },
 });
 
 const App: React.FC = () => {

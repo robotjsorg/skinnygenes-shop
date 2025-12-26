@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Title, Text, Paper, Group, TextInput, Textarea, Button, Grid, Card } from '@mantine/core';
+import { Container, Title, Text, Paper, Group, TextInput, Textarea, Button, Grid } from '@mantine/core';
 import { IconMail, IconPhone, IconMapPin } from '@tabler/icons-react';
 
 const ContactPage: React.FC = () => {
@@ -47,7 +47,7 @@ const ContactPage: React.FC = () => {
         </Grid.Col>
 
         <Grid.Col span={{ base: 12, md: 6 }}>
-          <Card shadow="sm" p="lg" radius="md" withBorder>
+          <Paper shadow="sm" p="lg" radius="md" withBorder>
             <Title order={2} mb="md">
               Send us a Message
             </Title>
@@ -75,10 +75,10 @@ const ContactPage: React.FC = () => {
               mb="md"
               required
             />
-            <Button fullWidth color="green">
+            <Button fullWidth color="teal">
               Send Message
             </Button>
-          </Card>
+          </Paper>
         </Grid.Col>
       </Grid>
     </Container>
