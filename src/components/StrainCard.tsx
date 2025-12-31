@@ -11,13 +11,11 @@ interface StrainCardProps {
 const StrainCard: React.FC<StrainCardProps> = ({ strain }) => {
   const [error, setError] = React.useState(false);
 
-  const imageUrl = `/skinnygenes.shop/images/${strain.name.replace(/\s+/g, '-').toLowerCase()}.jpg`;
-
   return (
     <Card className="strain-card" shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
         <Image
-          src={error ? '/skinnygenes.shop/chem91problemchild.png' : imageUrl}
+          src={strain.image}
           height={180}
           alt={strain.name}
           onError={() => setError(true)}
