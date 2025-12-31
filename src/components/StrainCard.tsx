@@ -17,7 +17,7 @@ const StrainCard: React.FC<StrainCardProps> = ({ strain }) => {
     <Card className="strain-card" shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
         <Image
-          src={error ? '/skinnygenes.shop/sq_image.png' : imageUrl}
+          src={error ? '/skinnygenes.shop/chem91problemchild.png' : imageUrl}
           height={180}
           alt={strain.name}
           onError={() => setError(true)}

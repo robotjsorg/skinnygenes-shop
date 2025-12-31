@@ -26,9 +26,10 @@ const LandingPage: React.FC = () => {
             </Group>
           </div>
           <Image
-            src="/skinnygenes.shop/rt_image.png"
+            src="/skinnygenes.shop/homepage.png"
             alt="Premium Cannabis Products"
             radius="md"
+            height={400}
           />
         </SimpleGrid>
 
@@ -37,7 +38,7 @@ const LandingPage: React.FC = () => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src="/skinnygenes.shop/sq_image.png" height={180} alt="Cannabis Seeds" />
+                <Image src="/skinnygenes.shop/northernlightsauto.png" height={180} alt="Cannabis Seeds" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>Premium Seeds</Text>
@@ -56,7 +57,7 @@ const LandingPage: React.FC = () => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src="/skinnygenes.shop/rt_image.png" height={180} alt="Cannabis Products" />
+                <Image src="/skinnygenes.shop/bluedreamcbd.png" height={180} alt="Cannabis Products" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>Wellness Products</Text>
@@ -75,7 +76,7 @@ const LandingPage: React.FC = () => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src="/skinnygenes.shop/sq_image.png" height={180} alt="Interactive Explorer" />
+                <Image src="/skinnygenes.shop/strains.png" height={180} alt="Interactive Explorer" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>Strain Explorer</Text>
@@ -86,7 +87,7 @@ const LandingPage: React.FC = () => {
               <Text size="sm" color="dimmed">
                 Explore strains interactively with our 3D visualization and detailed information.
               </Text>
-              <Button variant="light" color="orange" fullWidth mt="md" component={Link} to="/interactive-strain-explorer" style={{ marginTop: 'auto' }}>
+              <Button variant="light" color="orange" fullWidth mt="md" component={Link} to="/strain-explorer" style={{ marginTop: 'auto' }}>
                 Explore
               </Button>
             </Card>
