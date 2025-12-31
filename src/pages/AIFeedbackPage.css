@@ -1,0 +1,36 @@
+.ai-feedback-page {
+    padding: 2rem;
+    text-align: center;
+}
+
+.feedback-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.feedback-textarea {
+    width: 60%;
+    height: 150px;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.mic-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 1rem;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: background-color 0.3s;
+}
+
+.mic-button.listening {
+    background-color: #f44336;
+}

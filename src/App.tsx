@@ -11,6 +11,8 @@ const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 const StrainsPage = React.lazy(() => import('./pages/StrainsPage'));
 const StrainDetailPage = React.lazy(() => import('./pages/StrainDetailPage'));
 const InteractiveStrainExplorer = React.lazy(() => import('./pages/InteractiveStrainExplorer'));
+const AIFeedbackPage = React.lazy(() => import('./pages/AIFeedbackPage'));
+const CannabisAnthologyPage = React.lazy(() => import('./pages/CannabisAnthologyPage'));
 
 const LoadingFallback = () => (
   <Center style={{ height: '100vh' }}>
@@ -57,8 +59,16 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingFallback />}><StrainDetailPage /></Suspense>,
       },
       {
-        path: "interactive-strain-explorer",
+        path: "strain-explorer",
         element: <Suspense fallback={<LoadingFallback />}><InteractiveStrainExplorer /></Suspense>,
+      },
+      {
+        path: "ai-feedback",
+        element: <Suspense fallback={<LoadingFallback />}><AIFeedbackPage /></Suspense>,
+      },
+      {
+        path: "cannabis-anthology",
+        element: <Suspense fallback={<LoadingFallback />}><CannabisAnthologyPage /></Suspense>,
       },
     ],
   },
