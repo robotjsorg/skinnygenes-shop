@@ -281,9 +281,10 @@ export default function CannabisEvolutionApp() {
     setFocusedNode(node);
     setSearch(node.name);
   };
+  const height = window.innerHeight - 76;
 
   return (
-    <div style={{ width: '100vw', height: '100vh', background: '#050505', fontFamily: 'sans-serif', overflow: 'hidden' }}>
+    <div style={{ width: '100vw', height: height, background: '#050505', fontFamily: 'sans-serif', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: 76, left: 38, zIndex: 10, color: 'white', maxWidth: '300px' }}>
         <h1>Phylogenetic Tree</h1>
         <input 
