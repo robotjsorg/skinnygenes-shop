@@ -11,11 +11,13 @@
     "@mantine/core": "^7.17.8",
     "@mantine/hooks": "^7.17.8",
     "@react-three/fiber": "^8.18.0",
+    "@react-three/drei": "^8.18.0",
     "@tabler/icons-react": "^3.36.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.2",
-    "three": "^0.140.2"
+    "three": "^0.140.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.27",
