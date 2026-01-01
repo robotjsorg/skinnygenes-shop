@@ -286,7 +286,10 @@ export default function CannabisEvolutionApp() {
   return (
     <div style={{ width: '100vw', height: height, background: '#050505', fontFamily: 'sans-serif', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: 76, left: 38, zIndex: 10, color: 'white', maxWidth: '300px' }}>
-        <h1>Phylogenetic Tree</h1>
+        <h3>Phylogenetic Tree</h3>
+        <p>
+          Explore the historical evolution of genetic strains with the 3D phylogenetic tree.
+        </p>
         <input 
           type="text" 
           placeholder="Search strains..."
