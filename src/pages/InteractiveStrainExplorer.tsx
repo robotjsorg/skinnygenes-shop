@@ -163,11 +163,10 @@ const CameraRig = ({ targetNode }: { targetNode: RenderNode | null }) => {
       const { x, y, z } = targetNode.position;
       
       // 1. Calculate ideal camera position (offset by some amount so we aren't INSIDE the node)
-      // We start 4 units back (z) and 2 units up (y) from the node
-      const offset = new THREE.Vector3(0, 2, 6); 
+      const offset = new THREE.Vector3(0, 0, 25); 
       
       // Calculate target position in world space
-      const targetPos = new THREE.Vector3(x, y, z);
+      const targetPos = new THREE.Vector3(x, y-5, z);
       const desiredCamPos = targetPos.clone().add(offset);
 
       // 2. Smoothly interpolate (Lerp) camera position
@@ -325,8 +324,8 @@ export default function CannabisEvolutionApp() {
     <div style={{ width: '100vw', height: '100vh', background: '#050505', fontFamily: 'sans-serif', overflow: 'hidden' }}>
       
       {/* UI Overlay */}
-      <div style={{ position: 'absolute', top: 20, left: 20, zIndex: 10, color: 'white', maxWidth: '300px' }}>
-        <h1 style={{ margin: '0 0 10px 0', fontSize: '1.5rem', letterSpacing: '-0.5px' }}>Phylogenetic Tree</h1>
+      <div style={{ position: 'absolute', top: 76, left: 38, zIndex: 10, color: 'white', maxWidth: '300px' }}>
+        <h1>Phylogenetic Tree</h1>
         
         {/* Search Input */}
         <input 
