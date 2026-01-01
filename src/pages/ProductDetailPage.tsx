@@ -9,7 +9,7 @@ const products = [
     description: 'Chem 91 S1 crossed into Problem Child F2. A potent hybrid with exceptional genetics, this strain is known for its strong diesel and earthy aroma. It offers a powerful, uplifting high that stimulates creativity and focus, making it a favorite among artists and musicians. The dense, frosty buds are a testament to its premium quality.',
     price: 45,
     image: '/skinnygenes.shop/chem91problemchild.png',
-    category: 'Hybrid'
+    type: 'Hybrid'
   },
   {
     id: '2',
@@ -17,7 +17,7 @@ const products = [
     description: 'High-CBD strain perfect for wellness and relaxation. Balanced effects with minimal THC, providing a gentle sense of calm without the psychoactive high. Its sweet berry aroma and smooth flavor make it a delightful choice for daytime use. Ideal for managing stress, anxiety, and pain while maintaining mental clarity.',
     price: 50,
     image: '/skinnygenes.shop/bluedreamcbd.png',
-    category: 'CBD'
+    type: 'CBD'
   },
   {
     id: '3',
@@ -25,7 +25,7 @@ const products = [
     description: 'Classic autoflowering strain with reliable yields and easy cultivation. This indica-dominant variety is cherished for its resinous buds, fast flowering time, and resilience. It produces a sweet, spicy aroma and a deeply relaxing body high, perfect for unwinding at the end of the day. A great choice for both novice and experienced growers.',
     price: 40,
     image: '/skinnygenes.shop/northernlightsauto.png',
-    category: 'Autoflower'
+    type: 'Indica'
   }
 ];
 
@@ -34,6 +34,8 @@ const ProductDetailPage: React.FC = () => {
     const navigate = useNavigate();
     const product = products.find(p => p.id === id);
     const [quantity, setQuantity] = React.useState(1);
+    const type = product ? product.type : '';
+    const badgeColor = type === 'Indica' ? 'purple' : type === 'Sativa' ? 'orange' : 'green';
 
     if (!product) {
         return (
@@ -57,7 +59,7 @@ const ProductDetailPage: React.FC = () => {
                     <Grid.Col span={{ base: 12, md: 6 }}>
                         <Group justify="space-between" align="flex-start">
                             <Title order={1}>{product.name}</Title>
-                            <Badge color="teal" size="lg" variant="filled">{product.category}</Badge>
+                            <Badge color={badgeColor} size="lg" variant="filled">{product.type}</Badge>
                         </Group>
                         <Text mt="md" color="dimmed">{product.description}</Text>
                         <Text size="2rem" fw={700} mt="xl" color="teal">${(product.price * quantity).toFixed(2)}</Text>
