@@ -6,7 +6,7 @@ import '@mantine/core/styles.css';
 
 function Main() {
   return (
-    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
+    <MantineProvider defaultColorScheme="dark">
       <App />
     </MantineProvider>
   );

@@ -1,9 +1,10 @@
 :root {
+  --background-color: #0A2342;
+  --heading-color: #F5F5F5;
+  --text-color: #d7d7d7;
   --primary-color: #0A2342;
   --secondary-color: #0B8A8A;
   --accent-color: #A947A1;
-  --text-color: #333333;
-  --background-color: #F5F5F5;
 
   --heading-font: 'Montserrat', sans-serif;
   --body-font: 'Roboto', sans-serif;
@@ -18,5 +19,5 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font);
-  color: var(--primary-color);
+  color: var(--heading-color);
 }

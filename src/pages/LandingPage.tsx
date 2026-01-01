@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Title, Text, Button, Group, Image, Grid, Card, Badge, Paper, SimpleGrid } from '@mantine/core';
+import { Container, Title, Text, Button, Group, Image, Grid, Card, Paper, SimpleGrid } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
 const LandingPage: React.FC = () => {
@@ -12,15 +12,15 @@ const LandingPage: React.FC = () => {
             <Title order={1} size="4rem" mb="md">
               Welcome to Skinny Genes
             </Title>
-            <Text size="xl" mb="xl" color="dimmed">
+            <Text size="xl" mb="xl">
               Discover premium cannabis strains and products for your wellness journey.
               Quality, purity, and innovation in every seed and product.
             </Text>
             <Group>
-              <Button size="lg" component={Link} to="/products" variant="light">
+              <Button size="lg" component={Link} to="/products" variant="light" color="green">
                 Shop Products
               </Button>
-              <Button size="lg" variant="outline" component={Link} to="/strains">
+              <Button size="lg" variant="outline" component={Link} to="/strains" color="orange">
                 Explore Strains
               </Button>
             </Group>
@@ -38,38 +38,32 @@ const LandingPage: React.FC = () => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src="/skinnygenes.shop/northernlightsauto.png" height={180} alt="Cannabis Seeds" />
+                <Image src="/skinnygenes.shop/bluedreamcbd.png" height={180} alt="Cannabis Products" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500}>Premium Seeds</Text>
-                <Badge color="green" variant="light">
-                  New
-                </Badge>
+                <Text fw={500}>Wellness Products</Text>
               </Group>
-              <Text size="sm" color="dimmed">
-                High-quality, genetically superior cannabis seeds for growers and enthusiasts.
+              <Text size="sm">
+                Homemade selection of cannabis seeds, flower, CBD oils, edibles, and wellness products for daily use. Grinders and T-shirts available.
               </Text>
-              <Button variant="light" color="green" fullWidth mt="md" component={Link} to="/strains" style={{ marginTop: 'auto' }}>
-                View Strains
+              <Button variant="light" color="green" fullWidth mt="md" component={Link} to="/products" style={{ marginTop: 'auto' }}>
+                Shop Now
               </Button>
             </Card>
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src="/skinnygenes.shop/bluedreamcbd.png" height={180} alt="Cannabis Products" />
+                <Image src="/skinnygenes.shop/northernlightsauto.png" height={180} alt="Cannabis Seeds" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500}>Wellness Products</Text>
-                <Badge color="blue" variant="light">
-                  Popular
-                </Badge>
+                <Text fw={500}>Premium Seeds</Text>
               </Group>
-              <Text size="sm" color="dimmed">
-                Curated selection of CBD oils, edibles, and wellness products for daily use.
+              <Text size="sm">
+                High-quality, genetically superior cannabis seeds for growers and enthusiasts.
               </Text>
-              <Button variant="light" color="blue" fullWidth mt="md" component={Link} to="/products" style={{ marginTop: 'auto' }}>
-                Shop Now
+              <Button variant="light" color="blue" fullWidth mt="md" component={Link} to="/strains" style={{ marginTop: 'auto' }}>
+                View Strains
               </Button>
             </Card>
           </Grid.Col>
@@ -80,15 +74,44 @@ const LandingPage: React.FC = () => {
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>Strain Explorer</Text>
-                <Badge color="orange" variant="light">
-                  Interactive
-                </Badge>
               </Group>
-              <Text size="sm" color="dimmed">
-                Explore strains interactively with our 3D visualization and detailed information.
+              <Text size="sm">
+                Explore the historical evolution of genetic strains with the 3D phylogenetic tree.
               </Text>
               <Button variant="light" color="orange" fullWidth mt="md" component={Link} to="/strain-explorer" style={{ marginTop: 'auto' }}>
-                Explore
+                Visualize
+              </Button>
+            </Card>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, md: 4 }}>
+            <Card shadow="sm" padding="lg" radius="md" withBorder>
+              <Card.Section>
+                <Image src="/skinnygenes.shop/strains.png" height={180} alt="Interactive Explorer" />
+              </Card.Section>
+              <Group justify="space-between" mt="md" mb="xs">
+                <Text fw={500}>AI Feedback</Text>
+              </Group>
+              <Text size="sm">
+                Use an AI prompt to give valuable feedback on strains and products.
+              </Text>
+              <Button variant="light" color="pink" fullWidth mt="md" component={Link} to="/ai-feedback" style={{ marginTop: 'auto' }}>
+                Submit Feedback
+              </Button>
+            </Card>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, md: 4 }}>
+            <Card shadow="sm" padding="lg" radius="md" withBorder>
+              <Card.Section>
+                <Image src="/skinnygenes.shop/strains.png" height={180} alt="Interactive Explorer" />
+              </Card.Section>
+              <Group justify="space-between" mt="md" mb="xs">
+                <Text fw={500}>Cann-thology</Text>
+              </Group>
+              <Text size="sm">
+                Read about the anthology of cannabis strains and their unique characteristics and the players behind the genetics and industry.
+              </Text>
+              <Button variant="light" color="purple" fullWidth mt="md" component={Link} to="/cannabis-anthology" style={{ marginTop: 'auto' }}>
+                Learn More
               </Button>
             </Card>
           </Grid.Col>

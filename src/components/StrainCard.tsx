@@ -10,7 +10,7 @@ interface StrainCardProps {
 
 const StrainCard: React.FC<StrainCardProps> = ({ strain }) => {
   const [error, setError] = React.useState(false);
-
+  const badgeColor = strain.type === 'Indica' ? 'purple' : strain.type === 'Sativa' ? 'orange' : 'green';
   return (
     <Card className="strain-card" shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
@@ -25,7 +25,7 @@ const StrainCard: React.FC<StrainCardProps> = ({ strain }) => {
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>{strain.name}</Text>
-        <Badge color="pink" variant="light">
+        <Badge color={badgeColor} variant="light">
           {strain.type}
         </Badge>
       </Group>

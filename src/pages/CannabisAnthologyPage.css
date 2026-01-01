@@ -26,9 +26,8 @@
     flex: 0 0 250px;
     margin-right: 2rem;
     padding: 1.5rem;
-    background-color: #f9f9f9;
     border-radius: 8px;
-    border-left: 4px solid #4CAF50;
+    border-left: 4px solid #b8b8b8;
     white-space: normal;
 }
 
@@ -40,4 +39,5 @@
 
 .timeline-event {
     font-size: 1rem;
+    min-height: 320px;
 }

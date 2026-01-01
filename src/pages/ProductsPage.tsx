@@ -7,26 +7,26 @@ const products = [
   {
     id: '1',
     name: 'Chem 91 x Problem Child',
+    category: 'Hybrid',
     description: 'Chem 91 S1 crossed into Problem Child F2. A potent hybrid with exceptional genetics.',
     price: 45,
     image: '/skinnygenes.shop/chem91problemchild.png',
-    category: 'Hybrid'
   },
   {
     id: '2',
     name: 'Blue Dream CBD',
+    category: 'CBD',
     description: 'High-CBD strain perfect for wellness and relaxation. Balanced effects with minimal THC.',
     price: 50,
     image: '/skinnygenes.shop/bluedreamcbd.png',
-    category: 'CBD'
   },
   {
     id: '3',
     name: 'Northern Lights Auto',
+    category: 'Indica',
     description: 'Classic autoflowering strain with reliable yields and easy cultivation.',
     price: 40,
     image: '/skinnygenes.shop/northernlightsauto.png',
-    category: 'Autoflower'
   }
 ];
 
@@ -48,6 +48,7 @@ const ProductsPage: React.FC = () => {
             key={product.id}
             id={product.id}
             name={product.name}
+            type={product.category}
             description={product.description}
             price={product.price}
             imageUrl={product.image}
