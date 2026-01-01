@@ -4,8 +4,6 @@ import { OrbitControls, Text, Stars, Line } from '@react-three/drei';
 import * as THREE from 'three';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 
-// --- 1. Types & Interfaces ---
-
 type StrainType = 'Sativa' | 'Indica' | 'Hybrid' | 'Ruderalis';
 
 interface StrainNode {
@@ -21,7 +19,6 @@ interface RenderNode extends StrainNode {
   parentPosition?: THREE.Vector3;
 }
 
-// --- 2. Mock Data ---
 const cannabisEvolutionData: StrainNode = {
   id: 'root',
   name: 'Ancient Progenitor',
@@ -110,8 +107,6 @@ const cannabisEvolutionData: StrainNode = {
   ]
 };
 
-// --- 3. Layout Logic ---
-
 const calculateTreeLayout = (
   node: StrainNode, 
   depth: number = 0, 
@@ -123,15 +118,12 @@ const calculateTreeLayout = (
   const HEIGHT_PER_YEAR = 0.5;
   const BASE_YEAR = 1960;
   const RADIUS_INCREMENT = 1.5; 
-  
   const y = (node.year - BASE_YEAR) * HEIGHT_PER_YEAR;
   const currentAngle = angleStart + angleRange / 2;
   const radius = depth * RADIUS_INCREMENT; 
-  
   const x = Math.cos(currentAngle) * radius;
   const z = Math.sin(currentAngle) * radius;
   const currentPos = new THREE.Vector3(x, y, z);
-
   nodes.push({ ...node, position: currentPos, parentPosition: parentPos });
 
   if (node.children && node.children.length > 0) {
@@ -150,31 +142,16 @@ const calculateTreeLayout = (
   return nodes;
 };
 
-// --- 4. Camera & Interaction Components ---
-
-// This component handles the "Flight" logic
 const CameraRig = ({ targetNode }: { targetNode: RenderNode | null }) => {
   const { camera, controls } = useThree();
   const vec = new THREE.Vector3();
-
   useFrame((state, delta) => {
-    // If we have a target, fly to it
     if (targetNode) {
       const { x, y, z } = targetNode.position;
-      
-      // 1. Calculate ideal camera position (offset by some amount so we aren't INSIDE the node)
       const offset = new THREE.Vector3(0, 0, 25); 
-      
-      // Calculate target position in world space
       const targetPos = new THREE.Vector3(x, y-5, z);
       const desiredCamPos = targetPos.clone().add(offset);
-
-      // 2. Smoothly interpolate (Lerp) camera position
-      // The 4 * delta controls the speed of the flight
       state.camera.position.lerp(desiredCamPos, 4 * delta);
-
-      // 3. Smoothly interpolate the OrbitControls target (where the camera looks)
-      // We need to cast controls to OrbitControlsImpl to access 'target' in TS
       const ctrl = controls as unknown as OrbitControlsImpl;
       if(ctrl) {
         ctrl.target.lerp(targetPos, 4 * delta);
@@ -182,7 +159,6 @@ const CameraRig = ({ targetNode }: { targetNode: RenderNode | null }) => {
       }
     }
   });
-
   return null;
 };
 
@@ -196,15 +172,11 @@ interface StrainOrbProps {
 const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) => {
   const [hovered, setHover] = useState(false);
   const meshRef = useRef<THREE.Mesh>(null);
-
   const isMatch = searchQuery === '' || node.name.toLowerCase().includes(searchQuery.toLowerCase());
   const isDimmed = !isMatch;
-
   useFrame((state) => {
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.01;
-      
-      // Pulsate if matched or focused
       if (isFocused) {
         const scale = 1.5 + Math.sin(state.clock.elapsedTime * 8) * 0.2;
         meshRef.current.scale.setScalar(scale);
@@ -218,7 +190,6 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
       }
     }
   });
-
   const getColor = (type: StrainType) => {
     switch (type) {
       case 'Sativa': return '#ff6b6b';
@@ -228,7 +199,6 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
     }
   };
   const baseColor = getColor(node.type);
-
   return (
     <group position={node.position}>
       {node.parentPosition && (
@@ -243,7 +213,6 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
           transparent
         />
       )}
-
       <mesh
         ref={meshRef}
         onClick={(e) => { e.stopPropagation(); onSelect(node); }}
@@ -253,14 +222,13 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
         <icosahedronGeometry args={[0.4, 1]} /> 
         <meshStandardMaterial 
           color={isFocused ? '#fff' : baseColor} 
-          emissive={baseColor}
+          emissive={new THREE.Color(baseColor)}
           emissiveIntensity={isFocused ? 1 : (hovered ? 0.6 : 0.2)}
           transparent
           opacity={isDimmed ? 0.1 : 1}
           wireframe={!hovered && !isFocused}
         />
       </mesh>
-
       <Text
         position={[0, 0.7, 0]}
         fontSize={0.3}
@@ -284,7 +252,6 @@ const YearMarkers = () => {
   const step = 10;
   const HEIGHT_PER_YEAR = 0.5;
   const BASE_YEAR = 1960;
-
   for (let year = startYear; year <= endYear; year += step) {
     const y = (year - BASE_YEAR) * HEIGHT_PER_YEAR;
     markers.push(
@@ -302,39 +269,29 @@ const YearMarkers = () => {
   return <group>{markers}</group>;
 };
 
-// --- 5. Main App Component ---
-
 export default function CannabisEvolutionApp() {
   const nodes = useMemo(() => calculateTreeLayout(cannabisEvolutionData), []);
   const [search, setSearch] = useState('');
   const [focusedNode, setFocusedNode] = useState<RenderNode | null>(null);
-
-  // Filter nodes for the UI list
   const filteredNodes = useMemo(() => {
     if (!search) return [];
     return nodes.filter(n => n.name.toLowerCase().includes(search.toLowerCase()));
   }, [search, nodes]);
-
   const handleSelect = (node: RenderNode) => {
     setFocusedNode(node);
-    setSearch(node.name); // Fill search bar
+    setSearch(node.name);
   };
 
   return (
     <div style={{ width: '100vw', height: '100vh', background: '#050505', fontFamily: 'sans-serif', overflow: 'hidden' }}>
-      
-      {/* UI Overlay */}
       <div style={{ position: 'absolute', top: 76, left: 38, zIndex: 10, color: 'white', maxWidth: '300px' }}>
         <h1>Phylogenetic Tree</h1>
-        
-        {/* Search Input */}
         <input 
           type="text" 
           placeholder="Search strains..."
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
-            // If user clears search, reset focus
             if(e.target.value === '') setFocusedNode(null); 
           }}
           style={{
@@ -350,7 +307,6 @@ export default function CannabisEvolutionApp() {
           }}
         />
 
-        {/* Results Dropdown */}
         {filteredNodes.length > 0 && search !== focusedNode?.name && (
           <div style={{
             marginTop: '5px',
@@ -382,7 +338,6 @@ export default function CannabisEvolutionApp() {
           </div>
         )}
 
-        {/* Legend */}
         <div style={{ display: 'flex', gap: '15px', fontSize: '0.8rem', marginTop: '15px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff6b6b' }}></div> Sativa
@@ -398,22 +353,17 @@ export default function CannabisEvolutionApp() {
 
       <Canvas camera={{ position: [15, 20, 25], fov: 45 }}>
         <color attach="background" args={['#050505']} />
-        
-        {/* The Camera Rig handles the flying animation */}
         <CameraRig targetNode={focusedNode} />
-
         <ambientLight intensity={0.4} />
         <pointLight position={[10, 10, 10]} intensity={1} />
         <spotLight position={[0, 50, 0]} angle={0.5} penumbra={1} intensity={2} />
         <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={0.5} />
         <YearMarkers />
-
         <group position={[0, -5, 0]}>
           <mesh position={[0, 15, 0]}>
             <cylinderGeometry args={[0.02, 0.02, 40, 8]} />
             <meshBasicMaterial color="#222" transparent opacity={0.5} />
           </mesh>
-
           {nodes.map((node) => (
             <StrainOrb 
               key={node.id} 
@@ -425,7 +375,6 @@ export default function CannabisEvolutionApp() {
           ))}
         </group>
 
-        {/* makeDefault ensures this controls instance is accessible via useThree() */}
         <OrbitControls 
           makeDefault 
           enablePan={true} 
