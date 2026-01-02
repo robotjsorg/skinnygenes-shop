@@ -1,8 +1,9 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Text, Stars, Line } from '@react-three/drei';
 import * as THREE from 'three';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
+import './InteractiveStrainExplorer.css';
 
 type StrainType = 'Sativa' | 'Indica' | 'Hybrid' | 'Ruderalis';
 
@@ -236,9 +237,7 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
         anchorX="center"
         anchorY="middle"
         fillOpacity={isDimmed ? 0.1 : 1}
-        outlineWidth={isDimmed ? 0 : 0.02}
-        outlineColor="#000"
-      >
+      > 
         {node.name}
       </Text>
     </group>
@@ -273,6 +272,20 @@ export default function CannabisEvolutionApp() {
   const nodes = useMemo(() => calculateTreeLayout(cannabisEvolutionData), []);
   const [search, setSearch] = useState('');
   const [focusedNode, setFocusedNode] = useState<RenderNode | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setFocusedNode(null);
+        setSearch('');
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   const filteredNodes = useMemo(() => {
     if (!search) return [];
     return nodes.filter(n => n.name.toLowerCase().includes(search.toLowerCase()));
@@ -281,87 +294,74 @@ export default function CannabisEvolutionApp() {
     setFocusedNode(node);
     setSearch(node.name);
   };
+
+  const handleClearSearch = () => {
+    setFocusedNode(null);
+    setSearch('');
+  }
+
   const height = window.innerHeight - 76;
 
   return (
-    <div style={{ width: '100vw', height: height, background: '#050505', fontFamily: 'sans-serif', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: 76, left: 38, zIndex: 10, color: 'white', maxWidth: '300px' }}>
+    <div className="explorer-container" style={{ height: height }}>
+      <div className="info-panel" onClick={(e) => e.stopPropagation()}>
         <h3>Phylogenetic Tree</h3>
         <p>
           Explore the historical evolution of genetic strains with the 3D phylogenetic tree.
         </p>
-        <input 
-          type="text" 
-          placeholder="Search strains..."
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            if(e.target.value === '') setFocusedNode(null); 
-          }}
-          style={{
-            width: '100%',
-            padding: '10px 15px',
-            borderRadius: '20px',
-            border: '1px solid #333',
-            background: 'rgba(255,255,255,0.1)',
-            color: 'white',
-            fontSize: '14px',
-            outline: 'none',
-            backdropFilter: 'blur(5px)',
-          }}
-        />
+        <div className="search-container">
+          <input 
+            type="text" 
+            placeholder="Search strains..."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              if(e.target.value === '') setFocusedNode(null); 
+            }}
+            className="search-input"
+          />
+          {search && (
+            <button className="clear-search" onClick={handleClearSearch}>
+              &times;
+            </button>
+          )}
+        </div>
 
         {filteredNodes.length > 0 && search !== focusedNode?.name && (
-          <div style={{
-            marginTop: '5px',
-            background: 'rgba(0,0,0,0.8)',
-            border: '1px solid #333',
-            borderRadius: '10px',
-            maxHeight: '200px',
-            overflowY: 'auto'
-          }}>
+          <div className="search-results">
             {filteredNodes.map(node => (
               <div 
                 key={node.id}
-                onClick={() => handleSelect(node)}
-                style={{
-                  padding: '8px 15px',
-                  cursor: 'pointer',
-                  borderBottom: '1px solid #222',
-                  fontSize: '0.9rem',
-                  display: 'flex',
-                  justifyContent: 'space-between'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = '#222'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                onClick={(e) => { e.stopPropagation(); handleSelect(node); }}
+                className="result-item"
               >
                 <span>{node.name}</span>
-                <span style={{ opacity: 0.5, fontSize: '0.8rem' }}>{node.year}</span>
+                <span className="result-item-year">{node.year}</span>
               </div>
             ))}
           </div>
         )}
 
-        <div style={{ display: 'flex', gap: '15px', fontSize: '0.8rem', marginTop: '15px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ff6b6b' }}></div> Sativa
+        <div className="legend">
+          <div className="legend-item">
+            <div className="legend-color-box" style={{ background: '#ff6b6b' }}></div> Sativa
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#4ecdc4' }}></div> Indica
+          <div className="legend-item">
+            <div className="legend-color-box" style={{ background: '#4ecdc4' }}></div> Indica
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ffe66d' }}></div> Hybrid
+          <div className="legend-item">
+            <div className="legend-color-box" style={{ background: '#ffe66d' }}></div> Hybrid
           </div>
         </div>
       </div>
 
-      <Canvas camera={{ position: [15, 20, 25], fov: 45 }}>
+      <Canvas camera={{ position: [15, 20, 25], fov: 45 }} onPointerMissed={handleClearSearch}>
         <color attach="background" args={['#050505']} />
         <CameraRig targetNode={focusedNode} />
         <ambientLight intensity={0.4} />
         <pointLight position={[10, 10, 10]} intensity={1} />
         <spotLight position={[0, 50, 0]} angle={0.5} penumbra={1} intensity={2} />
-        <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={0.5} />
+        <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade={true} />
         <YearMarkers />
         <group position={[0, -5, 0]}>
           <mesh position={[0, 15, 0]}>

@@ -1,0 +1,92 @@
+.explorer-container {
+  width: 100vw;
+  height: calc(100vh - 76px);
+  background: #050505;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+.info-panel {
+  position: absolute;
+  top: 76px;
+  left: 38px;
+  z-index: 10;
+  color: white;
+  max-width: 300px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid #333;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  outline: none;
+  backdrop-filter: blur(5px);
+}
+
+.search-results {
+  margin-top: 5px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid #333;
+  border-radius: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.result-item {
+  padding: 8px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #222;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.result-item:hover {
+  background: #222;
+}
+
+.result-item-year {
+  opacity: 0.5;
+  font-size: 0.8rem;
+}
+
+.legend {
+  display: flex;
+  gap: 15px;
+  font-size: 0.8rem;
+  margin-top: 15px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-color-box {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+.clear-search {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
