@@ -8,18 +8,19 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.15.0",
     "@mantine/core": "^7.17.8",
     "@mantine/hooks": "^7.17.8",
     "@react-three/drei": "^8.18.0",
     "@react-three/fiber": "^8.18.0",
     "@tabler/icons-react": "^3.36.0",
+    "marked": "^17.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.2",
     "three": "^0.140.2",
     "three-stdlib": "^2.36.1",
-    "uuid": "^8.3.2",
-    "@google/generative-ai": "^0.15.0"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.27",
