@@ -39,7 +39,7 @@ const AIFeedbackPage: React.FC = () => {
             setMessages(newMessages);
             setInput('');
             try {
-                const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+                const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
                 const result = await model.generateContent(input);
                 const response = await result.response;
                 const text = response.text();
@@ -51,13 +51,51 @@ const AIFeedbackPage: React.FC = () => {
         }
     };
 
+    const renderMarkdown = (text: string) => {
+        let html = text;
+
+        // Handle lists (must be done before other replacements to avoid conflicts)
+        // Unordered lists
+        html = html.replace(/((?:^|\n)[ \t]*[-*] .+(?:\n[ \t]*[-*] .)*)/g, (match) => {
+            const items = match.trim().split('\n');
+            const listItems = items.map(item => `<li>${item.substring(2)}</li>`).join('');
+            return `<ul>${listItems}</ul>`;
+        });
+
+        // Ordered lists
+        html = html.replace(/((?:^|\n)[ \t]*\d+\. .+(?:\n[ \t]*\d+\. .)*)/g, (match) => {
+            const items = match.trim().split('\n');
+            const listItems = items.map(item => `<li>${item.substring(item.indexOf('.') + 2)}</li>`).join('');
+            return `<ol>${listItems}</ol>`;
+        });
+
+        // Handle bold and italic
+        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+        // Handle remaining newlines - convert to <br> only if they are not part of a list structure
+        html = html.replace(/<\/ul>|<\/ol>/g, (match) => `${match}\n`); // Add newline after lists
+        html = html.split('\n').map(line => {
+            if (line.trim().startsWith('<li>')) {
+                return line;
+            }
+            return line.trim() === '' ? '<br />' : line;
+        }).join('').replace(/<br \/>/g, '\n').replace(/\n/g, '<br />');
+
+        return { __html: html };
+    };
+
     return (
         <div className="ai-feedback-chat-page">
             <div className="chat-container">
                 <div className="message-list">
                     {messages.map((message, index) => (
                         <div key={index} className={`message ${message.sender}`}>
-                            {message.text}
+                            {message.sender === 'ai' ? (
+                                <div dangerouslySetInnerHTML={renderMarkdown(message.text)} />
+                            ) : (
+                                message.text
+                            )}
                         </div>
                     ))}
                     <div ref={messagesEndRef} />
