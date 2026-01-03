@@ -15,6 +15,7 @@ const AIFeedbackPage: React.FC = () => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const [conversationStage, setConversationStage] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [apiError, setApiError] = useState<string | null>(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -95,16 +96,11 @@ const AIFeedbackPage: React.FC = () => {
     };
 
     const gemini = async (prompt: string) => {
-        try {
-            const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
-            return text;
-        } catch (error) {
-            console.error("Error generating content:", error);
-            return "Sorry, I'm having trouble connecting. Please try again later.";
-        }
+        const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();
+        return text;
     };
 
     const handleSendMessage = async (e?: React.FormEvent) => {
@@ -119,9 +115,32 @@ const AIFeedbackPage: React.FC = () => {
         try {
             const aiResponse = await gemini(userMessage.text);
             setMessages((prevMessages) => [...prevMessages, { text: aiResponse, sender: 'ai' }]);
-        } catch (error) {
+            setApiError(null); // Clear any previous API errors on successful response
+        } catch (error: any) {
             console.error('Error sending message to Gemini:', error);
-            setMessages((prevMessages) => [...prevMessages, { text: "Apologies, I couldn't get a response. Please try again.", sender: 'ai' }]);
+            let errorMessage = "Apologies, I couldn't get a response due to an unexpected error. Please try again.";
+
+            // Attempt to access status directly or via nested response object
+            const statusCode = error.status || error.response?.status;
+
+            if (statusCode === 429) {
+                errorMessage = "The AI is currently experiencing high traffic. Please try again in a moment.";
+            } else if (statusCode) {
+                // Handle other specific HTTP errors if needed
+                errorMessage = `Apologies, I couldn't get a response. Error Code: ${statusCode}. Please try again.`;
+            } else if (error.message) {
+                // Fallback to error message parsing if no status code is available
+                if (error.message.includes('429')) {
+                    errorMessage = "The AI is currently experiencing high traffic. Please try again in a moment.";
+                } else {
+                    errorMessage = `Apologies, I couldn't get a response. Details: "${error.message}". Please try again.`;
+                }
+            }
+            
+            // Set the API error and then display it in the chat
+            setApiError(errorMessage);
+            setMessages((prevMessages) => [...prevMessages, { text: errorMessage, sender: 'ai' }]);
+            setApiError(null); // Clear after displaying
         } finally {
             setIsLoading(false);
         }
