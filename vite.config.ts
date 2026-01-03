@@ -5,6 +5,7 @@ export default defineConfig(({ command }) => {
   return {
     plugins: [react()],
     base: command === 'serve' ? '/' : '/skinnygenes-shop/',
+    appType: 'spa', // Explicitly declare as SPA
     build: {
       outDir: 'dist', // Output directory for the build
       rollupOptions: {
