@@ -74,6 +74,13 @@ skinnygenes-shop
 
 This project is configured to be deployed on GitHub Pages. The deployment workflow is defined in the `.github/workflows/static.yml` file. This workflow compiles the TypeScript code into JavaScript and deploys the resulting static assets. Make sure to set up your GitHub repository to enable GitHub Pages.
 
+### Single Page Application (SPA) Routing on GitHub Pages
+
+Due to the nature of GitHub Pages serving static files, direct navigation to sub-paths (e.g., `/skinnygenes-shop/products`) or refreshing the page on such paths can result in a 404 error. To address this for Single Page Applications (SPAs) built with React Router, the following configurations have been applied:
+
+1.  **React Router `basename`**: The `createBrowserRouter` configuration in `src/App.tsx` includes a `basename` prop set to `/skinnygenes-shop/`. This tells React Router the base URL segment where the application is deployed, allowing it to correctly construct and interpret routes.
+2.  **`public/404.html` Redirection**: A custom `public/404.html` file is used as a fallback. When GitHub Pages encounters a 404 for a path that doesn't correspond to a physical file, it serves this `404.html`. This file contains a JavaScript snippet that redirects the browser to the application's root (`/skinnygenes-shop/index.html`). Once redirected, React Router takes over and handles the intended sub-path client-side.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue for any suggestions or improvements.
