@@ -21,7 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, type, description, 
       </Card.Section>
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500} size="lg">{name}</Text>
-        <Badge color={badgeColor} variant="light">
+        <Badge color={badgeColor}>
           {type}
         </Badge>
       </Group>
@@ -29,7 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, type, description, 
         {description}
       </Text>
       <Text fw={700} size="lg" mt="md">${price.toFixed(2)}</Text>
-      <Button component={Link} to={`/products/${id}`} variant="light" fullWidth mt="md" className="product-card-button">
+      <Button component={Link} to={`/products/${id}`} fullWidth mt="md" className="product-card-button">
         View Details
       </Button>
     </Card>

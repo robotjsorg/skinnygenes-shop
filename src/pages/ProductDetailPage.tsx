@@ -43,7 +43,7 @@ const ProductDetailPage: React.FC = () => {
                 <Title order={1} ta="center">Product not found</Title>
                 <Text ta="center" mt="md">The product you are looking for does not exist.</Text>
                 <Group justify="center" mt="xl">
-                    <Button onClick={() => navigate('/products')} variant="light">Go back to Products</Button>
+                    <Button onClick={() => navigate('/products')}>Go back to Products</Button>
                 </Group>
             </Container>
         );
@@ -59,7 +59,7 @@ const ProductDetailPage: React.FC = () => {
                     <Grid.Col span={{ base: 12, md: 6 }}>
                         <Group justify="space-between" align="flex-start">
                             <Title order={1}>{product.name}</Title>
-                            <Badge color={badgeColor} size="lg" variant="filled">{product.type}</Badge>
+                            <Badge color={badgeColor}>{product.type}</Badge>
                         </Group>
                         <Text mt="md" color="dimmed">{product.description}</Text>
                         <Text size="2rem" fw={700} mt="xl" color="teal">${(product.price * quantity).toFixed(2)}</Text>

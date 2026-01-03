@@ -25,7 +25,7 @@ const StrainCard: React.FC<StrainCardProps> = ({ strain }) => {
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>{strain.name}</Text>
-        <Badge color={badgeColor} variant="light">
+        <Badge color={badgeColor}>
           {strain.type}
         </Badge>
       </Group>
@@ -37,7 +37,7 @@ const StrainCard: React.FC<StrainCardProps> = ({ strain }) => {
       <Button
         component={Link}
         to={`/strains/${strain.id}`}
-        variant="light"
+       
         fullWidth
         mt="md"
         radius="md"

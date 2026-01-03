@@ -40,6 +40,7 @@ const StrainDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const strain = strains.find(s => s.id === id);
+    const badgeColor = strain?.type === 'Indica' ? 'purple' : strain?.type === 'Sativa' ? 'orange' : 'green';
 
     if (!strain) {
         return (
@@ -63,7 +64,7 @@ const StrainDetailPage: React.FC = () => {
                     <Grid.Col span={{ base: 12, md: 6 }}>
                         <Group justify="space-between" align="flex-start">
                             <Title order={1}>{strain.name}</Title>
-                            <Badge color="pink" size="lg" variant="filled">{strain.type}</Badge>
+                            <Badge color={badgeColor}>{strain.type}</Badge>
                         </Group>
                         <Text mt="md" color="dimmed">{strain.description}</Text>
                         

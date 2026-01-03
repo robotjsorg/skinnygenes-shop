@@ -22,53 +22,6 @@
 
 .chatgpt-input-wrapper {
   display: flex;
-  align-items: center;
-  height: 56px;
-  border-radius: 28px;
-  background-color: #3e3e3e;
-  border: 1px solid #555;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2); /* For depth */
-  transition: all 0.2s ease-in-out;
-  padding: 0 10px;
-  position: relative;
-}
-
-.chatgpt-input-wrapper:focus-within {
-  border-color: #777;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.search-input {
-  flex-grow: 1;
-  height: 100%;
-  padding: 0 10px;
-  border: none;
-  background: transparent;
-  color: white;
-  font-size: 1rem;
-  outline: none;
-  backdrop-filter: blur(5px);
-}
-
-.search-input::placeholder {
-  color: #a0a0a0;
-  opacity: 1;
-}
-
-.microphone-button {
-  background: none;
-  border: none;
-  color: #8e8e8e;
-  cursor: pointer;
-  padding: 0 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s ease-in-out;
-}
-
-.microphone-button:hover {
-  color: #fff;
 }
 
 .clear-search {
@@ -79,4 +32,9 @@
   font-size: 20px;
   line-height: 1;
   margin-right: 5px;
+}
+
+.legend {
+  padding: 6px;
+  margin-top: 6px;
 }

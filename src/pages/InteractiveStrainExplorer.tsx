@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Text, Stars, Line } from '@react-three/drei';
+import { Badge } from '@mantine/core';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import * as THREE from 'three';
 import './InteractiveStrainExplorer.css';
@@ -193,10 +194,10 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
   });
   const getColor = (type: StrainType) => {
     switch (type) {
-      case 'Sativa': return '#ff6b6b';
-      case 'Indica': return '#4ecdc4';
-      case 'Hybrid': return '#ffe66d';
-      default: return '#f7fff7';
+      case 'Indica': return 'purple';
+      case 'Sativa': return 'orange';
+      case 'Hybrid': return 'green';
+      default: return 'gray';
     }
   };
   const baseColor = getColor(node.type);
@@ -318,45 +319,63 @@ export default function CannabisEvolutionApp() {
                 if(e.target.value === '') setFocusedNode(null);
               }}
               className="search-input"
+              style={{
+                width: '100%',
+                padding: '10px 15px',
+                borderRadius: '20px',
+                border: '1px solid #333',
+                background: 'rgba(255,255,255,0.1)',
+                color: 'white',
+                fontSize: '14px',
+                outline: 'none',
+                backdropFilter: 'blur(5px)',
+              }}
             />
-            <button className="microphone-button">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fillRule="evenodd" clipRule="evenodd" d="M12 3C10.3431 3 9 4.34315 9 6V11C9 12.6569 10.3431 14 12 14C13.6569 14 15 12.6569 15 11V6C15 4.34315 13.6569 3 12 3ZM7 11C7 13.7614 9.23858 16 12 16C14.7614 16 17 13.7614 17 11H19C19 14.4183 16.2091 17.2091 13 17.7231V21H11V17.7231C7.79086 17.2091 5 14.4183 5 11H7Z" fill="currentColor"/>
-              </svg>
-            </button>
+            {search && (
+              <button className="clear-search" onClick={handleClearSearch}>
+                &times;
+              </button>
+            )}
           </div>
-          {search && (
-            <button className="clear-search" onClick={handleClearSearch}>
-              &times;
-            </button>
-          )}
         </div>
 
         {filteredNodes.length > 0 && search !== focusedNode?.name && (
-          <div className="search-results">
+          <div style={{
+            marginTop: '5px',
+            background: 'rgba(0,0,0,0.8)',
+            border: '1px solid #333',
+            borderRadius: '10px',
+            maxHeight: '200px',
+            overflowY: 'auto'
+          }}>
             {filteredNodes.map(node => (
               <div 
                 key={node.id}
                 onClick={(e) => { e.stopPropagation(); handleSelect(node); }}
-                className="result-item"
+
+                style={{
+                  padding: '8px 15px',
+                  cursor: 'pointer',
+                  borderBottom: '1px solid #222',
+                  fontSize: '0.9rem',
+                  display: 'flex',
+                  justifyContent: 'space-between'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = '#222'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
                 <span>{node.name}</span>
-                <span className="result-item-year">{node.year}</span>
+                <span>{node.year}</span>
               </div>
             ))}
           </div>
         )}
 
         <div className="legend">
-          <div className="legend-item">
-            <div className="legend-color-box" style={{ background: '#ff6b6b' }}></div> Sativa
-          </div>
-          <div className="legend-item">
-            <div className="legend-color-box" style={{ background: '#4ecdc4' }}></div> Indica
-          </div>
-          <div className="legend-item">
-            <div className="legend-color-box" style={{ background: '#ffe66d' }}></div> Hybrid
-          </div>
+          <Badge color="orange" variant="light">Sativa</Badge>
+          <Badge color="purple" variant="light">Indica</Badge>
+          <Badge color="green" variant="light">Hybrid</Badge>
+          <Badge color="gray" variant="light">Ruderalis</Badge>
         </div>
       </div>
 
