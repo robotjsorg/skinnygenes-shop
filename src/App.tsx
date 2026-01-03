@@ -12,6 +12,7 @@ const StrainDetailPage = React.lazy(() => import('./pages/StrainDetailPage'));
 const InteractiveStrainExplorer = React.lazy(() => import('./pages/InteractiveStrainExplorer'));
 const AIFeedbackPage = React.lazy(() => import('./pages/AIFeedbackPage'));
 const CannabisAnthologyPage = React.lazy(() => import('./pages/CannabisAnthologyPage'));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 const LoadingFallback = () => (
   <Center style={{ height: '100vh' }}>
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "cannabis-anthology",
         element: <Suspense fallback={<LoadingFallback />}><CannabisAnthologyPage /></Suspense>,
+      },
+      {
+        path: "*", // Catch-all route for 404s
+        element: <Suspense fallback={<LoadingFallback />}><NotFoundPage /></Suspense>,
       },
     ],
   },
