@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './AIFeedbackPage.css';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { Marked } from 'marked';
+import { marked } from 'marked';
 
 const API_KEY = (import.meta as any).env.VITE_GEMINI_API_KEY as string;
 const genAI = new GoogleGenerativeAI(API_KEY);
@@ -39,7 +39,7 @@ const AIFeedbackPage: React.FC = () => {
                 setInput('Listening...');
             };
 
-            newRecognition.onresult = (event) => {
+            newRecognition.onresult = (event: { resultIndex: any; results: string | any[]; }) => {
                 let interimTranscript = '';
                 let finalTranscript = '';
 
@@ -61,7 +61,7 @@ const AIFeedbackPage: React.FC = () => {
                 }
             };
 
-            newRecognition.onerror = (event) => {
+            newRecognition.onerror = (event: { error: any; }) => {
                 console.error('Speech recognition error:', event.error);
                 setIsListening(false);
                 setInput('Error during speech recognition. Please try again.');
@@ -142,7 +142,7 @@ const AIFeedbackPage: React.FC = () => {
                     {messages.map((message, index) => (
                         <div key={index} className={`message ${message.sender}`}>
                             {message.sender === 'ai' ? (
-                                <div dangerouslySetInnerHTML={{ __html: new Marked().parse(message.text) }} />
+                                <div dangerouslySetInnerHTML={{ __html: marked(message.text) }} />
                             ) : (
                                 message.text
                             )}
