@@ -115,32 +115,15 @@ const AIFeedbackPage: React.FC = () => {
         try {
             const aiResponse = await gemini(userMessage.text);
             setMessages((prevMessages) => [...prevMessages, { text: aiResponse, sender: 'ai' }]);
-            setApiError(null); // Clear any previous API errors on successful response
+            setApiError(null);
         } catch (error: any) {
-            console.error('Error sending message to Gemini:', error);
-            let errorMessage = "Apologies, I couldn't get a response due to an unexpected error. Please try again.";
-
-            // Attempt to access status directly or via nested response object
             const statusCode = error.status || error.response?.status;
-
-            if (statusCode === 429) {
-                errorMessage = "The AI is currently experiencing high traffic. Please try again in a moment.";
-            } else if (statusCode) {
-                // Handle other specific HTTP errors if needed
-                errorMessage = `Apologies, I couldn't get a response. Error Code: ${statusCode}. Please try again.`;
-            } else if (error.message) {
-                // Fallback to error message parsing if no status code is available
-                if (error.message.includes('429')) {
-                    errorMessage = "The AI is currently experiencing high traffic. Please try again in a moment.";
-                } else {
-                    errorMessage = `Apologies, I couldn't get a response. Details: "${error.message}". Please try again.`;
-                }
+            if (statusCode) {
+                let errorMessage = `Error Code: ${statusCode}. "${error.message}".`;
+                setApiError(errorMessage);
+                setMessages((prevMessages) => [...prevMessages, { text: errorMessage, sender: 'ai' }]);
             }
-            
-            // Set the API error and then display it in the chat
-            setApiError(errorMessage);
-            setMessages((prevMessages) => [...prevMessages, { text: errorMessage, sender: 'ai' }]);
-            setApiError(null); // Clear after displaying
+            setApiError(null);
         } finally {
             setIsLoading(false);
         }
@@ -152,7 +135,6 @@ const AIFeedbackPage: React.FC = () => {
             handleSendMessage();
         }
     };
-
 
     return (
         <div className="ai-feedback-chat-page">
