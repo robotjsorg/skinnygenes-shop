@@ -3,7 +3,7 @@ import './AIFeedbackPage.css';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Marked } from 'marked';
 
-const API_KEY = 'AIzaSyB-WpLqAUqXBpVYSoGIATnSYitc03272gw';
+const API_KEY = import.meta.env.VITE_GOOGLE_AI_STUDIO_API;
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 const AIFeedbackPage: React.FC = () => {
