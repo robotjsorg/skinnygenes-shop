@@ -21,15 +21,15 @@ const LoadingFallback = () => (
 );
 
 const AppLayout = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    const redirectPath = sessionStorage.getItem('redirectPath');
-    if (redirectPath) {
-      sessionStorage.removeItem('redirectPath');
-      navigate(redirectPath, { replace: true });
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const redirectPath = sessionStorage.getItem('redirectPath');
+  //   if (redirectPath) {
+  //     sessionStorage.removeItem('redirectPath');
+  //     navigate(redirectPath, { replace: true });
+  //   }
+  // }, [navigate]);
 
   return (
     <>
