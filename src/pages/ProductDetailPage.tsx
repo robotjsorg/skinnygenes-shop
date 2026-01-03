@@ -8,7 +8,7 @@ const products = [
     name: 'Chem 91 x Problem Child',
     description: 'Chem 91 S1 crossed into Problem Child F2. A potent hybrid with exceptional genetics, this strain is known for its strong diesel and earthy aroma. It offers a powerful, uplifting high that stimulates creativity and focus, making it a favorite among artists and musicians. The dense, frosty buds are a testament to its premium quality.',
     price: 45,
-    image: '/skinnygenes.shop/chem91problemchild.png',
+    image: '/chem91problemchild.png',
     type: 'Hybrid'
   },
   {
@@ -16,7 +16,7 @@ const products = [
     name: 'Blue Dream CBD',
     description: 'High-CBD strain perfect for wellness and relaxation. Balanced effects with minimal THC, providing a gentle sense of calm without the psychoactive high. Its sweet berry aroma and smooth flavor make it a delightful choice for daytime use. Ideal for managing stress, anxiety, and pain while maintaining mental clarity.',
     price: 50,
-    image: '/skinnygenes.shop/bluedreamcbd.png',
+    image: '/bluedreamcbd.png',
     type: 'CBD'
   },
   {
@@ -24,7 +24,7 @@ const products = [
     name: 'Northern Lights Auto',
     description: 'Classic autoflowering strain with reliable yields and easy cultivation. This indica-dominant variety is cherished for its resinous buds, fast flowering time, and resilience. It produces a sweet, spicy aroma and a deeply relaxing body high, perfect for unwinding at the end of the day. A great choice for both novice and experienced growers.',
     price: 40,
-    image: '/skinnygenes.shop/northernlightsauto.png',
+    image: '/northernlightsauto.png',
     type: 'Indica'
   }
 ];

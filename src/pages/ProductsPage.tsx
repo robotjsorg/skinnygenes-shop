@@ -10,7 +10,7 @@ const products = [
     category: 'Hybrid',
     description: 'Chem 91 S1 crossed into Problem Child F2. A potent hybrid with exceptional genetics.',
     price: 45,
-    image: '/skinnygenes.shop/chem91problemchild.png',
+    image: '/chem91problemchild.png',
   },
   {
     id: '2',
@@ -18,7 +18,7 @@ const products = [
     category: 'CBD',
     description: 'High-CBD strain perfect for wellness and relaxation. Balanced effects with minimal THC.',
     price: 50,
-    image: '/skinnygenes.shop/bluedreamcbd.png',
+    image: '/bluedreamcbd.png',
   },
   {
     id: '3',
@@ -26,7 +26,7 @@ const products = [
     category: 'Indica',
     description: 'Classic autoflowering strain with reliable yields and easy cultivation.',
     price: 40,
-    image: '/skinnygenes.shop/northernlightsauto.png',
+    image: '/northernlightsauto.png',
   }
 ];
 

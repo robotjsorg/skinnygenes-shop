@@ -71,12 +71,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-], {
-  basename: '/skinnygenes.shop/',
-  future: {
-    v7_startTransition: true,
-  },
-});
+]);
 
 const App: React.FC = () => {
   return <RouterProvider router={router} />;
