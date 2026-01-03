@@ -15,7 +15,7 @@ const ContactPage: React.FC = () => {
             <Title order={2} mb="md">
               Get in Touch
             </Title>
-            <Text mb="lg" color="dimmed">
+            <Text mb="lg" c="dimmed">
               Have questions about our products or strains? We're here to help!
               Reach out to us and we'll get back to you as soon as possible.
             </Text>
@@ -24,7 +24,7 @@ const ContactPage: React.FC = () => {
               <IconMail size={20} />
               <div>
                 <Text fw={500}>Email</Text>
-                <Text color="dimmed">info@skinnygenes.shop</Text>
+                <Text c="dimmed">info@skinnygenes.shop</Text>
               </div>
             </Group>
 
@@ -32,7 +32,7 @@ const ContactPage: React.FC = () => {
               <IconPhone size={20} />
               <div>
                 <Text fw={500}>Phone</Text>
-                <Text color="dimmed">(123) 456-7890</Text>
+                <Text c="dimmed">(123) 456-7890</Text>
               </div>
             </Group>
 
@@ -40,7 +40,7 @@ const ContactPage: React.FC = () => {
               <IconMapPin size={20} />
               <div>
                 <Text fw={500}>Location</Text>
-                <Text color="dimmed">Available for shipping worldwide</Text>
+                <Text c="dimmed">Available for shipping worldwide</Text>
               </div>
             </Group>
           </Paper>

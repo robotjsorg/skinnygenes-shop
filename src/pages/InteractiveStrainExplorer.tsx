@@ -1,8 +1,8 @@
 import { useMemo, useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Text, Stars, Line } from '@react-three/drei';
-import * as THREE from 'three';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
+import * as THREE from 'three';
 import './InteractiveStrainExplorer.css';
 
 type StrainType = 'Sativa' | 'Indica' | 'Hybrid' | 'Ruderalis';

@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './AIFeedbackPage.css';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import React, { useState, useRef, useEffect } from 'react';
 import { marked } from 'marked';
+import './AIFeedbackPage.css';
 
 const API_KEY = (import.meta as any).env.VITE_GEMINI_API_KEY as string;
 const genAI = new GoogleGenerativeAI(API_KEY);
