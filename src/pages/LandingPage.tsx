@@ -25,7 +25,7 @@ const LandingPage: React.FC = () => {
             </Group>
           </div>
           <Image
-            src={import.meta.env.BASE_URL + "homepage.png"}
+            src={(import.meta as any).env.BASE_URL + "homepage.png"}
             alt="Premium Cannabis Products"
             radius="md"
             height={400}
@@ -36,7 +36,7 @@ const LandingPage: React.FC = () => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src={import.meta.env.BASE_URL + "bluedreamcbd.png"} height={180} alt="Cannabis Products" />
+                <Image src={(import.meta as any).env.BASE_URL + "bluedreamcbd.png"} height={180} alt="Cannabis Products" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>Wellness Products</Text>
@@ -52,7 +52,7 @@ const LandingPage: React.FC = () => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src={import.meta.env.BASE_URL + "northernlightsauto.png"} height={180} alt="Cannabis Seeds" />
+                <Image src={(import.meta as any).env.BASE_URL + "northernlightsauto.png"} height={180} alt="Cannabis Seeds" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>Premium Seeds</Text>
@@ -68,7 +68,7 @@ const LandingPage: React.FC = () => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src={import.meta.env.BASE_URL + "strains.png"} height={180} alt="Interactive Explorer" />
+                <Image src={(import.meta as any).env.BASE_URL + "strains.png"} height={180} alt="Interactive Explorer" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>Strain Explorer</Text>
@@ -84,7 +84,7 @@ const LandingPage: React.FC = () => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src={import.meta.env.BASE_URL + "strains.png"} height={180} alt="Interactive Explorer" />
+                <Image src={(import.meta as any).env.BASE_URL + "strains.png"} height={180} alt="Interactive Explorer" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>AI Feedback</Text>
@@ -100,7 +100,7 @@ const LandingPage: React.FC = () => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src={import.meta.env.BASE_URL + "strains.png"} height={180} alt="Interactive Explorer" />
+                <Image src={(import.meta as any).env.BASE_URL + "strains.png"} height={180} alt="Interactive Explorer" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>Cann-thology</Text>
