@@ -78,7 +78,9 @@ This project is configured to be deployed on GitHub Pages. The deployment workfl
 
 Due to the nature of GitHub Pages serving static files, direct navigation to sub-paths (e.g., `/skinnygenes-shop/products`) or refreshing the page on such paths can result in a 404 error. To address this for Single Page Applications (SPAs) built with React Router, the following configurations have been applied:
 
-1.  **React Router `basename`**: The `createBrowserRouter` configuration in `src/App.tsx` includes a `basename` prop set to `/skinnygenes-shop/`. This tells React Router the base URL segment where the application is deployed, allowing it to correctly construct and interpret routes.
+1.  **Dynamic Base URL (`import.meta.env.BASE_URL`)**:
+    *   **React Router `basename`**: The `createBrowserRouter` configuration in `src/App.tsx` now dynamically sets its `basename` prop using `import.meta.env.BASE_URL`. This ensures that the React Router correctly handles routing for both local development (where `BASE_URL` is `/`) and GitHub Pages deployment (where `BASE_URL` is `/skinnygenes-shop/`).
+    *   **Image Paths**: All image paths within the application's components have been updated to use `import.meta.env.BASE_URL` as a prefix. This ensures that images are loaded from the correct base directory, regardless of the deployment environment.
 2.  **`public/404.html` Redirection**: A custom `public/404.html` file is used as a fallback. When GitHub Pages encounters a 404 for a path that doesn't correspond to a physical file, it serves this `404.html`. This file contains a JavaScript snippet that redirects the browser to the application's root (`/skinnygenes-shop/index.html`). Once redirected, React Router takes over and handles the intended sub-path client-side.
 
 ## Contributing
