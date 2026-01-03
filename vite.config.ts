@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/skinnygenes.shop/', // Adjust the base path for GitHub Pages
+  base: '/skinnygenes-shop/', // Adjust the base path for GitHub Pages
   build: {
     outDir: 'dist', // Output directory for the build
     rollupOptions: {
