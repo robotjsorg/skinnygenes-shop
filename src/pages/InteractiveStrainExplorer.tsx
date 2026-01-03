@@ -311,6 +311,7 @@ export default function CannabisEvolutionApp() {
         <div className="search-container">
           <div className="chatgpt-input-wrapper">
             <input
+              name="search"
               type="text"
               placeholder="Search strains..."
               value={search}

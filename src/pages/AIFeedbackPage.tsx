@@ -164,6 +164,7 @@ const AIFeedbackPage: React.FC = () => {
             <div className="input-area">
                 <form onSubmit={handleSendMessage} className="text-input-form">
                     <textarea
+                        name="input"
                         className="text-input"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}

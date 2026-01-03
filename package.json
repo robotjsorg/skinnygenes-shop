@@ -8,6 +8,11 @@
     "build": "vite build",
     "serve": "vite preview"
   },
+  "reactRouter": {
+    "future": {
+      "v7_startTransition": true
+    }
+  },
   "dependencies": {
     "@google/generative-ai": "^0.15.0",
     "@mantine/core": "^7.17.8",
