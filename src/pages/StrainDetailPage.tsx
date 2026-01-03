@@ -11,7 +11,7 @@ const strains: Strain[] = [
     thc: '20-25%',
     cbd: '<1%',
     type: 'Hybrid',
-    image: '/chem91problemchild.png',
+    image: import.meta.env.BASE_URL + 'chem91problemchild.png',
     story: 'This strain is the result of a long-term breeding project by Jay Hershfield, aiming to combine the legendary Chem 91 with the robust genetics of Problem Child. The goal was to create a high-potency strain with a unique terpene profile and vigorous growth. After several generations of selection, this stable F2 hybrid was born.'
   },
   {
@@ -21,7 +21,7 @@ const strains: Strain[] = [
     thc: '8-12%',
     cbd: '15-20%',
     type: 'Hybrid',
-    image: '/bluedreamcbd.png',
+    image: import.meta.env.BASE_URL + 'bluedreamcbd.png',
     story: 'Blue Dream CBD was developed to provide the therapeutic benefits of cannabis without the intense psychoactive effects. By crossing a high-CBD variety with the classic Blue Dream, we created a strain that offers a mellow, calming experience. It\'s perfect for users seeking relief from anxiety, pain, and inflammation while staying clear-headed.'
   },
   {
@@ -31,7 +31,7 @@ const strains: Strain[] = [
     thc: '16-20%',
     cbd: '<1%',
     type: 'Indica',
-    image: '/northernlightsauto.png',
+    image: import.meta.env.BASE_URL + 'northernlightsauto.png',
     story: 'The autoflowering version of the legendary Northern Lights, this strain was bred for simplicity and speed. It retains the classic indica effects and resin production of the original but flowers automatically, regardless of the light cycle. This makes it an ideal choice for beginners or growers looking for a quick and easy harvest.'
   }
 ];

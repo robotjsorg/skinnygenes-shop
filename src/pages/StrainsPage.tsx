@@ -11,7 +11,7 @@ const strains: Strain[] = [
     thc: '20-25%',
     cbd: '<1%',
     type: 'Hybrid',
-    image: '/chem91problemchild.png'
+    image: import.meta.env.BASE_URL + 'chem91problemchild.png'
   },
   {
     id: 'blue-dream-cbd',
@@ -20,7 +20,7 @@ const strains: Strain[] = [
     thc: '8-12%',
     cbd: '15-20%',
     type: 'Hybrid',
-    image: '/bluedreamcbd.png'
+    image: import.meta.env.BASE_URL + 'bluedreamcbd.png'
   },
   {
     id: 'northern-lights-auto',
@@ -29,7 +29,7 @@ const strains: Strain[] = [
     thc: '16-20%',
     cbd: '<1%',
     type: 'Indica',
-    image: '/northernlightsauto.png'
+    image: import.meta.env.BASE_URL + 'northernlightsauto.png'
   }
 ];
 
