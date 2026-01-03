@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Title, Text, Button, Group, Image, Grid, Card, Paper, SimpleGrid } from '@mantine/core';
 import { Link } from 'react-router-dom';
+import './LandingPage.css';
 
 const LandingPage: React.FC = () => {
   return (
@@ -16,10 +17,10 @@ const LandingPage: React.FC = () => {
               Quality, purity, and innovation in every seed and product.
             </Text>
             <Group>
-              <Button size="lg" component={Link} to="/products" variant="light" color="green">
+              <Button size="lg" component={Link} to="/products" className="button">
                 Shop Products
               </Button>
-              <Button size="lg" variant="outline" component={Link} to="/strains" color="orange">
+              <Button size="lg" component={Link} to="/strains" className="button">
                 Explore Strains
               </Button>
             </Group>
@@ -44,7 +45,7 @@ const LandingPage: React.FC = () => {
               <Text size="sm">
                 Homemade selection of cannabis seeds, flower, CBD oils, edibles, and wellness products for daily use. Grinders and T-shirts available.
               </Text>
-              <Button variant="light" color="green" fullWidth mt="md" component={Link} to="/products" style={{ marginTop: 'auto' }}>
+              <Button fullWidth mt="md" component={Link} to="/products" style={{ marginTop: 'auto' }} className="button">
                 Shop Now
               </Button>
             </Card>
@@ -60,7 +61,7 @@ const LandingPage: React.FC = () => {
               <Text size="sm">
                 High-quality, genetically superior cannabis seeds for growers and enthusiasts.
               </Text>
-              <Button variant="light" color="blue" fullWidth mt="md" component={Link} to="/strains" style={{ marginTop: 'auto' }}>
+              <Button fullWidth mt="md" component={Link} to="/strains" style={{ marginTop: 'auto' }} className="button">
                 View Strains
               </Button>
             </Card>
@@ -76,7 +77,7 @@ const LandingPage: React.FC = () => {
               <Text size="sm">
                 Explore the historical evolution of genetic strains with the 3D phylogenetic tree.
               </Text>
-              <Button variant="light" color="orange" fullWidth mt="md" component={Link} to="/strain-explorer" style={{ marginTop: 'auto' }}>
+              <Button fullWidth mt="md" component={Link} to="/strain-explorer" style={{ marginTop: 'auto' }} className="button">
                 Visualize
               </Button>
             </Card>
@@ -92,7 +93,7 @@ const LandingPage: React.FC = () => {
               <Text size="sm">
                 Use an AI prompt to give valuable feedback on strains and products.
               </Text>
-              <Button variant="light" color="pink" fullWidth mt="md" component={Link} to="/ai-feedback" style={{ marginTop: 'auto' }}>
+              <Button fullWidth mt="md" component={Link} to="/ai-feedback" style={{ marginTop: 'auto' }} className="button">
                 Submit Feedback
               </Button>
             </Card>
@@ -108,7 +109,7 @@ const LandingPage: React.FC = () => {
               <Text size="sm">
                 Read about the anthology of cannabis strains and their unique characteristics and the players behind the genetics and industry.
               </Text>
-              <Button variant="light" color="purple" fullWidth mt="md" component={Link} to="/cannabis-anthology" style={{ marginTop: 'auto' }}>
+              <Button fullWidth mt="md" component={Link} to="/cannabis-anthology" style={{ marginTop: 'auto' }} className="button">
                 Learn More
               </Button>
             </Card>
