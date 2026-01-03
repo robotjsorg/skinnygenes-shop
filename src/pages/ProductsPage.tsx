@@ -31,12 +31,6 @@ const products = [
 ];
 
 const ProductsPage: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleViewDetails = (id: string) => {
-    navigate(`/products/${id}`);
-  };
-
   return (
     <Container size="xl" py="xl">
       <Title order={1} mb="xl" ta="center">

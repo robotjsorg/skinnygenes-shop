@@ -5,23 +5,22 @@ export default defineConfig(({ command }) => {
   return {
     plugins: [react()],
     base: '/skinnygenes-shop/',
-    appType: 'spa', // Explicitly declare as SPA
+    appType: 'spa',
     build: {
-      outDir: 'dist', // Output directory for the build
+      outDir: 'dist',
       rollupOptions: {
         output: {
           manualChunks: {
-            // Split vendor libraries into separate chunks
             'react-vendor': ['react', 'react-dom', 'react-router-dom'],
             'mantine-vendor': ['@mantine/core', '@mantine/hooks'],
-            'three-vendor': ['three', '@react-three/fiber'],
+            'three-vendor': ['three', '@react-three/fiber']
           },
         },
       },
-      chunkSizeWarningLimit: 1000, // Increase limit to 1MB for better visibility
+      chunkSizeWarningLimit: 1000
     },
     server: {
-      port: 3000, // Development server port
-    },
+      port: 3000
+    }
   };
 });
