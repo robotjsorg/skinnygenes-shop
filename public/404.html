@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Redirecting to the main page</title>
-    <script>
-      sessionStorage.redirect = location.href;
-    </script>
-    <meta http-equiv="refresh" content="0;URL='/'">
-  </head>
-  <body>
-    <p>If you are not redirected automatically, follow this <a href='/'>link to the main page</a>.</p>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <script type="text/javascript">
+    // Construct the base URL for redirection
+    // This assumes the app is deployed to a subfolder like /skinnygenes-shop/
+    // If deployed to root, it would just be '/'
+    const baseUrl = '/skinnygenes-shop/';
+
+    // Redirect to the index.html at the base URL
+    window.location.replace(window.location.origin + baseUrl);
+  </script>
+</head>
+<body>
+  If you are not redirected automatically, follow this <a href="/skinnygenes-shop/">link</a>.
+</body>
 </html>
