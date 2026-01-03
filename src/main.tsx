@@ -8,9 +8,9 @@ import './global.css';
 function Main() {
   return (
     <MantineProvider defaultColorScheme="dark">
-        <AgeVerificationModal>
-          <App />
-        </AgeVerificationModal>
+      <AgeVerificationModal>
+        <App />
+      </AgeVerificationModal>
     </MantineProvider>
   );
 }

@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import React, { Suspense, useEffect } from 'react';
+import { createBrowserRouter, RouterProvider, Outlet, useNavigate } from 'react-router-dom';
 import { Center, Loader } from '@mantine/core';
 import Header from './components/Layout/Header';
 
@@ -20,14 +20,26 @@ const LoadingFallback = () => (
   </Center>
 );
 
-const AppLayout = () => (
-  <>
-    <Header />
-    <main>
-      <Outlet />
-    </main>
-  </>
-);
+const AppLayout = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const redirectPath = sessionStorage.getItem('redirectPath');
+    if (redirectPath) {
+      sessionStorage.removeItem('redirectPath');
+      navigate(redirectPath, { replace: true });
+    }
+  }, [navigate]);
+
+  return (
+    <>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+    </>
+  );
+};
 
 const router = createBrowserRouter([
   {
