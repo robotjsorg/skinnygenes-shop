@@ -35,7 +35,7 @@ skinnygenes-shop
 ├── vite.config.ts
 ├── .github
 │   └── workflows
-│       └── deploy.yml
+│       └── static.yml
 └── README.md
 ```
 
@@ -72,7 +72,7 @@ skinnygenes-shop
 
 ## Deployment
 
-This project is configured to be deployed on GitHub Pages. The deployment workflow is defined in the `.github/workflows/deploy.yml` file. Make sure to set up your GitHub repository to enable GitHub Pages.
+This project is configured to be deployed on GitHub Pages. The deployment workflow is defined in the `.github/workflows/static.yml` file. This workflow compiles the TypeScript code into JavaScript and deploys the resulting static assets. Make sure to set up your GitHub repository to enable GitHub Pages.
 
 ## Contributing
 
