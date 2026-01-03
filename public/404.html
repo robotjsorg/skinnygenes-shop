@@ -4,13 +4,8 @@
   <meta charset="utf-8">
   <title>Redirecting...</title>
   <script type="text/javascript">
-    // Save the current path to session storage
-    sessionStorage.setItem('redirectPath', window.location.pathname + window.location.search);
-
-    // Redirect to the index.html at the root of the deployment
-    // This assumes the app is deployed to a subfolder like /skinnygenes-shop/
-    // If deployed to root, it would just be '/'
-    const baseUrl = '/skinnygenes-shop/'; // Adjust this if your app is deployed to a different subpath or root
+    // sessionStorage.setItem('redirectPath', window.location.pathname + window.location.search);
+    const baseUrl = '/skinnygenes-shop/';
     window.location.replace(window.location.origin + baseUrl);
   </script>
 </head>
