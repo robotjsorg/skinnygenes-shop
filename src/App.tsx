@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { Center, Loader } from '@mantine/core';
 import Header from './components/Layout/Header';
 
-// Lazy load pages for code splitting
 const LandingPage = React.lazy(() => import('./pages/LandingPage'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
 const ProductsPage = React.lazy(() => import('./pages/ProductsPage'));

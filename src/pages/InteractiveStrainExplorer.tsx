@@ -310,16 +310,23 @@ export default function CannabisEvolutionApp() {
           Explore the historical evolution of genetic strains with the 3D phylogenetic tree.
         </p>
         <div className="search-container">
-          <input 
-            type="text" 
-            placeholder="Search strains..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              if(e.target.value === '') setFocusedNode(null); 
-            }}
-            className="search-input"
-          />
+          <div className="chatgpt-input-wrapper">
+            <input
+              type="text"
+              placeholder="Search strains..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                if(e.target.value === '') setFocusedNode(null);
+              }}
+              className="search-input"
+            />
+            <button className="microphone-button">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" clipRule="evenodd" d="M12 3C10.3431 3 9 4.34315 9 6V11C9 12.6569 10.3431 14 12 14C13.6569 14 15 12.6569 15 11V6C15 4.34315 13.6569 3 12 3ZM7 11C7 13.7614 9.23858 16 12 16C14.7614 16 17 13.7614 17 11H19C19 14.4183 16.2091 17.2091 13 17.7231V21H11V17.7231C7.79086 17.2091 5 14.4183 5 11H7Z" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
           {search && (
             <button className="clear-search" onClick={handleClearSearch}>
               &times;
@@ -384,7 +391,7 @@ export default function CannabisEvolutionApp() {
           enablePan={true} 
           enableZoom={true} 
           maxPolarAngle={Math.PI / 1.5} 
-          autoRotate={!focusedNode && search === ''} // Stop rotation if focused or searching
+          autoRotate={!focusedNode && search === ''}
           autoRotateSpeed={0.5}
         />
       </Canvas>

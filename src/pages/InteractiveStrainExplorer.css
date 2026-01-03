@@ -15,78 +15,68 @@
   max-width: 300px;
 }
 
-.search-input {
-  width: 100%;
-  padding: 10px 15px;
-  border-radius: 20px;
-  border: 1px solid #333;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  font-size: 14px;
-  outline: none;
-  backdrop-filter: blur(5px);
-}
-
-.search-results {
-  margin-top: 5px;
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid #333;
-  border-radius: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.result-item {
-  padding: 8px 15px;
-  cursor: pointer;
-  border-bottom: 1px solid #222;
-  font-size: 0.9rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-.result-item:hover {
-  background: #222;
-}
-
-.result-item-year {
-  opacity: 0.5;
-  font-size: 0.8rem;
-}
-
-.legend {
-  display: flex;
-  gap: 15px;
-  font-size: 0.8rem;
-  margin-top: 15px;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.legend-color-box {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
 .search-container {
   position: relative;
   width: 100%;
 }
 
+.chatgpt-input-wrapper {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  border-radius: 28px;
+  background-color: #3e3e3e;
+  border: 1px solid #555;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2); /* For depth */
+  transition: all 0.2s ease-in-out;
+  padding: 0 10px;
+  position: relative;
+}
+
+.chatgpt-input-wrapper:focus-within {
+  border-color: #777;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.search-input {
+  flex-grow: 1;
+  height: 100%;
+  padding: 0 10px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  backdrop-filter: blur(5px);
+}
+
+.search-input::placeholder {
+  color: #a0a0a0;
+  opacity: 1;
+}
+
+.microphone-button {
+  background: none;
+  border: none;
+  color: #8e8e8e;
+  cursor: pointer;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease-in-out;
+}
+
+.microphone-button:hover {
+  color: #fff;
+}
+
 .clear-search {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
   background: none;
   border: none;
   color: white;
   cursor: pointer;
   font-size: 20px;
   line-height: 1;
+  margin-right: 5px;
 }

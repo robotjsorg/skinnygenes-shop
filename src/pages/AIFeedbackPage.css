@@ -10,6 +10,7 @@
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    padding-bottom: 90px;
 }
 
 .message-list {
@@ -39,42 +40,115 @@
     align-self: flex-start;
 }
 
-.chat-input-container {
+.input-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 1rem;
-    border-top: 1px solid #444654;
+    background-color: #202123;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 
-.chat-input {
+.text-input-form {
     display: flex;
+    align-items: center;
     max-width: 800px;
     margin: 0 auto;
     background-color: #444654;
-    border-radius: 8px;
+    border-radius: 25px;
+    border: 1px solid #555;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+    padding: 8px 1rem;
+    min-height: 56px;
+    box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
-.chat-input textarea {
+
+.text-input {
     flex-grow: 1;
     background: transparent;
     border: none;
     color: white;
-    padding: 1rem;
-    font-size: 1rem;
+    padding: 0;
+    font-size: 1.1rem;
+    line-height: 1.5;
     resize: none;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 10px;
+    min-height: 40px;
+    max-height: 200px;
 }
 
-.chat-input textarea:focus {
+.text-input::placeholder {
+    color: #acacbe;
+}
+
+.text-input:focus {
     outline: none;
 }
 
-.mic-button, .send-button {
-    background: transparent;
-    border: none;
-    color: #acacbe;
-    font-size: 1.5rem;
+.microphone-icon-container,
+.send-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #0b806d;
     cursor: pointer;
+    margin-left: 10px;
+    flex-shrink: 0;
+    border: none;
+    color: white;
+    padding: 0;
+}
+
+.send-button:disabled {
+    background-color: #444654;
+    cursor: not-allowed;
+}
+
+.microphone-icon,
+.send-icon {
+    color: white;
+}
+
+.message.ai.thinking {
+    background-color: #202123;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 1rem;
 }
 
-.mic-button:hover, .send-button:hover {
-    color: white;
+.typing-indicator span {
+    background-color: #fff;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 3px;
+    display: inline-block;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
 }

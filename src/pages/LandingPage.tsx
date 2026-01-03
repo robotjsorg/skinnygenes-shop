@@ -6,7 +6,6 @@ const LandingPage: React.FC = () => {
   return (
     <Paper shadow="none" p="xl" withBorder={false}>
       <Container size="xl">
-        {/* Hero Section */}
         <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl" my="xl">
           <div>
             <Title order={1} size="4rem" mb="md">
@@ -33,7 +32,6 @@ const LandingPage: React.FC = () => {
           />
         </SimpleGrid>
 
-        {/* Features Section */}
         <Grid mt="xl" gutter="lg">
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
