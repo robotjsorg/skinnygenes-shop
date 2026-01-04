@@ -175,6 +175,7 @@ interface StrainOrbProps {
 const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) => {
   const [hovered, setHover] = useState(false);
   const meshRef = useRef<THREE.Mesh>(null);
+  const { gl } = useThree(); // Access gl object from useThree
   const isMatch = searchQuery === '' || node.name.toLowerCase().includes(searchQuery.toLowerCase());
   const isDimmed = !isMatch;
   useFrame((state) => {
@@ -218,8 +219,8 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
       <mesh
         ref={meshRef}
         onClick={(e) => { e.stopPropagation(); onSelect(node); }}
-        onPointerOver={(e) => { e.stopPropagation(); setHover(true); }}
-        onPointerOut={() => setHover(false)}
+        onPointerOver={(e) => { e.stopPropagation(); setHover(true); gl.domElement.style.cursor = 'pointer'; }}
+        onPointerOut={() => { setHover(false); gl.domElement.style.cursor = 'default'; }}
       >
         <icosahedronGeometry args={[0.4, 1]} />
         <meshStandardMaterial
