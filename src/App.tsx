@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { createBrowserRouter, RouterProvider, Outlet, useNavigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Center, Loader } from '@mantine/core';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
@@ -26,13 +26,17 @@ const LoadingFallback = () => (
 );
 
 const AppLayout = () => {
+  const location = useLocation();
+  const hideFooterPaths = ['/strain-explorer', '/ai-feedback', '/checkout'];
+  const shouldShowFooter = !hideFooterPaths.includes(location.pathname);
+
   return (
     <>
       <Header />
       <main>
         <Outlet />
       </main>
-      <Footer />
+      {shouldShowFooter && <Footer />}
     </>
   );
 };
