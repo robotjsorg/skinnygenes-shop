@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "postbuild": "cp dist/index.html dist/404.html"
   },
   "reactRouter": {
     "future": {
