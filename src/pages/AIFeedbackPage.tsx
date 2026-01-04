@@ -172,7 +172,7 @@ const AIFeedbackPage: React.FC = () => {
                         <FaArrowUp size={20} />
                     </button>
                     <div className="microphone-icon-container" onClick={handleMicClick}>
-                        {isListening ? <FaMicrophoneSlash size={24} /> : <FaMicrophone size={24} />}
+                        {isListening ? <FaMicrophoneSlash size={20} /> : <FaMicrophone size={20} />}
                     </div>
                 </form>
             </div>

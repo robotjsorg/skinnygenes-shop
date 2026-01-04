@@ -56,7 +56,7 @@
     max-width: 800px;
     margin: 0 auto;
     background-color: #444654;
-    border-radius: 25px;
+    border-radius: 28px; /* Perfectly rounded for 56px min-height */
     border: 1px solid #555;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     padding: 8px 1rem;
@@ -70,14 +70,14 @@
     background: transparent;
     border: none;
     color: white;
-    padding: 0;
+    padding: 8px 0; /* Add vertical padding for alignment */
     font-size: 1.1rem;
     line-height: 1.5;
     resize: none;
     height: 100%;
     overflow-y: auto;
     padding-right: 10px;
-    min-height: 40px;
+    min-height: 40px; /* Keep min-height, but padding will help alignment */
     max-height: 200px;
 }
 
@@ -94,8 +94,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
+    width: 36px; /* Slightly smaller */
+    height: 36px; /* Slightly smaller */
     border-radius: 50%;
     background-color: #0b806d;
     cursor: pointer;
@@ -106,9 +106,13 @@
     padding: 0;
 }
 
+.microphone-icon-container:hover,
+.send-button:not(:disabled):hover {
+    background-color: var(--accent-color);
+}
+
 .send-button:disabled {
     background-color: #444654;
-    cursor: not-allowed;
 }
 
 .microphone-icon,
