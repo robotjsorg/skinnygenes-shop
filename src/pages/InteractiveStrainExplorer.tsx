@@ -525,7 +525,7 @@ export default function CannabisEvolutionApp() {
               const isChildDimmed = search !== '' && !childNode.name.toLowerCase().includes(search.toLowerCase());
               const isConnectionDimmed = isParentDimmed || isChildDimmed;
 
-              const lineColor = isConnectionHighlighted ? "red" : (isConnectionDimmed ? "#444" : "white");
+              const lineColor = isConnectionHighlighted ? "white" : (isConnectionDimmed ? "#444" : "white");
               const lineWidth = isConnectionHighlighted ? 2 : (isConnectionDimmed ? 0.5 : 1);
               const lineOpacity = isConnectionHighlighted ? 1 : (isConnectionDimmed ? 0.1 : 0.3);
 
