@@ -99,6 +99,7 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  margin-left: 8px;
 }
 
 .cart-item-count {

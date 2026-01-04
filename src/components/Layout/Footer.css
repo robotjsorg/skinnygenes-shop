@@ -1,7 +1,7 @@
 .footer {
   background-color: #333;
   color: #fff;
-  padding: 20px;
+  padding: 0 0 12px;
   text-align: center;
 }
 
@@ -15,12 +15,12 @@
 }
 
 .footer-content p {
-  margin-bottom: 10px;
+  padding: 6px;
 }
 
 .footer-content ul {
   list-style: none;
-  padding: 0;
+  padding: 6px;
   margin: 0;
 }
 

@@ -32,7 +32,7 @@ const Header: React.FC = () => {
         <NavLink to="/cannabis-anthology" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Cannabis Anthology</NavLink>
         <NavLink to="/account" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Account</NavLink>
         <NavLink to="/cart" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-          Cart <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} style={{ marginLeft: 4 }} />
+          Cart <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} />
             {totalItemsInCart > 0 && <span className="cart-item-count">{totalItemsInCart}</span>}</span>
         </NavLink>
       </nav>
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
           <NavLink to="/cannabis-anthology" className="mobile-nav-link" onClick={toggleMenu}>Cannabis Anthology</NavLink>
           <NavLink to="/account" className="mobile-nav-link" onClick={toggleMenu}>Account</NavLink>
           <NavLink to="/cart" className="mobile-nav-link" onClick={toggleMenu}>
-            Cart <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} style={{ marginLeft: 4 }} />
+            Cart <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} />
               {totalItemsInCart > 0 && <span className="cart-item-count">{totalItemsInCart}</span>}</span>
           </NavLink>
         </nav>
