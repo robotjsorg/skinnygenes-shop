@@ -1,8 +1,11 @@
-import React, { Suspense, useEffect } from 'react';
-import { createBrowserRouter, RouterProvider, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom';
 import { Center, Loader } from '@mantine/core';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
+import AgeVerificationModal from './components/AgeVerificationModal';
+import { AccountProvider } from './contexts/AccountContext';
+import { CartProvider } from './contexts/CartContext';
 
 const LandingPage = React.lazy(() => import('./pages/LandingPage'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
@@ -107,7 +110,15 @@ const router = createBrowserRouter([
 ], { basename: (import.meta as any).env.PROD ? '/skinnygenes-shop/' : '/' });
 
 const App: React.FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <AgeVerificationModal>
+      <AccountProvider>
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
+      </AccountProvider>
+    </AgeVerificationModal>
+  );
 };
 
 export default App;

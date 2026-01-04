@@ -33,35 +33,32 @@ const AgeVerificationModal: React.FC<AgeVerificationModalProps> = ({ children })
   }
 
   return (
-    <>
-      <Modal
-        opened={opened}
-        onClose={() => {}}
-        withCloseButton={false}
-        closeOnClickOutside={false}
-        closeOnEscape={false}
-        centered
-        overlayProps={{
-          backgroundOpacity: 0.8,
-          blur: 10,
-        }}
-        radius="md"
-        padding="xl"
-      >
-        <Text size="lg" fw={700} ta="center" mb="md">
-          Are you 21 years of age or older?
-        </Text>
-        <Group justify="center" mt="xl">
-          <Button size="md" onClick={handleVerifyAge} style={{ flex: 1, maxWidth: '150px' }}>
-            Yes
-          </Button>
-          <Button size="md" variant="outline" onClick={handleDeclineAge} style={{ flex: 1, maxWidth: '150px' }}>
-            No
-          </Button>
-        </Group>
-      </Modal>
-      {!opened && <>{children}</>}
-    </>
+    <Modal
+      opened={opened}
+      onClose={() => {}}
+      withCloseButton={false}
+      closeOnClickOutside={false}
+      closeOnEscape={false}
+      centered
+      overlayProps={{
+        backgroundOpacity: 0.8,
+        blur: 10,
+      }}
+      radius="md"
+      padding="xl"
+    >
+      <Text size="lg" fw={700} ta="center" mb="md">
+        Are you 21 years of age or older?
+      </Text>
+      <Group justify="center" mt="xl">
+        <Button size="md" onClick={handleVerifyAge} style={{ flex: 1, maxWidth: '150px' }}>
+          Yes
+        </Button>
+        <Button size="md" variant="outline" onClick={handleDeclineAge} style={{ flex: 1, maxWidth: '150px' }}>
+          No
+        </Button>
+      </Group>
+    </Modal>
   );
 };
 

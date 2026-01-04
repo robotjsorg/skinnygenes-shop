@@ -1,22 +1,13 @@
 import { createRoot } from 'react-dom/client';
 import { MantineProvider } from '@mantine/core';
 import App from './App';
-import AgeVerificationModal from './components/AgeVerificationModal';
-import { CartProvider } from './contexts/CartContext';
-import { AccountProvider } from './contexts/AccountContext';
 import '@mantine/core/styles.css';
 import './global.css';
 
 function Main() {
   return (
     <MantineProvider defaultColorScheme="dark">
-      <AgeVerificationModal>
-        <AccountProvider>
-          <CartProvider>
-            <App />
-          </CartProvider>
-        </AccountProvider>
-      </AgeVerificationModal>
+      <App />
     </MantineProvider>
   );
 }
