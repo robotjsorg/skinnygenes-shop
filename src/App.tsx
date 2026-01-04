@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider, Outlet, useNavigate } from 'react-router-dom';
 import { Center, Loader } from '@mantine/core';
 import Header from './components/Layout/Header';
+import Footer from './components/Layout/Footer';
 
 const LandingPage = React.lazy(() => import('./pages/LandingPage'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
@@ -31,6 +32,7 @@ const AppLayout = () => {
       <main>
         <Outlet />
       </main>
+      <Footer />
     </>
   );
 };
