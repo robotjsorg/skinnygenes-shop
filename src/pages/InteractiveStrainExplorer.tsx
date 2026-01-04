@@ -7,14 +7,14 @@ import { FaTimes } from 'react-icons/fa';
 import * as THREE from 'three';
 import './InteractiveStrainExplorer.css';
 
-type StrainType = 'Sativa' | 'Indica' | 'Hybrid' | 'Ruderalis';
+type StrainType = 'Sativa' | 'Indica' | 'Hybrid' | 'Ruderalis' | 'Other';
 
 interface StrainNode {
   id: string;
   name: string;
   year: number;
   type: StrainType;
-  children?: StrainNode[];
+  parents?: StrainNode[];
 }
 
 interface RenderNode extends StrainNode {
@@ -24,91 +24,97 @@ interface RenderNode extends StrainNode {
 
 const cannabisEvolutionData: StrainNode = {
   id: 'root',
-  name: 'Ancient Progenitor',
-  year: 1960,
-  type: 'Ruderalis',
-  children: [
+  name: 'Strainger Seeds Collection',
+  year: 2026,
+  type: 'Other',
+  parents: [
     {
-      id: 'thai',
-      name: 'Thai (Landrace)',
-      year: 1970,
-      type: 'Sativa',
-      children: [
+      id: 'pulp',
+      name: 'Pulp (Strainger Seeds)',
+      year: 2018,
+      type: 'Hybrid',
+      parents: [
         {
-          id: 'haze',
-          name: 'Original Haze',
-          year: 1975,
-          type: 'Sativa',
-          children: [
-            { id: 'jack', name: 'Jack Herer', year: 1990, type: 'Sativa', children: [] },
-            { id: 'silver-haze', name: 'Super Silver Haze', year: 1995, type: 'Sativa', children: [] }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'afghani',
-      name: 'Afghani (Landrace)',
-      year: 1970,
-      type: 'Indica',
-      children: [
-        {
-          id: 'nl',
-          name: 'Northern Lights',
-          year: 1985,
-          type: 'Indica',
-          children: [
-            { id: 'shiva', name: 'Shiva Skunk', year: 1987, type: 'Indica', children: [] }
-          ]
-        },
-        {
-          id: 'skunk1',
-          name: 'Skunk #1',
-          year: 1978,
+          id: 'mochalope',
+          name: 'Mochalope',
+          year: 2010,
           type: 'Hybrid',
-          children: [
-            { id: 'cheese', name: 'UK Cheese', year: 1995, type: 'Hybrid', children: [] },
-            { id: 'sour-diesel', name: 'Sour Diesel', year: 1992, type: 'Sativa', children: [] }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'kush-line',
-      name: 'Hindu Kush',
-      year: 1970,
-      type: 'Indica',
-      children: [
-        {
-          id: 'og-kush',
-          name: 'OG Kush',
-          year: 1992,
-          type: 'Hybrid',
-          children: [
+          parents: [
             {
-              id: 'gsc',
-              name: 'Girl Scout Cookies',
-              year: 2010,
+              id: 'oregon-diesel',
+              name: 'Oregon Diesel',
+              year: 2005,
               type: 'Hybrid',
-              children: [
+              parents: [
                 {
-                  id: 'sherbert',
-                  name: 'Sunset Sherbert',
-                  year: 2014,
+                  id: 'nyc-diesel',
+                  name: 'NYC Diesel',
+                  year: 2000,
                   type: 'Hybrid',
-                  children: [
-                    { id: 'gelato', name: 'Gelato', year: 2016, type: 'Hybrid', children: [] }
+                  parents: [
+                    { id: 'sour-diesel-pulp', name: 'Sour Diesel', year: 1995, type: 'Sativa', parents: [] },
+                    { id: 'afghani-hawaiian', name: 'Afghani/Hawaiian', year: 1995, type: 'Hybrid', parents: [] }
+                  ]
+                },
+                {
+                  id: 'blueberry',
+                  name: 'Blueberry',
+                  year: 1990,
+                  type: 'Indica',
+                  parents: [
+                    { id: 'highland-thai', name: 'Highland Thai', year: 1985, type: 'Sativa', parents: [] },
+                    { id: 'afghani-pulp', name: 'Afghani', year: 1985, type: 'Indica', parents: [] }
                   ]
                 }
               ]
             },
-            { id: 'bubba', name: 'Bubba Kush', year: 1996, type: 'Indica', children: [] }
+            {
+              id: 'purple-kush',
+              name: 'Purple Kush',
+              year: 2000,
+              type: 'Indica',
+              parents: [
+                { id: 'hindu-kush', name: 'Hindu Kush', year: 1970, type: 'Indica', parents: [] },
+                { id: 'purple-afghani', name: 'Purple Afghani', year: 1990, type: 'Indica', parents: [] }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: 'skunk-hammer',
+      name: 'Skunk Hammer (Strainger Seeds)',
+      year: 2019,
+      type: 'Hybrid',
+      parents: [
+        {
+          id: 'skunk-parent',
+          name: 'Skunk',
+          year: 1978,
+          type: 'Hybrid',
+          parents: [
+            { id: 'colombian-gold', name: 'Colombian Gold', year: 1970, type: 'Sativa', parents: [] },
+            { id: 'acapulco-gold', name: 'Acapulco Gold', year: 1970, type: 'Sativa', parents: [] },
+            { id: 'afghani-skunk', name: 'Afghani', year: 1970, type: 'Indica', parents: [] }
+          ]
+        },
+        {
+          id: 'hammer',
+          name: 'Hammer',
+          year: 2000,
+          type: 'Hybrid',
+          parents: [
+            { id: 'diesel', name: 'Diesel', year: 1995, type: 'Hybrid', parents: [] },
+            { id: 'bubba-kush-hammer', name: 'Bubba Kush', year: 1996, type: 'Indica', parents: [] }
           ]
         }
       ]
     }
   ]
 };
+
+
 
 const calculateTreeLayout = (
   node: StrainNode,
@@ -129,9 +135,9 @@ const calculateTreeLayout = (
   const currentPos = new THREE.Vector3(x, y, z);
   nodes.push({ ...node, position: currentPos, parentPosition: parentPos });
 
-  if (node.children && node.children.length > 0) {
-    const step = angleRange / node.children.length;
-    node.children.forEach((child, index) => {
+  if (node.parents && node.parents.length > 0) {
+    const step = angleRange / node.parents.length;
+    node.parents.forEach((child, index) => {
       const childNodes = calculateTreeLayout(
         child,
         depth + 1,
@@ -175,7 +181,7 @@ interface StrainOrbProps {
 const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) => {
   const [hovered, setHover] = useState(false);
   const meshRef = useRef<THREE.Mesh>(null);
-  const { gl } = useThree(); // Access gl object from useThree
+  const { gl } = useThree();
   const isMatch = searchQuery === '' || node.name.toLowerCase().includes(searchQuery.toLowerCase());
   const isDimmed = !isMatch;
   useFrame((state) => {
