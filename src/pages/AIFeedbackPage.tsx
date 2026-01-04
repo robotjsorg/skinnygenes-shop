@@ -161,7 +161,10 @@ const AIFeedbackPage: React.FC = () => {
       <div className="chat-container">
         <div className="message-list">
           {messages.map((message, index) => (
-            <div key={index} className={`message ${message.sender}`}>
+            <div
+              key={index}
+              className={`message ${message.sender}`}
+              style={index === messages.length - 1 && message.sender === 'ai' ? { paddingBottom: '5rem' } : {}}            >
               {message.sender === 'ai' ? (
                 <>
                   <div dangerouslySetInnerHTML={{ __html: marked(message.text) }} />

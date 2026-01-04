@@ -36,15 +36,17 @@
 
 .message.ai {
     align-self: flex-start;
-    padding-bottom: 3rem;
     position: relative;
 }
 
+.message.ai:first-child .ai-message-actions {
+    display: none;
+}
+
 .ai-message-actions {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
     display: flex;
+    height: 3rem;
+    align-items: center;
     gap: 0.5rem;
 }
 
