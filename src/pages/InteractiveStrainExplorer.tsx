@@ -482,11 +482,7 @@ export default function CannabisEvolutionApp() {
 
   return (
     <div className="explorer-container" style={{ height: height }}>
-      <div className="info-panel" onClick={(e) => e.stopPropagation()}>
-        <h3>Phylogenetic Tree</h3>
-        <p>
-          Explore cannabis strains bred by Skinny Genes with the 3D phylogenetic tree.
-        </p>
+      <div className="info-panel">
         <div className="search-container">
           <div className="chatgpt-input-wrapper">
             <input
@@ -546,11 +542,25 @@ export default function CannabisEvolutionApp() {
           </div>
         )}
         <div className="legend">
-          <Badge color="orange" variant="light">Sativa</Badge>
-          <Badge color="purple" variant="light">Indica</Badge>
-          <Badge color="green" variant="light">Hybrid</Badge>
-          <Badge color="gray" variant="light">Ruderalis</Badge>
+          <Badge color="orange" variant="light" style={{ opacity: focusedNode && focusedNode.type !== 'Sativa' ? 0.3 : 1 }}>Sativa</Badge>
+          <Badge color="purple" variant="light" style={{ opacity: focusedNode && focusedNode.type !== 'Indica' ? 0.3 : 1 }}>Indica</Badge>
+          <Badge color="green" variant="light" style={{ opacity: focusedNode && focusedNode.type !== 'Hybrid' ? 0.3 : 1 }}>Hybrid</Badge>
+          <Badge color="gray" variant="light" style={{ opacity: focusedNode && focusedNode.type !== 'Ruderalis' ? 0.3 : 1 }}>Ruderalis</Badge>
         </div>
+        {focusedNode ? (
+          <div>
+            <h3>{focusedNode.name}</h3>
+            {focusedNode.description && <p style={{ maxHeight: '150px', overflowY: 'auto', paddingRight: '10px' }}>{focusedNode.description}</p>}
+            {focusedNode.link && <a href={focusedNode.link} target="_blank" rel="noopener noreferrer">View strain details</a>}
+          </div>
+        ) : (
+          <>
+            <h3>Phylogenetic Tree</h3>
+            <p>
+              Explore cannabis strains bred by Skinny Genes with the 3D phylogenetic tree.
+            </p>
+          </>
+        )}
       </div>
       <Canvas camera={{ position: [7.5, 7.5, 15], fov: 45 }} onPointerMissed={handleClearSearch}>
         <color attach="background" args={['#050505']} />
