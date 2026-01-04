@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import React, { useState, useRef, useEffect } from 'react';
 import { marked } from 'marked';
-import { FaArrowUp, FaMicrophone, FaMicrophoneSlash, FaCopy, FaVolumeUp, FaVolumeOff } from 'react-icons/fa';
+import { FaArrowUp, FaMicrophone, FaMicrophoneSlash, FaCopy, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 import './AIFeedbackPage.css';
 
 const API_KEY = (import.meta as any).env.VITE_GEMINI_API_KEY as string;
@@ -194,8 +194,11 @@ const AIFeedbackPage: React.FC = () => {
                   <div dangerouslySetInnerHTML={{ __html: marked(message.text) }} />
                   <div className="ai-message-actions">
                     <button onClick={() => handleCopy(message.text)}><FaCopy size={16}/></button>
-                    <button onClick={() => handleReadAloud(message.text, index)}>
-                      {readingMessageIndex === index ? <FaVolumeOff /> : <FaVolumeUp size={16} />}
+                    <button 
+                      onClick={() => handleReadAloud(message.text, index)}
+                      className={readingMessageIndex === index ? 'reading' : ''}
+                    >
+                      {readingMessageIndex === index ? <FaVolumeMute /> : <FaVolumeUp size={16} />}
                     </button>
                   </div>
                 </>

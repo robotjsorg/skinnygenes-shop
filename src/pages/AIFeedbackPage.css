@@ -65,8 +65,9 @@
   font-size: 0.9rem;
 }
 
-.ai-message-actions button:hover {
-  background: #222;
+.ai-message-actions button:hover,
+.ai-message-actions button.reading {
+  background-color: #444;
 }
 
 .input-area {
@@ -134,7 +135,10 @@
   padding: 0;
 }
 
-.microphone-icon-container:hover,
+.microphone-icon-container:hover {
+  background-color: #444;
+}
+
 .send-button:not(:disabled):hover {
   background-color: var(--accent-color);
 }
