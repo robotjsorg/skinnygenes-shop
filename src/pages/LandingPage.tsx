@@ -20,13 +20,10 @@ const LandingPage: React.FC = () => {
               <Button size="lg" component={Link} to="/products" className="button">
                 Shop Products
               </Button>
-              <Button size="lg" component={Link} to="/strains" className="button">
-                Explore Strains
-              </Button>
             </Group>
           </div>
           <Image
-            src={(import.meta as any).env.BASE_URL + "homepage.png"}
+            src={(import.meta as any).env.BASE_URL + "chem91problemchild.png"}
             alt="Premium Cannabis Products"
             radius="md"
             height={400}
@@ -34,22 +31,6 @@ const LandingPage: React.FC = () => {
         </SimpleGrid>
 
         <Grid mt="xl" gutter="lg">
-          <Grid.Col span={{ base: 12, md: 4 }}>
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={(import.meta as any).env.BASE_URL + "bluedreamcbd.png"} height={180} alt="Cannabis Products" />
-              </Card.Section>
-              <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500}>Wellness Products</Text>
-              </Group>
-              <Text size="sm">
-                Homemade selection of cannabis seeds, flower, CBD oils, edibles, and wellness products for daily use. Grinders and T-shirts available.
-              </Text>
-              <Button fullWidth mt="md" component={Link} to="/products" style={{ marginTop: 'auto' }} className="button">
-                Shop Now
-              </Button>
-            </Card>
-          </Grid.Col>
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
@@ -85,7 +66,7 @@ const LandingPage: React.FC = () => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
-                <Image src={(import.meta as any).env.BASE_URL + "strains.png"} height={180} alt="Interactive Explorer" />
+                <Image src={(import.meta as any).env.BASE_URL + "homepage.png"} height={180} alt="Interactive Explorer" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>AI Feedback</Text>
