@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import React, { useState, useRef, useEffect } from 'react';
 import { marked } from 'marked';
+import { FaArrowUp, FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa';
 import './AIFeedbackPage.css';
 
 const API_KEY = (import.meta as any).env.VITE_GEMINI_API_KEY as string;
@@ -13,9 +14,7 @@ const AIFeedbackPage: React.FC = () => {
     ]);
     const [isListening, setIsListening] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const [conversationStage, setConversationStage] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
-    const [apiError, setApiError] = useState<string | null>(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -115,15 +114,12 @@ const AIFeedbackPage: React.FC = () => {
         try {
             const aiResponse = await gemini(userMessage.text);
             setMessages((prevMessages) => [...prevMessages, { text: aiResponse, sender: 'ai' }]);
-            setApiError(null);
         } catch (error: any) {
             const statusCode = error.status || error.response?.status;
             if (statusCode) {
                 let errorMessage = `Error Code: ${statusCode}. "${error.message}".`;
-                setApiError(errorMessage);
                 setMessages((prevMessages) => [...prevMessages, { text: errorMessage, sender: 'ai' }]);
             }
-            setApiError(null);
         } finally {
             setIsLoading(false);
         }
@@ -173,29 +169,10 @@ const AIFeedbackPage: React.FC = () => {
                         rows={1}
                     />
                     <button type="submit" className="send-button" disabled={!input.trim() || isLoading}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="send-icon">
-                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                        </svg>
+                        <FaArrowUp size={20} />
                     </button>
                     <div className="microphone-icon-container" onClick={handleMicClick}>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="microphone-icon"
-                        >
-                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                            <line x1="12" y1="19" x2="12" y2="23"></line>
-                            <line x1="8" y1="23" x2="16" y2="23"></line>
-                        </svg>
+                        {isListening ? <FaMicrophoneSlash size={24} /> : <FaMicrophone size={24} />}
                     </div>
                 </form>
             </div>
