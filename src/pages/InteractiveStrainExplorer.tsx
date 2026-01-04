@@ -9,6 +9,8 @@ import './InteractiveStrainExplorer.css';
 
 type StrainType = 'Sativa' | 'Indica' | 'Hybrid' | 'Ruderalis' | 'Other';
 
+const BASE_YEAR = 2000;
+
 interface StrainNode {
   id: string;
   name: string;
@@ -30,103 +32,60 @@ const cannabisEvolutionData: StrainNode = {
   parents: [
     {
       id: 'pulp',
-      name: 'Pulp (Strainger Seeds)',
-      year: 2018,
+      name: 'Pulp',
+      year: 2023,
       type: 'Hybrid',
       parents: [
         {
-          id: 'mochalope',
-          name: 'Mochalope',
-          year: 2010,
-          type: 'Hybrid',
-          parents: [
-            {
-              id: 'oregon-diesel',
-              name: 'Oregon Diesel',
-              year: 2005,
-              type: 'Hybrid',
-              parents: [
-                {
-                  id: 'nyc-diesel',
-                  name: 'NYC Diesel',
-                  year: 2000,
-                  type: 'Hybrid',
-                  parents: [
-                    { id: 'sour-diesel-pulp', name: 'Sour Diesel', year: 1995, type: 'Sativa', parents: [] },
-                    { id: 'afghani-hawaiian', name: 'Afghani/Hawaiian', year: 1995, type: 'Hybrid', parents: [] }
-                  ]
-                },
-                {
-                  id: 'blueberry',
-                  name: 'Blueberry',
-                  year: 1990,
-                  type: 'Indica',
-                  parents: [
-                    { id: 'highland-thai', name: 'Highland Thai', year: 1985, type: 'Sativa', parents: [] },
-                    { id: 'afghani-pulp', name: 'Afghani', year: 1985, type: 'Indica', parents: [] }
-                  ]
-                }
-              ]
-            },
-            {
-              id: 'purple-kush',
-              name: 'Purple Kush',
-              year: 2000,
-              type: 'Indica',
-              parents: [
-                { id: 'hindu-kush', name: 'Hindu Kush', year: 1970, type: 'Indica', parents: [] },
-                { id: 'purple-afghani', name: 'Purple Afghani', year: 1990, type: 'Indica', parents: [] }
-              ]
-            }
-          ]
+          id: 'cherry-ghostenade',
+          name: 'Cherry Ghostenade',
+          year: 2020,
+          type: 'Indica',
+          parents: []
+        },
+        {
+          id: 'problem-child-f2',
+          name: 'Problem Child [F2]',
+          year: 2022,
+          type: 'Indica',
+          parents: []
         }
       ]
     },
     {
       id: 'skunk-hammer',
-      name: 'Skunk Hammer (Strainger Seeds)',
+      name: 'Skunk Hammer',
       year: 2019,
-      type: 'Hybrid',
+      type: 'Indica',
       parents: [
         {
-          id: 'skunk-parent',
-          name: 'Skunk',
-          year: 1978,
-          type: 'Hybrid',
-          parents: [
-            { id: 'colombian-gold', name: 'Colombian Gold', year: 1970, type: 'Sativa', parents: [] },
-            { id: 'acapulco-gold', name: 'Acapulco Gold', year: 1970, type: 'Sativa', parents: [] },
-            { id: 'afghani-skunk', name: 'Afghani', year: 1970, type: 'Indica', parents: [] }
-          ]
+          id: '9lb-hammer',
+          name: '9lb Hammer',
+          year: 2014,
+          type: 'Indica',
+          parents: []
         },
         {
-          id: 'hammer',
-          name: 'Hammer',
-          year: 2000,
+          id: 'blue-cheese',
+          name: 'Blue Cheese',
+          year: 2006,
           type: 'Hybrid',
-          parents: [
-            { id: 'diesel', name: 'Diesel', year: 1995, type: 'Hybrid', parents: [] },
-            { id: 'bubba-kush-hammer', name: 'Bubba Kush', year: 1996, type: 'Indica', parents: [] }
-          ]
+          parents: []
         }
       ]
     }
   ]
 };
 
-
-
 const calculateTreeLayout = (
   node: StrainNode,
   depth: number = 0,
   angleStart: number = 0,
   angleRange: number = Math.PI * 2,
-  parentPos?: THREE.Vector3, // This is the actual parent's position for layout calculation
-  effectiveParentPos?: THREE.Vector3 // This is the position the current node should link to, skipping 'Other' nodes
+  effectiveParentPos?: THREE.Vector3
 ): RenderNode[] => {
   const nodes: RenderNode[] = [];
   const WIDTH_PER_YEAR = 0.5;
-  const BASE_YEAR = 1960;
   const RADIUS_INCREMENT = 1.5;
   const x = (node.year - BASE_YEAR) * WIDTH_PER_YEAR;
   const currentAngle = angleStart + angleRange / 2;
@@ -149,7 +108,6 @@ const calculateTreeLayout = (
         depth + 1,
         angleStart + (step * index),
         step,
-        currentPos,
         newEffectiveParentPos
       );
       nodes.push(...childNodes);
@@ -260,12 +218,10 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
 
 const YearMarkers = () => {
   const markers = [];
-  const startYear = 1960;
   const endYear = 2020;
   const step = 10;
   const WIDTH_PER_YEAR = 0.5;
-  const BASE_YEAR = 1960;
-  for (let year = startYear; year <= endYear; year += step) {
+  for (let year = BASE_YEAR; year <= endYear; year += step) {
     const x = (year - BASE_YEAR) * WIDTH_PER_YEAR;
     markers.push(
       <group key={year} position={[x, 0, 0]}>
@@ -304,7 +260,7 @@ const CustomAutoRotate = ({ rotationDirection, setRotationDirection, autoRotateA
 };
 
 export default function CannabisEvolutionApp() {
-  const nodes = useMemo(() => calculateTreeLayout(cannabisEvolutionData, 0, 0, Math.PI * 2, undefined, undefined), []);
+  const nodes = useMemo(() => calculateTreeLayout(cannabisEvolutionData, 0, 0, Math.PI * 2, undefined), []);
   const [search, setSearch] = useState('');
   const [focusedNode, setFocusedNode] = useState<RenderNode | null>(null);
   const [currentFocusIndex, setCurrentFocusIndex] = useState<number>(-1);
@@ -453,7 +409,7 @@ export default function CannabisEvolutionApp() {
           <Badge color="gray" variant="light">Ruderalis</Badge>
         </div>
       </div>
-      <Canvas camera={{ position: [15, 10, 25], fov: 45 }} onPointerMissed={handleClearSearch}>
+      <Canvas camera={{ position: [7.5, 7.5, 15], fov: 45 }} onPointerMissed={handleClearSearch}>
         <color attach="background" args={['#050505']} />
         <CameraRig targetNode={focusedNode} />
         <CustomAutoRotate
@@ -487,12 +443,17 @@ export default function CannabisEvolutionApp() {
           makeDefault
           enablePan={true}
           enableZoom={true}
-          maxPolarAngle={Math.PI / 1.5}
-          minAzimuthAngle={-Math.PI / 2}
-          maxAzimuthAngle={Math.PI / 2}
-          minDistance={5}
-          maxDistance={50}
-          target={[15, 0, 0]}
+          minPolarAngle={0}
+          maxPolarAngle={Math.PI / 2}
+          minAzimuthAngle={-Math.PI / 4}
+          maxAzimuthAngle={Math.PI / 4}
+          minDistance={2}
+          maxDistance={25}
+          onEnd={(e: any) => {
+            const controls = e.target as OrbitControlsImpl;
+            console.log('Polar Angle:', controls.getPolarAngle(), 'Azimuth Angle:', controls.getAzimuthalAngle());
+          }}
+          target={[7.5, 0, 0]}
         />
       </Canvas>
     </div>
