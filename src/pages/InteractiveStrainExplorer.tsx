@@ -396,7 +396,7 @@ export default function CannabisEvolutionApp() {
             />
             {search && (
               <FaTimes className="clear-search-icon" onClick={handleClearSearch} style={{
-                position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: '#aaa'
+                position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer'
               }} />
             )}
           </div>
