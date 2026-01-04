@@ -79,7 +79,7 @@ const LandingPage: React.FC = () => {
               <Text size="sm">
                 Use an AI prompt to give valuable feedback on strains and products, get recommendation on seeds and products, and instructions and tips on growing your own cannabis.
               </Text>
-              <Button fullWidth mt="md" component={Link} to="/ai-feedback" style={{ marginTop: 'auto' }} className="button">
+              <Button fullWidth mt="md" component={Link} to="/ai-chatbot" style={{ marginTop: 'auto' }} className="button">
                 Chat with AI
               </Button>
             </Card>

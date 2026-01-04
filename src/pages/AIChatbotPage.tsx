@@ -2,12 +2,12 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import React, { useState, useRef, useEffect } from 'react';
 import { marked } from 'marked';
 import { FaArrowUp, FaMicrophone, FaMicrophoneSlash, FaCopy, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
-import './AIFeedbackPage.css';
+import './AIChatbotPage.css';
 
 const API_KEY = (import.meta as any).env.VITE_GEMINI_API_KEY as string;
 const genAI = new GoogleGenerativeAI(API_KEY);
 
-const AIFeedbackPage: React.FC = () => {
+const AIChatbotPage: React.FC = () => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([
     { text: "Hey there! What cannabis product are you enjoying right now, or what have you tried recently? I'd love to hear about it.", sender: "ai" }
@@ -181,7 +181,7 @@ const AIFeedbackPage: React.FC = () => {
   };
 
   return (
-    <div className="ai-feedback-chat-page">
+    <div className="ai-chat-page">
       <div className="chat-container">
         <div className="message-list">
           {messages.map((message, index) => (
@@ -250,4 +250,4 @@ const AIFeedbackPage: React.FC = () => {
   );
 };
 
-export default AIFeedbackPage;
+export default AIChatbotPage;
