@@ -3,6 +3,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Text, Stars, Line } from '@react-three/drei';
 import { Badge } from '@mantine/core';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
+import { FaTimes } from 'react-icons/fa';
 import * as THREE from 'three';
 import './InteractiveStrainExplorer.css';
 
@@ -333,9 +334,9 @@ export default function CannabisEvolutionApp() {
               }}
             />
             {search && (
-              <button className="clear-search" onClick={handleClearSearch}>
-                &times;
-              </button>
+              <FaTimes className="clear-search-icon" onClick={handleClearSearch} style={{
+                position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: '#aaa'
+              }} />
             )}
           </div>
         </div>
