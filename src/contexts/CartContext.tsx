@@ -1,13 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { Product } from '../types/product';
 
-// Define the shape of a cart item
 export interface CartItem {
   product: Product;
   quantity: number;
 }
 
-// Define the shape of the cart context
 interface CartContextType {
   cart: CartItem[];
   addToCart: (product: Product, quantity: number) => void;
@@ -16,10 +14,8 @@ interface CartContextType {
   clearCart: () => void;
 }
 
-// Create the Cart Context
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Create a custom hook to use the Cart Context
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -28,7 +24,6 @@ export const useCart = () => {
   return context;
 };
 
-// Create the Cart Provider component
 interface CartProviderProps {
   children: ReactNode;
 }
@@ -59,9 +54,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
         item.product.id === productId
-          ? { ...item, quantity: Math.max(1, quantity) } // Ensure quantity is at least 1
+          ? { ...item, quantity: Math.max(1, quantity) }
           : item
-      ).filter(item => item.quantity > 0) // Remove if quantity becomes 0
+      ).filter(item => item.quantity > 0)
     );
   };
 

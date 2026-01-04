@@ -3,6 +3,7 @@ import { MantineProvider } from '@mantine/core';
 import App from './App';
 import AgeVerificationModal from './components/AgeVerificationModal';
 import { CartProvider } from './contexts/CartContext';
+import { AccountProvider } from './contexts/AccountContext';
 import '@mantine/core/styles.css';
 import './global.css';
 
@@ -10,9 +11,11 @@ function Main() {
   return (
     <MantineProvider defaultColorScheme="dark">
       <AgeVerificationModal>
-        <CartProvider>
-          <App />
-        </CartProvider>
+        <AccountProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </AccountProvider>
       </AgeVerificationModal>
     </MantineProvider>
   );
