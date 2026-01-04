@@ -167,10 +167,10 @@ const AIFeedbackPage: React.FC = () => {
             rows={1}
           />
           <button type="submit" className="send-button" disabled={!input.trim() || isLoading}>
-            <FaArrowUp size={20} />
+            <FaArrowUp size={16} />
           </button>
           <div className="microphone-icon-container" onClick={handleMicClick}>
-            {isListening ? <FaMicrophoneSlash size={20} /> : <FaMicrophone size={20} />}
+            {isListening ? <FaMicrophoneSlash size={16} /> : <FaMicrophone size={16} />}
           </div>
         </form>
       </div>

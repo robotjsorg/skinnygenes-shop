@@ -7,10 +7,9 @@
 .chat-container {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 1rem 1rem;
     display: flex;
     flex-direction: column;
-    padding-bottom: 90px;
 }
 
 .message-list {
@@ -24,14 +23,14 @@
 }
 
 .message {
-    padding: 1rem;
     border-radius: 8px;
     max-width: 75%;
     word-wrap: break-word;
 }
 
 .message.user {
-    background-color: #444654;
+    padding: 1rem;
+    background-color: #323232d9;
     align-self: flex-end;
 }
 
@@ -44,8 +43,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 1rem 0 2rem;
-    background-color: var(--background-color);
+    margin: 0 1rem 2rem;
     z-index: 1000;
 }
 
@@ -54,10 +52,10 @@
     align-items: center;
     max-width: 800px;
     margin: 0 auto;
-    background-color: #444654;
+    background-color: #303030;
     border-radius: 28px;
-    border: 1px solid #555;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ffffff0d;
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 12px 0px, rgba(255, 255, 255, 0.2) 0px 0px 1px 0px inset;
     padding: 8px 10px;
     min-height: 56px;
     box-sizing: border-box;
