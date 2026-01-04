@@ -443,8 +443,8 @@ export default function CannabisEvolutionApp() {
           makeDefault
           enablePan={true}
           enableZoom={true}
-          minPolarAngle={0}
-          maxPolarAngle={Math.PI / 2}
+          minPolarAngle={Math.PI / 4}
+          maxPolarAngle={3 * Math.PI / 4}
           minAzimuthAngle={-Math.PI / 4}
           maxAzimuthAngle={Math.PI / 4}
           minDistance={2}
