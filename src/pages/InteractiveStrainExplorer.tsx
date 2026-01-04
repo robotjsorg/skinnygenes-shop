@@ -118,14 +118,14 @@ const calculateTreeLayout = (
   parentPos?: THREE.Vector3
 ): RenderNode[] => {
   const nodes: RenderNode[] = [];
-  const HEIGHT_PER_YEAR = 0.5;
+  const WIDTH_PER_YEAR = 0.5;
   const BASE_YEAR = 1960;
-  const RADIUS_INCREMENT = 1.5; 
-  const y = (node.year - BASE_YEAR) * HEIGHT_PER_YEAR;
+  const RADIUS_INCREMENT = 1.5;
+  const x = (node.year - BASE_YEAR) * WIDTH_PER_YEAR; // Year now drives X-position
   const currentAngle = angleStart + angleRange / 2;
-  const radius = depth * RADIUS_INCREMENT; 
-  const x = Math.cos(currentAngle) * radius;
-  const z = Math.sin(currentAngle) * radius;
+  const radius = depth * RADIUS_INCREMENT;
+  const y = Math.cos(currentAngle) * radius; // Angle drives Y-position
+  const z = Math.sin(currentAngle) * radius; // Angle drives Z-position
   const currentPos = new THREE.Vector3(x, y, z);
   nodes.push({ ...node, position: currentPos, parentPosition: parentPos });
 
@@ -151,8 +151,8 @@ const CameraRig = ({ targetNode }: { targetNode: RenderNode | null }) => {
   useFrame((state, delta) => {
     if (targetNode) {
       const { x, y, z } = targetNode.position;
-      const offset = new THREE.Vector3(0, 0, 25); 
-      const targetPos = new THREE.Vector3(x, y-5, z);
+      const offset = new THREE.Vector3(0, 10, 20); 
+      const targetPos = new THREE.Vector3(x, y, z);
       const desiredCamPos = targetPos.clone().add(offset);
       state.camera.position.lerp(desiredCamPos, 4 * delta);
       const ctrl = controls as unknown as OrbitControlsImpl;
@@ -249,17 +249,17 @@ const YearMarkers = () => {
   const startYear = 1960;
   const endYear = 2020;
   const step = 10;
-  const HEIGHT_PER_YEAR = 0.5;
+  const WIDTH_PER_YEAR = 0.5;
   const BASE_YEAR = 1960;
   for (let year = startYear; year <= endYear; year += step) {
-    const y = (year - BASE_YEAR) * HEIGHT_PER_YEAR;
+    const x = (year - BASE_YEAR) * WIDTH_PER_YEAR; // Year now drives X-position
     markers.push(
-      <group key={year} position={[0, y, 0]}>
-        <mesh rotation={[-Math.PI / 2, 0, 0]}>
+      <group key={year} position={[x, 0, 0]}> {/* Position along x-axis */}
+        <mesh rotation={[0, Math.PI / 2, Math.PI / 2]}> {/* Rotate to be vertical and aligned with X-axis */}
           <ringGeometry args={[5, 5.05, 32]} />
           <meshBasicMaterial color="white" opacity={0.05} transparent side={THREE.DoubleSide} />
         </mesh>
-        <Text position={[5.5, 0, 0]} fontSize={0.5} color="#666" anchorX="left" anchorY="middle">
+        <Text position={[0, 5.5, 0]} fontSize={0.5} color="#666" anchorX="center" anchorY="bottom"> {/* Adjust text position */}
           {year}
         </Text>
       </group>
@@ -381,7 +381,7 @@ export default function CannabisEvolutionApp() {
         </div>
       </div>
 
-      <Canvas camera={{ position: [15, 20, 25], fov: 45 }} onPointerMissed={handleClearSearch}>
+      <Canvas camera={{ position: [15, 10, 25], fov: 45 }} onPointerMissed={handleClearSearch}>
         <color attach="background" args={['#050505']} />
         <CameraRig targetNode={focusedNode} />
         <ambientLight intensity={0.4} />
@@ -389,9 +389,10 @@ export default function CannabisEvolutionApp() {
         <spotLight position={[0, 50, 0]} angle={0.5} penumbra={1} intensity={2} />
         <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade={true} />
         <YearMarkers />
-        <group position={[0, -5, 0]}>
-          <mesh position={[0, 15, 0]}>
-            <cylinderGeometry args={[0.02, 0.02, 40, 8]} />
+        <group>
+          {/* Central horizontal axis */}
+          <mesh position={[15, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+            <cylinderGeometry args={[0.02, 0.02, 30, 8]} /> {/* Length of 30 */}
             <meshBasicMaterial color="#222" transparent opacity={0.5} />
           </mesh>
           {nodes.map((node) => (
@@ -412,6 +413,7 @@ export default function CannabisEvolutionApp() {
           maxPolarAngle={Math.PI / 1.5} 
           autoRotate={!focusedNode && search === ''}
           autoRotateSpeed={0.5}
+          target={[15, 0, 0]}
         />
       </Canvas>
     </div>
