@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { Product } from '../types/product';
 
 export interface CartItem {
@@ -29,19 +29,39 @@ interface CartProviderProps {
 }
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      try {
+        const parsedCart = JSON.parse(storedCart);
+        if (Array.isArray(parsedCart)) {
+          return parsedCart;
+        }
+      } catch (e) {
+        console.error('useState initializer: Error parsing cart from localStorage', e);
+        return [];
+      }
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (product: Product, quantity: number) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.product.id === product.id);
       if (existingItem) {
-        return prevCart.map((item) =>
+        const newCart = prevCart.map((item) =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
+        return newCart;
       } else {
-        return [...prevCart, { product, quantity }];
+        const newCart = [...prevCart, { product, quantity }];
+        return newCart;
       }
     });
   };
