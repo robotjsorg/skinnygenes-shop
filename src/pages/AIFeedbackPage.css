@@ -1,198 +1,204 @@
 .ai-feedback-chat-page {
-    display: flex;
-    flex-direction: column;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-    height: calc(100vh - 76px);
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  height: calc(100vh - 76px);
 }
 
 .chat-container {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 1rem 1rem;
-    display: flex;
-    flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .message-list {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .message {
-    border-radius: 8px;
-    max-width: 75%;
-    word-wrap: break-word;
+  border-radius: 8px;
+  max-width: 75%;
+  word-wrap: break-word;
 }
 
 .message.user {
-    padding: 1rem;
-    background-color: #323232d9;
-    align-self: flex-end;
+  padding: 1rem;
+  background-color: #323232d9;
+  align-self: flex-end;
 }
 
 .message.ai {
-    align-self: flex-start;
-    position: relative;
+  align-self: flex-start;
+  position: relative;
 }
 
 .message.ai:first-child .ai-message-actions {
-    display: none;
+  display: none;
 }
 
 .ai-message-actions {
-    display: flex;
-    height: 3rem;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  height: 3rem;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .ai-message-actions button {
-    background: transparent;
-    border: none;
-    color: white;
-    padding: 0.25rem;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 0.25rem;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
 }
 
 .ai-message-actions button:hover {
-    background: #222;
+  background: #222;
 }
 
 .input-area {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 1rem 2rem;
-    z-index: 1000;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 1rem 2rem;
+  z-index: 1000;
 }
 
 .text-input-form {
-    display: flex;
-    align-items: center;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #303030;
-    border-radius: 28px;
-    border: 1px solid #ffffff0d;
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 12px 0px, rgba(255, 255, 255, 0.2) 0px 0px 1px 0px inset;
-    padding: 8px 10px;
-    min-height: 56px;
-    box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #303030;
+  border-radius: 28px;
+  border: 1px solid #ffffff0d;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 12px 0px, rgba(255, 255, 255, 0.2) 0px 0px 1px 0px inset;
+  padding: 8px 10px;
+  min-height: 56px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }
 
 .text-input {
-    flex-grow: 1;
-    background: transparent;
-    border: none;
-    color: white;
-    padding: 8px 10px;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    resize: none;
-    height: 100%;
-    overflow-y: auto;
-    min-height: 40px;
-    max-height: 200px;
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 8px 10px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  resize: none;
+  height: 100%;
+  overflow-y: auto;
+  min-height: 40px;
+  max-height: 200px;
 }
 
 .text-input::placeholder {
-    color: #acacbe;
+  color: #acacbe;
 }
 
 .text-input:focus {
-    outline: none;
+  outline: none;
 }
 
 .microphone-icon-container,
 .send-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: #0b806d;
-    cursor: pointer;
-    margin-left: 10px;
-    flex-shrink: 0;
-    border: none;
-    color: white;
-    padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #0b806d;
+  cursor: pointer;
+  margin-left: 10px;
+  flex-shrink: 0;
+  border: none;
+  color: white;
+  padding: 0;
 }
 
 .microphone-icon-container:hover,
 .send-button:not(:disabled):hover {
-    background-color: var(--accent-color);
+  background-color: var(--accent-color);
 }
 
 .send-button:disabled {
-    background-color: #444654;
+  background-color: #444654;
 }
 
 .gemini-attribution {
   position: absolute;
-  bottom: -20px;
+  bottom: -40px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #202123;
+  background-color: var(--background-color);
   color: #aaa;
-  padding: 2px 10px;
-  border-radius: 8px;
   font-size: 0.7rem;
-  z-index: 999;
   white-space: nowrap;
+  width: 100%;
   max-width: 800px;
-  height: 1rem + 16px;
+  height: 76px;
+  padding: 44px 0 0;
+  text-align: center;
 }
 
 .microphone-icon,
 .send-icon {
-    color: white;
+  color: white;
 }
 
 .message.ai.thinking {
-    align-self: flex-start;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
 .typing-indicator span {
-    background-color: #fff;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin: 0 3px;
-    display: inline-block;
-    animation: bounce 1.4s infinite ease-in-out both;
+  background-color: #fff;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 3px;
+  display: inline-block;
+  animation: bounce 1.4s infinite ease-in-out both;
 }
 
 .typing-indicator span:nth-child(1) {
-    animation-delay: -0.32s;
+  animation-delay: -0.32s;
 }
 
 .typing-indicator span:nth-child(2) {
-    animation-delay: -0.16s;
+  animation-delay: -0.16s;
 }
 
 @keyframes bounce {
-    0%, 80%, 100% {
-        transform: scale(0);
-    }
-    40% {
-        transform: scale(1);
-    }
+
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+
+  40% {
+    transform: scale(1);
+  }
 }
