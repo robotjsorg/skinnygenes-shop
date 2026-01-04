@@ -179,21 +179,27 @@ interface StrainOrbProps {
   searchQuery: string;
   isFocused: boolean;
   onSelect: (node: RenderNodeWithConnections) => void;
+  isHighlighted: boolean;
 }
 
-const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) => {
+const StrainOrb = ({ node, searchQuery, isFocused, onSelect, isHighlighted }: StrainOrbProps) => {
   const [hovered, setHover] = useState(false);
   const meshRef = useRef<THREE.Mesh>(null);
   const { gl } = useThree();
   const isMatch = searchQuery === '' || node.name.toLowerCase().includes(searchQuery.toLowerCase());
-  const isDimmed = !isMatch;
+  const isDimmed = !isMatch; // This means it doesn't match the search query
+
   useFrame((state) => {
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.01;
+      // Prioritize focused state, then search match, then hovered
       if (isFocused) {
         const scale = 1.5 + Math.sin(state.clock.elapsedTime * 8) * 0.2;
         meshRef.current.scale.setScalar(scale);
-      } else if (isMatch && searchQuery !== '') {
+      } else if (isHighlighted) { // Only scale if highlighted and not focused
+        const scale = 1.2 + Math.sin(state.clock.elapsedTime * 4) * 0.1;
+        meshRef.current.scale.setScalar(scale);
+      } else if (isMatch && searchQuery !== '') { // Only scale if it's a search match and not highlighted/focused
         const scale = 1 + Math.sin(state.clock.elapsedTime * 4) * 0.1;
         meshRef.current.scale.setScalar(scale);
       } else if (hovered) {
@@ -203,6 +209,7 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
       }
     }
   });
+
   const getColor = (type: StrainType) => {
     switch (type) {
       case 'Indica': return 'purple';
@@ -212,6 +219,15 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
     }
   };
   const baseColor = getColor(node.type);
+
+  // Determine rendering properties based on state
+  const orbColor = isHighlighted ? '#fff' : baseColor; // Highlighted nodes are white, others use their type color
+  const emissiveColor = isHighlighted ? new THREE.Color('#fff') : new THREE.Color(baseColor);
+  const emissiveIntensity = isHighlighted ? 1.5 : (hovered ? 0.6 : 0.2);
+  // Dim if not highlighted AND dimmed by search query
+  const opacity = (isDimmed && !isHighlighted) ? 0.1 : 1;
+  const wireframe = !hovered && !isFocused && !isHighlighted; // No wireframe if hovered, focused, or highlighted
+
   return (
     <group position={node.position}>
       <mesh
@@ -222,12 +238,12 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
       >
         <icosahedronGeometry args={[0.4, 1]} />
         <meshStandardMaterial
-          color={isFocused ? '#fff' : baseColor}
-          emissive={new THREE.Color(baseColor)}
-          emissiveIntensity={isFocused ? 1 : (hovered ? 0.6 : 0.2)}
+          color={orbColor}
+          emissive={emissiveColor}
+          emissiveIntensity={emissiveIntensity}
           transparent
-          opacity={isDimmed ? 0.1 : 1}
-          wireframe={!hovered && !isFocused}
+          opacity={opacity}
+          wireframe={wireframe}
         />
       </mesh>
       <Text
@@ -236,7 +252,7 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
         color="white"
         anchorX="center"
         anchorY="middle"
-        fillOpacity={isDimmed ? 0.1 : 1}>
+        fillOpacity={(isDimmed && !isHighlighted) ? 0.1 : 1}>
         {node.name}
       </Text>
     </group>
@@ -293,6 +309,7 @@ export default function CannabisEvolutionApp() {
   const [search, setSearch] = useState('');
   const [focusedNode, setFocusedNode] = useState<RenderNodeWithConnections | null>(null);
   const [currentFocusIndex, setCurrentFocusIndex] = useState<number>(-1);
+  const [focusedNodesAndParentsIds, setFocusedNodesAndParentsIds] = useState<Set<string>>(new Set());
   const [rotationDirection, setRotationDirection] = useState<number>(1);
   const height = window.innerHeight - 76;
 
@@ -354,12 +371,39 @@ export default function CannabisEvolutionApp() {
     setSearch(node.name);
     const index = sortedNodes.findIndex(n => n.id === node.id);
     setCurrentFocusIndex(index);
+
+    const getAncestors = (
+      startNodeId: string,
+      nodesMap: Map<string, RenderNodeWithConnections>,
+      ancestorSet: Set<string> = new Set()
+    ): Set<string> => {
+      const node = nodesMap.get(startNodeId);
+      if (!node) {
+        return ancestorSet;
+      }
+
+      if (node.parents && node.parents.length > 0) {
+        for (const parentStrainNode of node.parents) {
+          if (!ancestorSet.has(parentStrainNode.id)) {
+            ancestorSet.add(parentStrainNode.id);
+            getAncestors(parentStrainNode.id, nodesMap, ancestorSet);
+          }
+        }
+      }
+      return ancestorSet;
+    };
+
+    const ancestors = getAncestors(node.id, nodesMap);
+    const allFocusedIds = new Set(ancestors);
+    allFocusedIds.add(node.id);
+    setFocusedNodesAndParentsIds(allFocusedIds);
   };
 
   const handleClearSearch = () => {
     setFocusedNode(null);
     setSearch('');
     setCurrentFocusIndex(-1);
+    setFocusedNodesAndParentsIds(new Set());
   }
 
   return (
@@ -464,6 +508,7 @@ export default function CannabisEvolutionApp() {
                 searchQuery={search}
                 isFocused={focusedNode?.id === node.id}
                 onSelect={handleSelect}
+                isHighlighted={focusedNodesAndParentsIds.has(node.id)}
               />
             )
           ))}
@@ -472,17 +517,25 @@ export default function CannabisEvolutionApp() {
             const childNode = nodesMap.get(conn.childId);
 
             if (parentNode && childNode) {
+              const isParentHighlighted = focusedNodesAndParentsIds.has(conn.parentId);
+              const isChildHighlighted = focusedNodesAndParentsIds.has(conn.childId);
+              const isConnectionHighlighted = isParentHighlighted && isChildHighlighted;
+
               const isParentDimmed = search !== '' && !parentNode.name.toLowerCase().includes(search.toLowerCase());
               const isChildDimmed = search !== '' && !childNode.name.toLowerCase().includes(search.toLowerCase());
               const isConnectionDimmed = isParentDimmed || isChildDimmed;
+
+              const lineColor = isConnectionHighlighted ? "red" : (isConnectionDimmed ? "#444" : "white");
+              const lineWidth = isConnectionHighlighted ? 2 : (isConnectionDimmed ? 0.5 : 1);
+              const lineOpacity = isConnectionHighlighted ? 1 : (isConnectionDimmed ? 0.1 : 0.3);
 
               return (
                 <Line
                   key={index}
                   points={[parentNode.position, childNode.position]}
-                  color={isConnectionDimmed ? new THREE.Color("#444").getHex() : new THREE.Color("white").getHex()}
-                  lineWidth={isConnectionDimmed ? 0.5 : 1}
-                  opacity={isConnectionDimmed ? 0.1 : 0.3}
+                  color={lineColor}
+                  lineWidth={lineWidth}
+                  opacity={lineOpacity}
                   transparent
                 />
               );
