@@ -157,7 +157,13 @@ const AIFeedbackPage: React.FC = () => {
             className="text-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Type or speak your feedback here..."
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage();
+              }
+            }}
+            placeholder="Let's chat!"
             rows={1}
           />
           <button type="submit" className="send-button" disabled={!input.trim() || isLoading}>

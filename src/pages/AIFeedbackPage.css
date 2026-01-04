@@ -44,9 +44,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 1rem;
-    background-color: #202123;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0 2rem;
+    background-color: var(--background-color);
     z-index: 1000;
 }
 
@@ -56,28 +55,26 @@
     max-width: 800px;
     margin: 0 auto;
     background-color: #444654;
-    border-radius: 28px; /* Perfectly rounded for 56px min-height */
+    border-radius: 28px;
     border: 1px solid #555;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
-    padding: 8px 1rem;
+    padding: 8px 10px;
     min-height: 56px;
     box-sizing: border-box;
 }
-
 
 .text-input {
     flex-grow: 1;
     background: transparent;
     border: none;
     color: white;
-    padding: 8px 0; /* Add vertical padding for alignment */
+    padding: 8px 10px;
     font-size: 1.1rem;
     line-height: 1.5;
     resize: none;
     height: 100%;
     overflow-y: auto;
-    padding-right: 10px;
-    min-height: 40px; /* Keep min-height, but padding will help alignment */
+    min-height: 40px;
     max-height: 200px;
 }
 
