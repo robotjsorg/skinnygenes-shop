@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Grid, Image, Title, Text, Badge, Button, Group, NumberInput, Paper } from '@mantine/core';
+import { useCart } from '../contexts/CartContext';
 
 const products = [
   {
@@ -32,6 +33,7 @@ const products = [
 const ProductDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const { addToCart } = useCart();
     const product = products.find(p => p.id === id);
     const [quantity, setQuantity] = React.useState(1);
     const type = product ? product.type : '';
@@ -48,6 +50,11 @@ const ProductDetailPage: React.FC = () => {
             </Container>
         );
     }
+
+    const handleAddToCart = () => {
+      addToCart({ ...product, category: product.type }, quantity);
+      navigate('/cart');
+    };
 
     return (
         <Container size="lg" py="xl">
@@ -74,7 +81,7 @@ const ProductDetailPage: React.FC = () => {
                                 label="Quantity"
                                 style={{ width: 100 }}
                             />
-                            <Button size="lg" color="teal" style={{ flex: 1 }}>Add to Cart</Button>
+                            <Button size="lg" color="teal" style={{ flex: 1 }} onClick={handleAddToCart}>Add to Cart</Button>
                         </Group>
 
                         <Button onClick={() => navigate('/products')} variant="outline" mt="xl">

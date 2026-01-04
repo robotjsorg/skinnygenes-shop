@@ -12,6 +12,10 @@ const StrainDetailPage = React.lazy(() => import('./pages/StrainDetailPage'));
 const InteractiveStrainExplorer = React.lazy(() => import('./pages/InteractiveStrainExplorer'));
 const AIFeedbackPage = React.lazy(() => import('./pages/AIFeedbackPage'));
 const CannabisAnthologyPage = React.lazy(() => import('./pages/CannabisAnthologyPage'));
+const CartPage = React.lazy(() => import('./pages/CartPage'));
+const AccountPage = React.lazy(() => import('./pages/AccountPage'));
+const CheckoutPage = React.lazy(() => import('./pages/CheckoutPage'));
+const OrderConfirmationPage = React.lazy(() => import('./pages/OrderConfirmationPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 const LoadingFallback = () => (
@@ -21,16 +25,6 @@ const LoadingFallback = () => (
 );
 
 const AppLayout = () => {
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const redirectPath = sessionStorage.getItem('redirectPath');
-  //   if (redirectPath) {
-  //     sessionStorage.removeItem('redirectPath');
-  //     navigate(redirectPath, { replace: true });
-  //   }
-  // }, [navigate]);
-
   return (
     <>
       <Header />
@@ -81,6 +75,22 @@ const router = createBrowserRouter([
       {
         path: "cannabis-anthology",
         element: <Suspense fallback={<LoadingFallback />}><CannabisAnthologyPage /></Suspense>,
+      },
+      {
+        path: "cart",
+        element: <Suspense fallback={<LoadingFallback />}><CartPage /></Suspense>,
+      },
+      {
+        path: "account",
+        element: <Suspense fallback={<LoadingFallback />}><AccountPage /></Suspense>,
+      },
+      {
+        path: "checkout",
+        element: <Suspense fallback={<LoadingFallback />}><CheckoutPage /></Suspense>,
+      },
+      {
+        path: "order-confirmation",
+        element: <Suspense fallback={<LoadingFallback />}><OrderConfirmationPage /></Suspense>,
       },
       {
         path: "*", // Catch-all route for 404s

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Title } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
-import { HiOutlineMenuAlt3, HiX } from 'react-icons/hi'; // Import icons
+import { HiOutlineMenuAlt3, HiX } from 'react-icons/hi';
 import './Header.css';
 
 const Header: React.FC = () => {
@@ -26,6 +26,8 @@ const Header: React.FC = () => {
                 <NavLink to="/strain-explorer" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Strain Explorer</NavLink>
                 <NavLink to="/ai-feedback" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>AI Feedback</NavLink>
                 <NavLink to="/cannabis-anthology" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Cannabis Anthology</NavLink>
+                <NavLink to="/cart" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Cart</NavLink>
+                <NavLink to="/account" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Account</NavLink>
             </nav>
             {isOpen && (
                 <nav className="mobile-nav">
@@ -35,6 +37,8 @@ const Header: React.FC = () => {
                     <NavLink to="/strain-explorer" className="mobile-nav-link" onClick={toggleMenu}>Strain Explorer</NavLink>
                     <NavLink to="/ai-feedback" className="mobile-nav-link" onClick={toggleMenu}>AI Feedback</NavLink>
                     <NavLink to="/cannabis-anthology" className="mobile-nav-link" onClick={toggleMenu}>Cannabis Anthology</NavLink>
+                    <NavLink to="/cart" className="mobile-nav-link" onClick={toggleMenu}>Cart</NavLink>
+                    <NavLink to="/account" className="mobile-nav-link" onClick={toggleMenu}>Account</NavLink>
                 </nav>
             )}
         </header>
