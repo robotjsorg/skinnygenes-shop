@@ -38,7 +38,7 @@ const cannabisEvolutionData: StrainNode = {
       id: 'chem-91-problem-child',
       name: 'Chem 91 x Problem Child',
       year: 2025,
-      type: 'Sativa',
+      type: 'Hybrid',
       parents: [
         {
           id: 'chem-91',
@@ -367,7 +367,7 @@ export default function CannabisEvolutionApp() {
       <div className="info-panel" onClick={(e) => e.stopPropagation()}>
         <h3>Phylogenetic Tree</h3>
         <p>
-          Explore the historical evolution of genetic strains with the 3D phylogenetic tree.
+          Explore cannabis strains bred by Skinny Genes with the 3D phylogenetic tree.
         </p>
         <div className="search-container">
           <div className="chatgpt-input-wrapper">
