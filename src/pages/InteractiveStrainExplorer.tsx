@@ -147,7 +147,11 @@ const collectLayoutData = (
 
 const getUniqueRenderNodesAndConnections = (
   rootNode: StrainNode
-): { uniqueRenderNodes: RenderNodeWithConnections[]; connections: Connection[]; nodesMap: Map<string, RenderNodeWithConnections> } => {
+): {
+  uniqueRenderNodes: RenderNodeWithConnections[];
+  connections: Connection[];
+  nodesMap: Map<string, RenderNodeWithConnections>
+} => {
   const nodesMap = new Map<string, RenderNodeWithConnections>();
   const connections: Connection[] = [];
   collectLayoutData(rootNode, 0, 0, Math.PI * 2, undefined, nodesMap, connections);
@@ -187,19 +191,18 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect, isHighlighted }: St
   const meshRef = useRef<THREE.Mesh>(null);
   const { gl } = useThree();
   const isMatch = searchQuery === '' || node.name.toLowerCase().includes(searchQuery.toLowerCase());
-  const isDimmed = !isMatch; // This means it doesn't match the search query
+  const isDimmed = !isMatch;
 
   useFrame((state) => {
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.01;
-      // Prioritize focused state, then search match, then hovered
       if (isFocused) {
         const scale = 1.5 + Math.sin(state.clock.elapsedTime * 8) * 0.2;
         meshRef.current.scale.setScalar(scale);
-      } else if (isHighlighted) { // Only scale if highlighted and not focused
+      } else if (isHighlighted) {
         const scale = 1.2 + Math.sin(state.clock.elapsedTime * 4) * 0.1;
         meshRef.current.scale.setScalar(scale);
-      } else if (isMatch && searchQuery !== '') { // Only scale if it's a search match and not highlighted/focused
+      } else if (isMatch && searchQuery !== '') {
         const scale = 1 + Math.sin(state.clock.elapsedTime * 4) * 0.1;
         meshRef.current.scale.setScalar(scale);
       } else if (hovered) {
@@ -219,14 +222,11 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect, isHighlighted }: St
     }
   };
   const baseColor = getColor(node.type);
-
-  // Determine rendering properties based on state
-  const orbColor = isHighlighted ? '#fff' : baseColor; // Highlighted nodes are white, others use their type color
+  const orbColor = isHighlighted ? '#fff' : baseColor;
   const emissiveColor = isHighlighted ? new THREE.Color('#fff') : new THREE.Color(baseColor);
   const emissiveIntensity = isHighlighted ? 1.5 : (hovered ? 0.6 : 0.2);
-  // Dim if not highlighted AND dimmed by search query
   const opacity = (isDimmed && !isHighlighted) ? 0.1 : 1;
-  const wireframe = !hovered && !isFocused && !isHighlighted; // No wireframe if hovered, focused, or highlighted
+  const wireframe = !hovered && !isFocused && !isHighlighted;
 
   return (
     <group position={node.position}>
@@ -281,7 +281,12 @@ const YearMarkers = () => {
   return <group>{markers}</group>;
 };
 
-const CustomAutoRotate = ({ rotationDirection, setRotationDirection, autoRotateActive, rotationSpeed = 0.005 }: { rotationDirection: number; setRotationDirection: React.Dispatch<React.SetStateAction<number>>; autoRotateActive: boolean; rotationSpeed?: number }) => {
+const CustomAutoRotate = ({ rotationDirection, setRotationDirection, autoRotateActive, rotationSpeed = 0.005 }: 
+  { rotationDirection: number;
+    setRotationDirection: React.Dispatch<React.SetStateAction<number>>;
+    autoRotateActive: boolean; 
+    rotationSpeed?: number
+  }) => {
   const { controls } = useThree();
   const orbitControls = controls as OrbitControlsImpl;
 
