@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import React, { useState, useRef, useEffect } from 'react';
 import { marked } from 'marked';
-import { FaArrowUp, FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa';
+import { FaArrowUp, FaMicrophone, FaMicrophoneSlash, FaCopy, FaVolumeUp, FaVolumeOff } from 'react-icons/fa';
 import './AIFeedbackPage.css';
 
 const API_KEY = (import.meta as any).env.VITE_GEMINI_API_KEY as string;
@@ -15,6 +15,7 @@ const AIFeedbackPage: React.FC = () => {
   const [isListening, setIsListening] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [readingMessageIndex, setReadingMessageIndex] = useState<number | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -79,6 +80,12 @@ const AIFeedbackPage: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    return () => {
+      speechSynthesis.cancel();
+    };
+  }, []);
+
   const handleMicClick = () => {
     if (isListening) {
       recognition?.stop();
@@ -125,6 +132,30 @@ const AIFeedbackPage: React.FC = () => {
     }
   };
 
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
+  };
+
+  const handleReadAloud = (text: string, index: number) => {
+    if (speechSynthesis.speaking && readingMessageIndex === index) {
+      speechSynthesis.cancel();
+      setReadingMessageIndex(null);
+    } else {
+      if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+      }
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.onend = () => {
+        setReadingMessageIndex(null);
+      };
+      speechSynthesis.speak(utterance);
+      setReadingMessageIndex(index);
+    }
+  };
+
   return (
     <div className="ai-feedback-chat-page">
       <div className="chat-container">
@@ -132,7 +163,15 @@ const AIFeedbackPage: React.FC = () => {
           {messages.map((message, index) => (
             <div key={index} className={`message ${message.sender}`}>
               {message.sender === 'ai' ? (
-                <div dangerouslySetInnerHTML={{ __html: marked(message.text) }} />
+                <>
+                  <div dangerouslySetInnerHTML={{ __html: marked(message.text) }} />
+                  <div className="ai-message-actions">
+                    <button onClick={() => handleCopy(message.text)}><FaCopy size={16}/></button>
+                    <button onClick={() => handleReadAloud(message.text, index)}>
+                      {readingMessageIndex === index ? <FaVolumeOff /> : <FaVolumeUp size={16} />}
+                    </button>
+                  </div>
+                </>
               ) : (
                 message.text
               )}

@@ -36,6 +36,33 @@
 
 .message.ai {
     align-self: flex-start;
+    padding-bottom: 3rem;
+    position: relative;
+}
+
+.ai-message-actions {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.ai-message-actions button {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 0.25rem;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.ai-message-actions button:hover {
+    background: #222;
 }
 
 .input-area {
@@ -89,8 +116,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 36px; /* Slightly smaller */
-    height: 36px; /* Slightly smaller */
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background-color: #0b806d;
     cursor: pointer;
