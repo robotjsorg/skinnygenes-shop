@@ -311,17 +311,17 @@ export default function CannabisEvolutionApp() {
       if (event.key === 'Escape') {
         setFocusedNode(null);
         setSearch('');
-        setCurrentFocusIndex(-1); // Reset index on escape
-      } else if (event.key === 'ArrowLeft') {
+        setCurrentFocusIndex(-1);
+      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
         setCurrentFocusIndex(prevIndex => {
-          if (prevIndex === -1) { // If no node is focused, start at the last node
+          if (prevIndex === -1) {
             return sortedNodes.length - 1;
           }
           return (prevIndex - 1 + sortedNodes.length) % sortedNodes.length;
         });
-      } else if (event.key === 'ArrowRight') {
+      } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
         setCurrentFocusIndex(prevIndex => {
-          if (prevIndex === -1) { // If no node is focused, start at the first node
+          if (prevIndex === -1) {
             return 0;
           }
           return (prevIndex + 1) % sortedNodes.length;
@@ -332,7 +332,7 @@ export default function CannabisEvolutionApp() {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [sortedNodes]); // Depend on sortedNodes for navigation
+  }, [sortedNodes]);
 
   useEffect(() => {
     if (currentFocusIndex !== -1 && sortedNodes[currentFocusIndex]) {
@@ -353,7 +353,6 @@ export default function CannabisEvolutionApp() {
   const handleSelect = (node: RenderNode) => {
     setFocusedNode(node);
     setSearch(node.name);
-    // Find the index of the selected node in sortedNodes
     const index = sortedNodes.findIndex(n => n.id === node.id);
     setCurrentFocusIndex(index);
   };
@@ -361,7 +360,7 @@ export default function CannabisEvolutionApp() {
   const handleClearSearch = () => {
     setFocusedNode(null);
     setSearch('');
-    setCurrentFocusIndex(-1); // Reset index on clear search
+    setCurrentFocusIndex(-1);
   }
 
   return (
@@ -475,6 +474,8 @@ export default function CannabisEvolutionApp() {
           maxPolarAngle={Math.PI / 1.5}
           minAzimuthAngle={-Math.PI / 2}
           maxAzimuthAngle={Math.PI / 2}
+          minDistance={5}
+          maxDistance={50}
           target={[15, 0, 0]}
         />
       </Canvas>
