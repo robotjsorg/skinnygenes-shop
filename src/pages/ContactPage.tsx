@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Title, Text, Paper, Group, TextInput, Textarea, Button, Grid } from '@mantine/core';
-import { IconMail, IconPhone, IconMapPin } from '@tabler/icons-react';
+import { FaEnvelope, FaPhone, FaMapPin } from 'react-icons/fa';
 
 const ContactPage: React.FC = () => {
   return (
@@ -21,7 +21,7 @@ const ContactPage: React.FC = () => {
             </Text>
 
             <Group gap="md" mb="lg">
-              <IconMail size={20} />
+              <FaEnvelope size={20} />
               <div>
                 <Text fw={500}>Email</Text>
                 <Text c="dimmed">info@skinnygenes.shop</Text>
@@ -29,7 +29,7 @@ const ContactPage: React.FC = () => {
             </Group>
 
             <Group gap="md" mb="lg">
-              <IconPhone size={20} />
+              <FaPhone size={20} />
               <div>
                 <Text fw={500}>Phone</Text>
                 <Text c="dimmed">(123) 456-7890</Text>
@@ -37,7 +37,7 @@ const ContactPage: React.FC = () => {
             </Group>
 
             <Group gap="md">
-              <IconMapPin size={20} />
+              <FaMapPin size={20} />
               <div>
                 <Text fw={500}>Location</Text>
                 <Text c="dimmed">Available for shipping worldwide</Text>
