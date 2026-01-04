@@ -312,14 +312,17 @@ export default function CannabisEvolutionApp() {
     getUniqueRenderNodesAndConnections(cannabisEvolutionData)
     , []);
   const [search, setSearch] = useState('');
-  const [focusedNode, setFocusedNode] = useState<RenderNodeWithConnections | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
   const [currentFocusIndex, setCurrentFocusIndex] = useState<number>(-1);
+  const [focusedNode, setFocusedNode] = useState<RenderNodeWithConnections | null>(null);
   const [focusedNodesAndParentsIds, setFocusedNodesAndParentsIds] = useState<Set<string>>(new Set());
   const [rotationDirection, setRotationDirection] = useState<number>(1);
   const height = window.innerHeight - 76;
 
   const sortedNodes = useMemo(() => {
-    return [...uniqueRenderNodes].sort((a, b) => {
+    return [...uniqueRenderNodes]
+      .filter(node => node.type !== 'Other')
+      .sort((a, b) => {
       if (a.year !== b.year) {
         return a.year - b.year;
       }
@@ -327,33 +330,33 @@ export default function CannabisEvolutionApp() {
     });
   }, [uniqueRenderNodes]);
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setFocusedNode(null);
-        setSearch('');
-        setCurrentFocusIndex(-1);
-      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-        setCurrentFocusIndex(prevIndex => {
-          if (prevIndex === -1) {
-            return sortedNodes.length - 1;
-          }
-          return (prevIndex - 1 + sortedNodes.length) % sortedNodes.length;
-        });
-      } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-        setCurrentFocusIndex(prevIndex => {
-          if (prevIndex === -1) {
-            return 0;
-          }
-          return (prevIndex + 1) % sortedNodes.length;
-        });
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [sortedNodes]);
+    useEffect(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+          setSearch('');
+          setCurrentFocusIndex(-1);
+          setFocusedNode(null);
+          setFocusedNodesAndParentsIds(new Set());
+          setIsSearching(false);
+        } else if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+          setIsSearching(false);
+          setCurrentFocusIndex(prevIndex => {
+            if (prevIndex === -1) return sortedNodes.length - 1;
+            return (prevIndex - 1 + sortedNodes.length) % sortedNodes.length;
+          });
+        } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+          setIsSearching(false);
+          setCurrentFocusIndex(prevIndex => {
+            if (prevIndex === -1) return 0;
+            return (prevIndex + 1) % sortedNodes.length;
+          });
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }, [isSearching, search, sortedNodes, setIsSearching, setCurrentFocusIndex, setFocusedNode, setSearch]);
 
   useEffect(() => {
     if (currentFocusIndex !== -1 && sortedNodes[currentFocusIndex]) {
@@ -366,16 +369,23 @@ export default function CannabisEvolutionApp() {
     }
   }, [currentFocusIndex, sortedNodes]);
 
+  useEffect(() => {
+    if (focusedNode) {
+      handleSelect(focusedNode);
+    }
+  }, [focusedNode, nodesMap]);
+
   const filteredNodes = useMemo(() => {
     if (!search) return [];
     return uniqueRenderNodes.filter(n => n.name.toLowerCase().includes(search.toLowerCase()));
   }, [search, uniqueRenderNodes]);
 
   const handleSelect = (node: RenderNodeWithConnections) => {
-    setFocusedNode(node);
+    setIsSearching(false);
     setSearch(node.name);
     const index = sortedNodes.findIndex(n => n.id === node.id);
     setCurrentFocusIndex(index);
+    setFocusedNode(node);
 
     const getAncestors = (
       startNodeId: string,
@@ -407,6 +417,7 @@ export default function CannabisEvolutionApp() {
   const handleClearSearch = () => {
     setFocusedNode(null);
     setSearch('');
+    setIsSearching(false);
     setCurrentFocusIndex(-1);
     setFocusedNodesAndParentsIds(new Set());
   }
@@ -426,8 +437,11 @@ export default function CannabisEvolutionApp() {
               placeholder="Search strains..."
               value={search}
               onChange={(e) => {
-                setSearch(e.target.value);
-                if (e.target.value === '') setFocusedNode(null);
+                const newSearch = e.target.value;
+                setSearch(newSearch);
+                setIsSearching(newSearch !== '');
+                setCurrentFocusIndex(-1);
+                if (newSearch === '') setFocusedNode(null);
               }}
               className="search-input"
               style={{
