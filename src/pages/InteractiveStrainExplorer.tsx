@@ -7,7 +7,7 @@ import { FaTimes } from 'react-icons/fa';
 import * as THREE from 'three';
 import './InteractiveStrainExplorer.css';
 
-type StrainType = 'Sativa' | 'Indica' | 'Hybrid' | 'Ruderalis' | 'Other';
+type StrainType = 'Sativa' | 'Indica' | 'Hybrid' | 'Ruderalis' | 'Invisible';
 
 const BASE_YEAR = 2000;
 
@@ -16,6 +16,8 @@ interface StrainNode {
   name: string;
   year: number;
   type: StrainType;
+  description?: string;
+  link?: string;
   parents?: StrainNode[];
 }
 
@@ -32,27 +34,46 @@ const cannabisEvolutionData: StrainNode = {
   id: 'root',
   name: 'Skinny Genes Breeds',
   year: 2026,
-  type: 'Other',
+  type: 'Invisible',
   parents: [
     {
       id: 'chem-91-problem-child',
       name: 'Chem 91 x Problem Child',
       year: 2025,
       type: 'Hybrid',
+      description: "This strain is the result of a long-term breeding project by \
+      Jay Hershfield, aiming to combine the legendary Chem 91 with the robust genetics \
+      of Problem Child. The goal was to create a high-potency strain with a unique \
+      terpene profile and vigorous growth. After several generations of selection, \
+      this stable F2 hybrid was born.",
       parents: [
         {
-          id: 'chem-91',
-          name: 'Chem 91',
-          year: 2023,
+          id: 'chem-91-auto',
+          name: 'Chem 91 Auto',
+          year: 2024,
           type: 'Hybrid',
-          parents: []
+          description: "Chem 91 Auto is an ruderalis / indica / sativa from Night Owl \
+          Seeds and can be cultivated indoors, outdoors and greenhouse (Where the \
+          plants will need a flowering time of ±85 days) Night Owl Seeds's Chem 91 \
+          Auto is only available as feminized seeds. \
+          Lineage: Chem 91 Clone Only x Chemdogging F3 \
+          Generation: F4 Feminized Autoflower \
+          Quantity: 3 Feminized Autoflower Seeds \
+          Height: Up to 3.5 Feet \
+          Yield: 2 - 4 Ounces \
+          Harvest Time: 75 - 85 Days from Sprout",
+          link: "https://seedfinder.eu/en/strain-info/chem-91-auto/night-owl-seeds"
         },
         {
-          id: 'problem-child-f2',
-          name: 'Problem Child [F2]',
+          id: 'problem-child',
+          name: 'Problem Child',
           year: 2022,
           type: 'Indica',
-          parents: []
+          description: "Problem Child is an mostly indica from Jinxproof Genetics \
+          and can be cultivated indoors, outdoors and greenhouse (Where the plants \
+          will need a flowering time of ±60 days) Jinxproof Genetics's Problem Child \
+          is/was never available as feminized seeds.",
+          link: "https://seedfinder.eu/en/strain-info/problem-child/jinxproof-genetics"
         }
       ]
     },
@@ -61,20 +82,36 @@ const cannabisEvolutionData: StrainNode = {
       name: 'Pulp',
       year: 2023,
       type: 'Hybrid',
+      description: "Approximately 60% Indica/40% Sativa. Phenotypes tend to show either \
+      a slight dominance leaning more toward a Sativa direction stemming from the Tangie \
+      and Maui Haze in the Problem Child F2 father, or take an Indica-leaning and more \
+      Narcotic/ heavy-eyed dominant effect from the Cherry Ghostenade mother （also \
+      from the nature of everything 9lb Hammer touches）. Was intentionally bred to \
+      reduce/eliminate \"thought salad\". Best of both worlds effects-wise. \
+      Exceptionally potent, and the flavor is off-the-charts delicious. Think Cherry & \
+      Orange fun dip, accompanied by tart Lemon, Lime, candy Grape and deep bold \
+      Blackberries. This strain is aptly named... It smells and tastes like PULP! One \
+      of the least demanding plants I have ever grown by a clear mile （gets that from \
+      the parent genetics）. Typically finishes in 56-63 days, including the more \
+      sativa-dominant phenotypes which don't need to go much further than the 63 day \
+      mark, even after stress or shock.",
+      link: "https://skinnygenes.com/strain/pulp-skinny-genes/",
       parents: [
         {
           id: 'cherry-ghostenade',
           name: 'Cherry Ghostenade',
           year: 2020,
           type: 'Indica',
-          parents: []
+          description: "Cherry Ghostenade is an mostly indica from Clone Only Strains \
+          and can be cultivated indoors and outdoors Clone Only Strains's Cherry \
+          Ghostenade is/was clone only available as feminized seeds.",
+          link: "https://seedfinder.eu/en/strain-info/cherry-ghostenade/clone-only-strains"
         },
         {
-          id: 'problem-child-f2',
-          name: 'Problem Child [F2]',
+          id: 'problem-child',
+          name: 'Problem Child',
           year: 2022,
-          type: 'Indica',
-          parents: []
+          type: 'Indica'
         }
       ]
     },
@@ -83,20 +120,40 @@ const cannabisEvolutionData: StrainNode = {
       name: 'Skunk Hammer',
       year: 2019,
       type: 'Indica',
+      description: "Skunk Hammer is an mostly indica from Strainger Seeds and can be \
+      cultivated indoors (Where the plants will need a flowering time of ±63 days) \
+      Strainger Seeds's Skunk Hammer is/was never available as feminized seeds. 9lb \
+      Hammer x Big Buddha Blue Cheese） Super heavy onset, some haziness, heavy \
+      sedative/narcotic high in both mind and body. Some giggles, followed by a \
+      catatonic couch lock high that will ease patients to sleep, regardless of \
+      tolerance. Bred for pain, insomnia, and reducing 'thought salad'.",
+      link: "https://seedfinder.eu/en/strain-info/skunk-hammer/strainger-seeds",
       parents: [
         {
           id: '9lb-hammer',
           name: '9lb Hammer',
           year: 2014,
           type: 'Indica',
-          parents: []
+          description: "9lb Hammer is an mostly indica from Jinxproof Genetics and can be cultivated indoors and outdoors (Where the plants will need a flowering time of ±55 days) Jinxproof Genetics's 9lb Hammer is/was never available as feminized seeds. \
+          This strain was distributed from TGA genetics until 2019. \
+          Parents: Gooberry （Afgooey x Blackberry） & Jesus OG Kush \
+          Havest: 50-60 days \
+          Yield: Heavy",
+          link: "https://seedfinder.eu/en/strain-info/9lb-hammer/jinxproof-genetics"
         },
         {
           id: 'blue-cheese',
           name: 'Blue Cheese',
           year: 2006,
           type: 'Hybrid',
-          parents: []
+          description: "Blue Cheese is an indica / sativa from Big Buddha Seeds and can be cultivated indoors and outdoors (Where the plants will need a flowering time of ±63 days) Big Buddha Seeds's Blue Cheese also available as feminized seeds. Genetics: (Skunk No. 1 (Cheese) x Afghani) x Blueberry \
+          Type: f1 Hybrid \
+          Harvest Date: October/November \
+          Flowering Period: 8-10 Weeks \
+          THC Content: Unknown \
+          No. of Seeds Per Packet: 10 \
+          Characteristics: A Sweet, Fruity, Berry scent, with musky undertone of the original cheese.",
+          link: "https://seedfinder.eu/en/strain-info/blue-cheese/big-buddha-seeds"
         }
       ]
     }
@@ -125,7 +182,7 @@ const collectLayoutData = (
     nodesMap.set(node.id, { ...node, position: currentPos });
   }
 
-  if (effectiveParentId && node.type !== 'Other' && effectiveParentId !== 'root') {
+  if (effectiveParentId && node.type !== 'Invisible' && effectiveParentId !== 'root') {
     connections.push({ parentId: effectiveParentId, childId: node.id });
   }
 
@@ -281,10 +338,11 @@ const YearMarkers = () => {
   return <group>{markers}</group>;
 };
 
-const CustomAutoRotate = ({ rotationDirection, setRotationDirection, autoRotateActive, rotationSpeed = 0.005 }: 
-  { rotationDirection: number;
+const CustomAutoRotate = ({ rotationDirection, setRotationDirection, autoRotateActive, rotationSpeed = 0.005 }:
+  {
+    rotationDirection: number;
     setRotationDirection: React.Dispatch<React.SetStateAction<number>>;
-    autoRotateActive: boolean; 
+    autoRotateActive: boolean;
     rotationSpeed?: number
   }) => {
   const { controls } = useThree();
@@ -321,42 +379,42 @@ export default function CannabisEvolutionApp() {
 
   const sortedNodes = useMemo(() => {
     return [...uniqueRenderNodes]
-      .filter(node => node.type !== 'Other')
+      .filter(node => node.type !== 'Invisible')
       .sort((a, b) => {
-      if (a.year !== b.year) {
-        return a.year - b.year;
-      }
-      return a.name.localeCompare(b.name);
-    });
+        if (a.year !== b.year) {
+          return a.year - b.year;
+        }
+        return a.name.localeCompare(b.name);
+      });
   }, [uniqueRenderNodes]);
 
-    useEffect(() => {
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-          setSearch('');
-          setCurrentFocusIndex(-1);
-          setFocusedNode(null);
-          setFocusedNodesAndParentsIds(new Set());
-          setIsSearching(false);
-        } else if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-          setIsSearching(false);
-          setCurrentFocusIndex(prevIndex => {
-            if (prevIndex === -1) return sortedNodes.length - 1;
-            return (prevIndex - 1 + sortedNodes.length) % sortedNodes.length;
-          });
-        } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-          setIsSearching(false);
-          setCurrentFocusIndex(prevIndex => {
-            if (prevIndex === -1) return 0;
-            return (prevIndex + 1) % sortedNodes.length;
-          });
-        }
-      };
-      window.addEventListener('keydown', handleKeyDown);
-      return () => {
-        window.removeEventListener('keydown', handleKeyDown);
-      };
-    }, [isSearching, search, sortedNodes, setIsSearching, setCurrentFocusIndex, setFocusedNode, setSearch]);
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setSearch('');
+        setCurrentFocusIndex(-1);
+        setFocusedNode(null);
+        setFocusedNodesAndParentsIds(new Set());
+        setIsSearching(false);
+      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+        setIsSearching(false);
+        setCurrentFocusIndex(prevIndex => {
+          if (prevIndex === -1) return sortedNodes.length - 1;
+          return (prevIndex - 1 + sortedNodes.length) % sortedNodes.length;
+        });
+      } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+        setIsSearching(false);
+        setCurrentFocusIndex(prevIndex => {
+          if (prevIndex === -1) return 0;
+          return (prevIndex + 1) % sortedNodes.length;
+        });
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isSearching, search, sortedNodes, setIsSearching, setCurrentFocusIndex, setFocusedNode, setSearch]);
 
   useEffect(() => {
     if (currentFocusIndex !== -1 && sortedNodes[currentFocusIndex]) {
@@ -513,7 +571,7 @@ export default function CannabisEvolutionApp() {
             <meshBasicMaterial color="#222" transparent opacity={0.5} />
           </mesh>
           {uniqueRenderNodes.map((node) => (
-            node.type !== 'Other' && (
+            node.type !== 'Invisible' && (
               <StrainOrb
                 key={node.id}
                 node={node}
