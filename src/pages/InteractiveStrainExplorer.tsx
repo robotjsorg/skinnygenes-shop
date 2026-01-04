@@ -111,9 +111,9 @@ const cannabisEvolutionData: StrainNode = {
 };
 
 const calculateTreeLayout = (
-  node: StrainNode, 
-  depth: number = 0, 
-  angleStart: number = 0, 
+  node: StrainNode,
+  depth: number = 0,
+  angleStart: number = 0,
   angleRange: number = Math.PI * 2,
   parentPos?: THREE.Vector3
 ): RenderNode[] => {
@@ -121,11 +121,11 @@ const calculateTreeLayout = (
   const WIDTH_PER_YEAR = 0.5;
   const BASE_YEAR = 1960;
   const RADIUS_INCREMENT = 1.5;
-  const x = (node.year - BASE_YEAR) * WIDTH_PER_YEAR; // Year now drives X-position
+  const x = (node.year - BASE_YEAR) * WIDTH_PER_YEAR;
   const currentAngle = angleStart + angleRange / 2;
   const radius = depth * RADIUS_INCREMENT;
-  const y = Math.cos(currentAngle) * radius; // Angle drives Y-position
-  const z = Math.sin(currentAngle) * radius; // Angle drives Z-position
+  const y = Math.cos(currentAngle) * radius;
+  const z = Math.sin(currentAngle) * radius;
   const currentPos = new THREE.Vector3(x, y, z);
   nodes.push({ ...node, position: currentPos, parentPosition: parentPos });
 
@@ -133,9 +133,9 @@ const calculateTreeLayout = (
     const step = angleRange / node.children.length;
     node.children.forEach((child, index) => {
       const childNodes = calculateTreeLayout(
-        child, 
-        depth + 1, 
-        angleStart + (step * index), 
+        child,
+        depth + 1,
+        angleStart + (step * index),
         step,
         currentPos
       );
@@ -151,12 +151,12 @@ const CameraRig = ({ targetNode }: { targetNode: RenderNode | null }) => {
   useFrame((state, delta) => {
     if (targetNode) {
       const { x, y, z } = targetNode.position;
-      const offset = new THREE.Vector3(0, 10, 20); 
+      const offset = new THREE.Vector3(0, 10, 20);
       const targetPos = new THREE.Vector3(x, y, z);
       const desiredCamPos = targetPos.clone().add(offset);
       state.camera.position.lerp(desiredCamPos, 4 * delta);
       const ctrl = controls as unknown as OrbitControlsImpl;
-      if(ctrl) {
+      if (ctrl) {
         ctrl.target.lerp(targetPos, 4 * delta);
         ctrl.update();
       }
@@ -221,9 +221,9 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
         onPointerOver={(e) => { e.stopPropagation(); setHover(true); }}
         onPointerOut={() => setHover(false)}
       >
-        <icosahedronGeometry args={[0.4, 1]} /> 
-        <meshStandardMaterial 
-          color={isFocused ? '#fff' : baseColor} 
+        <icosahedronGeometry args={[0.4, 1]} />
+        <meshStandardMaterial
+          color={isFocused ? '#fff' : baseColor}
           emissive={new THREE.Color(baseColor)}
           emissiveIntensity={isFocused ? 1 : (hovered ? 0.6 : 0.2)}
           transparent
@@ -252,14 +252,14 @@ const YearMarkers = () => {
   const WIDTH_PER_YEAR = 0.5;
   const BASE_YEAR = 1960;
   for (let year = startYear; year <= endYear; year += step) {
-    const x = (year - BASE_YEAR) * WIDTH_PER_YEAR; // Year now drives X-position
+    const x = (year - BASE_YEAR) * WIDTH_PER_YEAR;
     markers.push(
-      <group key={year} position={[x, 0, 0]}> {/* Position along x-axis */}
-        <mesh rotation={[0, Math.PI / 2, Math.PI / 2]}> {/* Rotate to be vertical and aligned with X-axis */}
+      <group key={year} position={[x, 0, 0]}>
+        <mesh rotation={[0, Math.PI / 2, Math.PI / 2]}>
           <ringGeometry args={[5, 5.05, 32]} />
           <meshBasicMaterial color="white" opacity={0.05} transparent side={THREE.DoubleSide} />
         </mesh>
-        <Text position={[0, 5.5, 0]} fontSize={0.5} color="#666" anchorX="center" anchorY="bottom"> {/* Adjust text position */}
+        <Text position={[0, 5.5, 0]} fontSize={0.5} color="#666" anchorX="center" anchorY="bottom">
           {year}
         </Text>
       </group>
@@ -268,39 +268,101 @@ const YearMarkers = () => {
   return <group>{markers}</group>;
 };
 
+const CustomAutoRotate = ({ rotationDirection, setRotationDirection, autoRotateActive, rotationSpeed = 0.005 }: { rotationDirection: number; setRotationDirection: React.Dispatch<React.SetStateAction<number>>; autoRotateActive: boolean; rotationSpeed?: number }) => {
+  const { controls } = useThree();
+  const orbitControls = controls as OrbitControlsImpl;
+
+  useFrame(() => {
+    if (autoRotateActive && orbitControls) {
+      const currentAzimuth = orbitControls.getAzimuthalAngle();
+      const minAzimuth = orbitControls.minAzimuthAngle;
+      const maxAzimuth = orbitControls.maxAzimuthAngle;
+      if (currentAzimuth <= minAzimuth + 0.01 && rotationDirection === -1) {
+        setRotationDirection(1);
+      } else if (currentAzimuth >= maxAzimuth - 0.01 && rotationDirection === 1) {
+        setRotationDirection(-1);
+      }
+      orbitControls.setAzimuthalAngle(currentAzimuth + rotationDirection * rotationSpeed);
+      orbitControls.update();
+    }
+  });
+  return null;
+};
+
 export default function CannabisEvolutionApp() {
   const nodes = useMemo(() => calculateTreeLayout(cannabisEvolutionData), []);
   const [search, setSearch] = useState('');
   const [focusedNode, setFocusedNode] = useState<RenderNode | null>(null);
+  const [currentFocusIndex, setCurrentFocusIndex] = useState<number>(-1);
+  const [rotationDirection, setRotationDirection] = useState<number>(1);
+  const height = window.innerHeight - 76;
+
+  const sortedNodes = useMemo(() => {
+    return [...nodes].sort((a, b) => {
+      if (a.year !== b.year) {
+        return a.year - b.year;
+      }
+      return a.name.localeCompare(b.name);
+    });
+  }, [nodes]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setFocusedNode(null);
         setSearch('');
+        setCurrentFocusIndex(-1); // Reset index on escape
+      } else if (event.key === 'ArrowLeft') {
+        setCurrentFocusIndex(prevIndex => {
+          if (prevIndex === -1) { // If no node is focused, start at the last node
+            return sortedNodes.length - 1;
+          }
+          return (prevIndex - 1 + sortedNodes.length) % sortedNodes.length;
+        });
+      } else if (event.key === 'ArrowRight') {
+        setCurrentFocusIndex(prevIndex => {
+          if (prevIndex === -1) { // If no node is focused, start at the first node
+            return 0;
+          }
+          return (prevIndex + 1) % sortedNodes.length;
+        });
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [sortedNodes]); // Depend on sortedNodes for navigation
+
+  useEffect(() => {
+    if (currentFocusIndex !== -1 && sortedNodes[currentFocusIndex]) {
+      const node = sortedNodes[currentFocusIndex];
+      setFocusedNode(node);
+      setSearch(node.name);
+    } else {
+      setFocusedNode(null);
+      setSearch('');
+    }
+  }, [currentFocusIndex, sortedNodes]);
 
   const filteredNodes = useMemo(() => {
     if (!search) return [];
     return nodes.filter(n => n.name.toLowerCase().includes(search.toLowerCase()));
   }, [search, nodes]);
+
   const handleSelect = (node: RenderNode) => {
     setFocusedNode(node);
     setSearch(node.name);
+    // Find the index of the selected node in sortedNodes
+    const index = sortedNodes.findIndex(n => n.id === node.id);
+    setCurrentFocusIndex(index);
   };
 
   const handleClearSearch = () => {
     setFocusedNode(null);
     setSearch('');
+    setCurrentFocusIndex(-1); // Reset index on clear search
   }
-
-  const height = window.innerHeight - 76;
 
   return (
     <div className="explorer-container" style={{ height: height }}>
@@ -318,7 +380,7 @@ export default function CannabisEvolutionApp() {
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
-                if(e.target.value === '') setFocusedNode(null);
+                if (e.target.value === '') setFocusedNode(null);
               }}
               className="search-input"
               style={{
@@ -335,12 +397,11 @@ export default function CannabisEvolutionApp() {
             />
             {search && (
               <FaTimes className="clear-search-icon" onClick={handleClearSearch} style={{
-                position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: '#aaa'
+                position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: '#aaa'
               }} />
             )}
           </div>
         </div>
-
         {filteredNodes.length > 0 && search !== focusedNode?.name && (
           <div style={{
             marginTop: '5px',
@@ -351,7 +412,7 @@ export default function CannabisEvolutionApp() {
             overflowY: 'auto'
           }}>
             {filteredNodes.map(node => (
-              <div 
+              <div
                 key={node.id}
                 onClick={(e) => { e.stopPropagation(); handleSelect(node); }}
 
@@ -372,7 +433,6 @@ export default function CannabisEvolutionApp() {
             ))}
           </div>
         )}
-
         <div className="legend">
           <Badge color="orange" variant="light">Sativa</Badge>
           <Badge color="purple" variant="light">Indica</Badge>
@@ -380,39 +440,41 @@ export default function CannabisEvolutionApp() {
           <Badge color="gray" variant="light">Ruderalis</Badge>
         </div>
       </div>
-
       <Canvas camera={{ position: [15, 10, 25], fov: 45 }} onPointerMissed={handleClearSearch}>
         <color attach="background" args={['#050505']} />
         <CameraRig targetNode={focusedNode} />
+        <CustomAutoRotate
+          rotationDirection={rotationDirection}
+          setRotationDirection={setRotationDirection}
+          autoRotateActive={!focusedNode && search === ''}
+        />
         <ambientLight intensity={0.4} />
         <pointLight position={[10, 10, 10]} intensity={1} />
         <spotLight position={[0, 50, 0]} angle={0.5} penumbra={1} intensity={2} />
         <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade={true} />
         <YearMarkers />
         <group>
-          {/* Central horizontal axis */}
           <mesh position={[15, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-            <cylinderGeometry args={[0.02, 0.02, 30, 8]} /> {/* Length of 30 */}
+            <cylinderGeometry args={[0.02, 0.02, 30, 8]} />
             <meshBasicMaterial color="#222" transparent opacity={0.5} />
           </mesh>
           {nodes.map((node) => (
-            <StrainOrb 
-              key={node.id} 
-              node={node} 
-              searchQuery={search} 
+            <StrainOrb
+              key={node.id}
+              node={node}
+              searchQuery={search}
               isFocused={focusedNode?.id === node.id}
               onSelect={handleSelect}
             />
           ))}
         </group>
-
-        <OrbitControls 
-          makeDefault 
-          enablePan={true} 
-          enableZoom={true} 
-          maxPolarAngle={Math.PI / 1.5} 
-          autoRotate={!focusedNode && search === ''}
-          autoRotateSpeed={0.5}
+        <OrbitControls
+          makeDefault
+          enablePan={true}
+          enableZoom={true}
+          maxPolarAngle={Math.PI / 1.5}
+          minAzimuthAngle={-Math.PI / 2}
+          maxAzimuthAngle={Math.PI / 2}
           target={[15, 0, 0]}
         />
       </Canvas>
