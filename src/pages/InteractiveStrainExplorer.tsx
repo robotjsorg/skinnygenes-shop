@@ -450,14 +450,7 @@ export default function CannabisEvolutionApp() {
           </div>
         </div>
         {filteredNodes.length > 0 && search !== focusedNode?.name && (
-          <div style={{
-            marginTop: '5px',
-            background: 'rgba(0,0,0,0.8)',
-            border: '1px solid #333',
-            borderRadius: '10px',
-            maxHeight: '200px',
-            overflowY: 'auto'
-          }}>
+          <div className="search-results">
             {filteredNodes.map(node => (
               <div
                 key={node.id}

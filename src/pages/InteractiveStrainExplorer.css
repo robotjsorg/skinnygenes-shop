@@ -15,9 +15,33 @@
   max-width: 300px;
 }
 
+@media (max-width: 768px) {
+  .info-panel {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    padding: 10px 20px;
+  }
+
+  .search-results {
+    max-height: 100px;
+  }
+}
+
 .search-container {
   position: relative;
   width: 100%;
+}
+
+.search-results {
+  margin-top: 5px;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid #333;
+  border-radius: 10px;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .chatgpt-input-wrapper {
