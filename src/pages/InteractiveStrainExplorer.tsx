@@ -121,7 +121,8 @@ const calculateTreeLayout = (
   depth: number = 0,
   angleStart: number = 0,
   angleRange: number = Math.PI * 2,
-  parentPos?: THREE.Vector3
+  parentPos?: THREE.Vector3, // This is the actual parent's position for layout calculation
+  effectiveParentPos?: THREE.Vector3 // This is the position the current node should link to, skipping 'Other' nodes
 ): RenderNode[] => {
   const nodes: RenderNode[] = [];
   const WIDTH_PER_YEAR = 0.5;
@@ -133,7 +134,12 @@ const calculateTreeLayout = (
   const y = Math.cos(currentAngle) * radius;
   const z = Math.sin(currentAngle) * radius;
   const currentPos = new THREE.Vector3(x, y, z);
-  nodes.push({ ...node, position: currentPos, parentPosition: parentPos });
+
+  const newEffectiveParentPos = (node.type === 'Other') ? effectiveParentPos : currentPos;
+
+  if (node.type !== 'Other') {
+    nodes.push({ ...node, position: currentPos, parentPosition: effectiveParentPos });
+  }
 
   if (node.parents && node.parents.length > 0) {
     const step = angleRange / node.parents.length;
@@ -143,7 +149,8 @@ const calculateTreeLayout = (
         depth + 1,
         angleStart + (step * index),
         step,
-        currentPos
+        currentPos,
+        newEffectiveParentPos
       );
       nodes.push(...childNodes);
     });
@@ -297,7 +304,7 @@ const CustomAutoRotate = ({ rotationDirection, setRotationDirection, autoRotateA
 };
 
 export default function CannabisEvolutionApp() {
-  const nodes = useMemo(() => calculateTreeLayout(cannabisEvolutionData), []);
+  const nodes = useMemo(() => calculateTreeLayout(cannabisEvolutionData, 0, 0, Math.PI * 2, undefined, undefined), []);
   const [search, setSearch] = useState('');
   const [focusedNode, setFocusedNode] = useState<RenderNode | null>(null);
   const [currentFocusIndex, setCurrentFocusIndex] = useState<number>(-1);
