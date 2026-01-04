@@ -19,9 +19,13 @@ interface StrainNode {
   parents?: StrainNode[];
 }
 
-interface RenderNode extends StrainNode {
+interface RenderNodeWithConnections extends StrainNode {
   position: THREE.Vector3;
-  parentPosition?: THREE.Vector3;
+}
+
+interface Connection {
+  parentId: string;
+  childId: string;
 }
 
 const cannabisEvolutionData: StrainNode = {
@@ -30,6 +34,28 @@ const cannabisEvolutionData: StrainNode = {
   year: 2026,
   type: 'Other',
   parents: [
+    {
+      id: 'chem-91-problem-child',
+      name: 'Chem 91 x Problem Child',
+      year: 2025,
+      type: 'Sativa',
+      parents: [
+        {
+          id: 'chem-91',
+          name: 'Chem 91',
+          year: 2023,
+          type: 'Hybrid',
+          parents: []
+        },
+        {
+          id: 'problem-child-f2',
+          name: 'Problem Child [F2]',
+          year: 2022,
+          type: 'Indica',
+          parents: []
+        }
+      ]
+    },
     {
       id: 'pulp',
       name: 'Pulp',
@@ -77,46 +103,58 @@ const cannabisEvolutionData: StrainNode = {
   ]
 };
 
-const calculateTreeLayout = (
+const collectLayoutData = (
   node: StrainNode,
-  depth: number = 0,
-  angleStart: number = 0,
-  angleRange: number = Math.PI * 2,
-  effectiveParentPos?: THREE.Vector3
-): RenderNode[] => {
-  const nodes: RenderNode[] = [];
+  depth: number,
+  angleStart: number,
+  angleRange: number,
+  effectiveParentId: string | undefined,
+  nodesMap: Map<string, RenderNodeWithConnections>,
+  connections: Connection[]
+) => {
   const WIDTH_PER_YEAR = 0.5;
   const RADIUS_INCREMENT = 1.5;
-  const x = (node.year - BASE_YEAR) * WIDTH_PER_YEAR;
-  const currentAngle = angleStart + angleRange / 2;
-  const radius = depth * RADIUS_INCREMENT;
-  const y = Math.cos(currentAngle) * radius;
-  const z = Math.sin(currentAngle) * radius;
-  const currentPos = new THREE.Vector3(x, y, z);
 
-  const newEffectiveParentPos = (node.type === 'Other') ? effectiveParentPos : currentPos;
+  if (!nodesMap.has(node.id)) {
+    const x = (node.year - BASE_YEAR) * WIDTH_PER_YEAR;
+    const currentAngle = angleStart + angleRange / 2;
+    const radius = depth * RADIUS_INCREMENT;
+    const y = Math.cos(currentAngle) * radius;
+    const z = Math.sin(currentAngle) * radius;
+    const currentPos = new THREE.Vector3(x, y, z);
+    nodesMap.set(node.id, { ...node, position: currentPos });
+  }
 
-  if (node.type !== 'Other') {
-    nodes.push({ ...node, position: currentPos, parentPosition: effectiveParentPos });
+  if (effectiveParentId && node.type !== 'Other') {
+    connections.push({ parentId: effectiveParentId, childId: node.id });
   }
 
   if (node.parents && node.parents.length > 0) {
     const step = angleRange / node.parents.length;
     node.parents.forEach((child, index) => {
-      const childNodes = calculateTreeLayout(
+      collectLayoutData(
         child,
         depth + 1,
         angleStart + (step * index),
         step,
-        newEffectiveParentPos
+        node.id,
+        nodesMap,
+        connections
       );
-      nodes.push(...childNodes);
     });
   }
-  return nodes;
 };
 
-const CameraRig = ({ targetNode }: { targetNode: RenderNode | null }) => {
+const getUniqueRenderNodesAndConnections = (
+  rootNode: StrainNode
+): { uniqueRenderNodes: RenderNodeWithConnections[]; connections: Connection[]; nodesMap: Map<string, RenderNodeWithConnections> } => {
+  const nodesMap = new Map<string, RenderNodeWithConnections>();
+  const connections: Connection[] = [];
+  collectLayoutData(rootNode, 0, 0, Math.PI * 2, undefined, nodesMap, connections);
+  return { uniqueRenderNodes: Array.from(nodesMap.values()), connections, nodesMap };
+};
+
+const CameraRig = ({ targetNode }: { targetNode: RenderNodeWithConnections | null }) => {
   const { camera, controls } = useThree();
   const vec = new THREE.Vector3();
   useFrame((state, delta) => {
@@ -137,10 +175,10 @@ const CameraRig = ({ targetNode }: { targetNode: RenderNode | null }) => {
 };
 
 interface StrainOrbProps {
-  node: RenderNode;
+  node: RenderNodeWithConnections;
   searchQuery: string;
   isFocused: boolean;
-  onSelect: (node: RenderNode) => void;
+  onSelect: (node: RenderNodeWithConnections) => void;
 }
 
 const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) => {
@@ -176,17 +214,6 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
   const baseColor = getColor(node.type);
   return (
     <group position={node.position}>
-      {node.parentPosition && (
-        <Line
-          points={[
-            new THREE.Vector3(node.parentPosition.x - node.position.x, node.parentPosition.y - node.position.y, node.parentPosition.z - node.position.z),
-            new THREE.Vector3(0, 0, 0)
-          ]}
-          color={isDimmed ? new THREE.Color("#444").getHex() : new THREE.Color("white").getHex()}
-          lineWidth={isDimmed ? 0.5 : 1}
-          opacity={isDimmed ? 0.1 : 0.3}
-          transparent />
-      )}
       <mesh
         ref={meshRef}
         onClick={(e) => { e.stopPropagation(); onSelect(node); }}
@@ -260,21 +287,23 @@ const CustomAutoRotate = ({ rotationDirection, setRotationDirection, autoRotateA
 };
 
 export default function CannabisEvolutionApp() {
-  const nodes = useMemo(() => calculateTreeLayout(cannabisEvolutionData, 0, 0, Math.PI * 2, undefined), []);
+  const { uniqueRenderNodes, connections, nodesMap } = useMemo(() =>
+    getUniqueRenderNodesAndConnections(cannabisEvolutionData)
+    , []);
   const [search, setSearch] = useState('');
-  const [focusedNode, setFocusedNode] = useState<RenderNode | null>(null);
+  const [focusedNode, setFocusedNode] = useState<RenderNodeWithConnections | null>(null);
   const [currentFocusIndex, setCurrentFocusIndex] = useState<number>(-1);
   const [rotationDirection, setRotationDirection] = useState<number>(1);
   const height = window.innerHeight - 76;
 
   const sortedNodes = useMemo(() => {
-    return [...nodes].sort((a, b) => {
+    return [...uniqueRenderNodes].sort((a, b) => {
       if (a.year !== b.year) {
         return a.year - b.year;
       }
       return a.name.localeCompare(b.name);
     });
-  }, [nodes]);
+  }, [uniqueRenderNodes]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -317,10 +346,10 @@ export default function CannabisEvolutionApp() {
 
   const filteredNodes = useMemo(() => {
     if (!search) return [];
-    return nodes.filter(n => n.name.toLowerCase().includes(search.toLowerCase()));
-  }, [search, nodes]);
+    return uniqueRenderNodes.filter(n => n.name.toLowerCase().includes(search.toLowerCase()));
+  }, [search, uniqueRenderNodes]);
 
-  const handleSelect = (node: RenderNode) => {
+  const handleSelect = (node: RenderNodeWithConnections) => {
     setFocusedNode(node);
     setSearch(node.name);
     const index = sortedNodes.findIndex(n => n.id === node.id);
@@ -427,7 +456,7 @@ export default function CannabisEvolutionApp() {
             <cylinderGeometry args={[0.02, 0.02, 30, 8]} />
             <meshBasicMaterial color="#222" transparent opacity={0.5} />
           </mesh>
-          {nodes.map((node) => (
+          {uniqueRenderNodes.map((node) => (
             node.type !== 'Other' && (
               <StrainOrb
                 key={node.id}
@@ -438,6 +467,28 @@ export default function CannabisEvolutionApp() {
               />
             )
           ))}
+          {connections.map((conn, index) => {
+            const parentNode = nodesMap.get(conn.parentId);
+            const childNode = nodesMap.get(conn.childId);
+
+            if (parentNode && childNode) {
+              const isParentDimmed = search !== '' && !parentNode.name.toLowerCase().includes(search.toLowerCase());
+              const isChildDimmed = search !== '' && !childNode.name.toLowerCase().includes(search.toLowerCase());
+              const isConnectionDimmed = isParentDimmed || isChildDimmed;
+
+              return (
+                <Line
+                  key={index}
+                  points={[parentNode.position, childNode.position]}
+                  color={isConnectionDimmed ? new THREE.Color("#444").getHex() : new THREE.Color("white").getHex()}
+                  lineWidth={isConnectionDimmed ? 0.5 : 1}
+                  opacity={isConnectionDimmed ? 0.1 : 0.3}
+                  transparent
+                />
+              );
+            }
+            return null;
+          })}
         </group>
         <OrbitControls
           makeDefault
@@ -449,10 +500,6 @@ export default function CannabisEvolutionApp() {
           maxAzimuthAngle={Math.PI / 4}
           minDistance={2}
           maxDistance={25}
-          onEnd={(e: any) => {
-            const controls = e.target as OrbitControlsImpl;
-            console.log('Polar Angle:', controls.getPolarAngle(), 'Azimuth Angle:', controls.getAzimuthalAngle());
-          }}
           target={[7.5, 0, 0]}
         />
       </Canvas>
