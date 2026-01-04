@@ -72,12 +72,12 @@ const LandingPage: React.FC = () => {
                 <Image src={(import.meta as any).env.BASE_URL + "strains.png"} height={180} alt="Interactive Explorer" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500}>Strain Explorer</Text>
+                <Text fw={500}>Cann-Thology</Text>
               </Group>
               <Text size="sm">
                 Explore the historical evolution of genetic strains with the 3D phylogenetic tree.
               </Text>
-              <Button fullWidth mt="md" component={Link} to="/strain-explorer" style={{ marginTop: 'auto' }} className="button">
+              <Button fullWidth mt="md" component={Link} to="/cann-thology" style={{ marginTop: 'auto' }} className="button">
                 Visualize
               </Button>
             </Card>
@@ -91,29 +91,14 @@ const LandingPage: React.FC = () => {
                 <Text fw={500}>AI Feedback</Text>
               </Group>
               <Text size="sm">
-                Use an AI prompt to give valuable feedback on strains and products.
+                Use an AI prompt to give valuable feedback on strains and products, get recommendation on seeds and products, and instructions and tips on growing your own cannabis.
               </Text>
               <Button fullWidth mt="md" component={Link} to="/ai-feedback" style={{ marginTop: 'auto' }} className="button">
                 Submit Feedback
               </Button>
             </Card>
           </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 4 }}>
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={(import.meta as any).env.BASE_URL + "strains.png"} height={180} alt="Interactive Explorer" />
-              </Card.Section>
-              <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500}>Cann-thology</Text>
-              </Group>
-              <Text size="sm">
-                Read about the anthology of cannabis strains and their unique characteristics and the players behind the genetics and industry.
-              </Text>
-              <Button fullWidth mt="md" component={Link} to="/cannabis-anthology" style={{ marginTop: 'auto' }} className="button">
-                Learn More
-              </Button>
-            </Card>
-          </Grid.Col>
+
         </Grid>
       </Container>
     </Paper>

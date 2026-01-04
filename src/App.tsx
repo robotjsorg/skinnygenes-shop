@@ -13,9 +13,8 @@ const ProductsPage = React.lazy(() => import('./pages/ProductsPage'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 const StrainsPage = React.lazy(() => import('./pages/StrainsPage'));
 const StrainDetailPage = React.lazy(() => import('./pages/StrainDetailPage'));
-const InteractiveStrainExplorer = React.lazy(() => import('./pages/InteractiveStrainExplorer'));
+const CannThology = React.lazy(() => import('./pages/CannThology'));
 const AIFeedbackPage = React.lazy(() => import('./pages/AIFeedbackPage'));
-const CannabisAnthologyPage = React.lazy(() => import('./pages/CannabisAnthologyPage'));
 const CartPage = React.lazy(() => import('./pages/CartPage'));
 const AccountPage = React.lazy(() => import('./pages/AccountPage'));
 const CheckoutPage = React.lazy(() => import('./pages/CheckoutPage'));
@@ -30,7 +29,7 @@ const LoadingFallback = () => (
 
 const AppLayout = () => {
   const location = useLocation();
-  const hideFooterPaths = ['/strain-explorer', '/ai-feedback', '/checkout'];
+  const hideFooterPaths = ['/cann-thology', '/ai-feedback', '/checkout'];
   const shouldShowFooter = !hideFooterPaths.includes(location.pathname);
 
   return (
@@ -74,16 +73,12 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<LoadingFallback />}><StrainDetailPage /></Suspense>,
       },
       {
-        path: "strain-explorer",
-        element: <Suspense fallback={<LoadingFallback />}><InteractiveStrainExplorer /></Suspense>,
+        path: "cann-thology",
+        element: <Suspense fallback={<LoadingFallback />}><CannThology /></Suspense>,
       },
       {
         path: "ai-feedback",
         element: <Suspense fallback={<LoadingFallback />}><AIFeedbackPage /></Suspense>,
-      },
-      {
-        path: "cannabis-anthology",
-        element: <Suspense fallback={<LoadingFallback />}><CannabisAnthologyPage /></Suspense>,
       },
       {
         path: "cart",

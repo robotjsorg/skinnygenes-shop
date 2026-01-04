@@ -5,7 +5,7 @@ import { Badge } from '@mantine/core';
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { FaTimes } from 'react-icons/fa';
 import * as THREE from 'three';
-import './InteractiveStrainExplorer.css';
+import './CannThology.css';
 
 type StrainType = 'Sativa' | 'Indica' | 'Hybrid' | 'Ruderalis' | 'Invisible';
 
@@ -365,7 +365,7 @@ const CustomAutoRotate = ({ rotationDirection, setRotationDirection, autoRotateA
   return null;
 };
 
-export default function CannabisEvolutionApp() {
+export default function CannThology() {
   const { uniqueRenderNodes, connections, nodesMap } = useMemo(() =>
     getUniqueRenderNodesAndConnections(cannabisEvolutionData)
     , []);
@@ -551,13 +551,13 @@ export default function CannabisEvolutionApp() {
           <div>
             <h3>{focusedNode.name}</h3>
             {focusedNode.description && <p style={{ maxHeight: '150px', overflowY: 'auto', paddingRight: '10px' }}>{focusedNode.description}</p>}
-            {focusedNode.link && <a href={focusedNode.link} target="_blank" rel="noopener noreferrer">View strain details</a>}
+            {focusedNode.link && <a href={focusedNode.link} target="_blank" rel="noopener noreferrer">View strain details on seedfinder.eu</a>}
           </div>
         ) : (
           <>
-            <h3>Phylogenetic Tree</h3>
+            <h3>Cann-thology</h3>
             <p>
-              Explore cannabis strains bred by Skinny Genes with the 3D phylogenetic tree.
+              Explore the rich history and lineage of cannabis strains with our interactive 3D Cann-thology.
             </p>
           </>
         )}

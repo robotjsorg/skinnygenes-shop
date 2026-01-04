@@ -24,12 +24,10 @@ const Header: React.FC = () => {
         {isOpen ? <HiX size={28} color="white" /> : <HiOutlineMenuAlt3 size={28} color="white" />}
       </button>
       <nav className="header-nav">
-        <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Home</NavLink>
         <NavLink to="/products" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Products</NavLink>
         <NavLink to="/strains" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Strains</NavLink>
-        <NavLink to="/strain-explorer" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Strain Explorer</NavLink>
+        <NavLink to="/cann-thology" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Cann-Thology</NavLink>
         <NavLink to="/ai-feedback" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>AI Feedback</NavLink>
-        <NavLink to="/cannabis-anthology" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Cannabis Anthology</NavLink>
         <NavLink to="/account" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Account</NavLink>
         <NavLink to="/cart" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
           Cart <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} />
@@ -38,12 +36,10 @@ const Header: React.FC = () => {
       </nav>
       {isOpen && (
         <nav className="mobile-nav">
-          <NavLink to="/" className="mobile-nav-link" onClick={toggleMenu}>Home</NavLink>
           <NavLink to="/products" className="mobile-nav-link" onClick={toggleMenu}>Products</NavLink>
           <NavLink to="/strains" className="mobile-nav-link" onClick={toggleMenu}>Strains</NavLink>
-          <NavLink to="/strain-explorer" className="mobile-nav-link" onClick={toggleMenu}>Strain Explorer</NavLink>
+          <NavLink to="/cann-thology" className="mobile-nav-link" onClick={toggleMenu}>Cann-Thology</NavLink>
           <NavLink to="/ai-feedback" className="mobile-nav-link" onClick={toggleMenu}>AI Feedback</NavLink>
-          <NavLink to="/cannabis-anthology" className="mobile-nav-link" onClick={toggleMenu}>Cannabis Anthology</NavLink>
           <NavLink to="/account" className="mobile-nav-link" onClick={toggleMenu}>Account</NavLink>
           <NavLink to="/cart" className="mobile-nav-link" onClick={toggleMenu}>
             Cart <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} />
