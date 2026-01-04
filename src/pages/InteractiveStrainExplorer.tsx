@@ -125,7 +125,7 @@ const collectLayoutData = (
     nodesMap.set(node.id, { ...node, position: currentPos });
   }
 
-  if (effectiveParentId && node.type !== 'Other') {
+  if (effectiveParentId && node.type !== 'Other' && effectiveParentId !== 'root') {
     connections.push({ parentId: effectiveParentId, childId: node.id });
   }
 
