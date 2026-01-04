@@ -85,9 +85,9 @@ const LandingPage: React.FC = () => {
               </Button>
             </Card>
           </Grid.Col>
-
         </Grid>
       </Container>
+      <div style={{ paddingBottom: '50px' }}></div>
     </Paper>
   );
 };
