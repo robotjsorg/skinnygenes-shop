@@ -7,12 +7,23 @@ const LandingPage: React.FC = () => {
   return (
     <Paper shadow="none" p="xl" withBorder={false}>
       <Container size="xl">
-        <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl" my="xl">
-          <div>
-            <Title order={1} size="4rem" mb="md">
+        <SimpleGrid
+          cols={{ base: 1, md: 2 }}
+          spacing="xl"
+          my="xl"
+          style={{
+            backgroundImage: `url(${(import.meta as any).env.BASE_URL + "chem91problemchild.png"})`,
+            backgroundSize: '150%',
+            backgroundPosition: 'center',
+            borderRadius: 'md',
+            animation: 'slow-pan 40s ease-in-out infinite',
+          }}
+        >
+          <div className="text-container">
+            <Title order={1} size="4rem" mb="md" className="text-container-text">
               Welcome to Skinny Genes
             </Title>
-            <Text size="xl" mb="xl">
+            <Text size="xl" mb="xl" className="text-container-text">
               Discover premium cannabis strains and products for your wellness journey.
               Quality, purity, and innovation in every seed and product.
             </Text>
@@ -22,12 +33,6 @@ const LandingPage: React.FC = () => {
               </Button>
             </Group>
           </div>
-          <Image
-            src={(import.meta as any).env.BASE_URL + "chem91problemchild.png"}
-            alt="Premium Cannabis Products"
-            radius="md"
-            height={400}
-          />
         </SimpleGrid>
 
         <Grid mt="xl" gutter="lg">
@@ -59,7 +64,7 @@ const LandingPage: React.FC = () => {
                 Explore the historical evolution of genetic strains with the 3D phylogenetic tree.
               </Text>
               <Button fullWidth mt="md" component={Link} to="/cann-thology" style={{ marginTop: 'auto' }} className="button">
-                Visualize
+                Visualize Genetics
               </Button>
             </Card>
           </Grid.Col>
@@ -69,13 +74,13 @@ const LandingPage: React.FC = () => {
                 <Image src={(import.meta as any).env.BASE_URL + "homepage.png"} height={180} alt="Interactive Explorer" />
               </Card.Section>
               <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500}>AI Feedback</Text>
+                <Text fw={500}>AI Chatbot</Text>
               </Group>
               <Text size="sm">
                 Use an AI prompt to give valuable feedback on strains and products, get recommendation on seeds and products, and instructions and tips on growing your own cannabis.
               </Text>
               <Button fullWidth mt="md" component={Link} to="/ai-feedback" style={{ marginTop: 'auto' }} className="button">
-                Submit Feedback
+                Chat with AI
               </Button>
             </Card>
           </Grid.Col>
