@@ -37,11 +37,10 @@ const CheckoutPage: React.FC = () => {
   };
 
   const handlePlaceOrder = () => {
-    // Mock order placement logic
     console.log('Placing order with:', { shippingDetails, paymentDetails, cart });
     alert('Order Placed Successfully! (This is a mock order)');
     clearCart();
-    navigate('/order-confirmation'); // Navigate to a mock order confirmation page
+    navigate('/order-confirmation');
   };
 
   if (cart.length === 0) {
@@ -107,7 +106,7 @@ const CheckoutPage: React.FC = () => {
             <Select
               label="Country"
               placeholder="Select your country"
-              data={['USA', 'Canada', 'Mexico']} // Mock data
+              data={['USA', 'Canada', 'Mexico']}
               name="country"
               value={shippingDetails.country}
               onChange={(value) => setShippingDetails((prev) => ({ ...prev, country: value || '' }))}

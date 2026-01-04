@@ -9,7 +9,6 @@ interface StrainCardProps {
 }
 
 const StrainCard: React.FC<StrainCardProps> = ({ strain }) => {
-  const [error, setError] = React.useState(false);
   const badgeColor = strain.type === 'Indica' ? 'purple' : strain.type === 'Sativa' ? 'orange' : 'green';
   return (
     <Card className="strain-card" shadow="sm" padding="lg" radius="md" withBorder>
@@ -18,7 +17,6 @@ const StrainCard: React.FC<StrainCardProps> = ({ strain }) => {
           src={strain.image}
           height={180}
           alt={strain.name}
-          onError={() => setError(true)}
           className="strain-card-image"
         />
       </Card.Section>

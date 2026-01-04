@@ -61,7 +61,7 @@
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     padding: 8px 1rem;
     min-height: 56px;
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+    box-sizing: border-box;
 }
 
 

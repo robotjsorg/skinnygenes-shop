@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Title } from '@mantine/core';
 import { NavLink } from 'react-router-dom';
-import { HiOutlineMenuAlt3, HiX } from 'react-icons/hi';
+import { HiOutlineMenuAlt3, HiX, HiOutlineShoppingCart } from 'react-icons/hi';
 import './Header.css';
+import { useCart } from '../../contexts/CartContext';
 
 const Header: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const { cart } = useCart();
+
+    const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -26,8 +30,11 @@ const Header: React.FC = () => {
                 <NavLink to="/strain-explorer" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Strain Explorer</NavLink>
                 <NavLink to="/ai-feedback" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>AI Feedback</NavLink>
                 <NavLink to="/cannabis-anthology" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Cannabis Anthology</NavLink>
-                <NavLink to="/cart" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Cart</NavLink>
                 <NavLink to="/account" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Account</NavLink>
+                <NavLink to="/cart" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                    Cart <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} style={{marginLeft: 4}} />
+                    {totalItemsInCart > 0 && <span className="cart-item-count">{totalItemsInCart}</span>}</span>
+                </NavLink>
             </nav>
             {isOpen && (
                 <nav className="mobile-nav">
@@ -37,8 +44,11 @@ const Header: React.FC = () => {
                     <NavLink to="/strain-explorer" className="mobile-nav-link" onClick={toggleMenu}>Strain Explorer</NavLink>
                     <NavLink to="/ai-feedback" className="mobile-nav-link" onClick={toggleMenu}>AI Feedback</NavLink>
                     <NavLink to="/cannabis-anthology" className="mobile-nav-link" onClick={toggleMenu}>Cannabis Anthology</NavLink>
-                    <NavLink to="/cart" className="mobile-nav-link" onClick={toggleMenu}>Cart</NavLink>
                     <NavLink to="/account" className="mobile-nav-link" onClick={toggleMenu}>Account</NavLink>
+                    <NavLink to="/cart" className="mobile-nav-link" onClick={toggleMenu}>
+                        Cart <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} style={{marginLeft: 4}} />
+                        {totalItemsInCart > 0 && <span className="cart-item-count">{totalItemsInCart}</span>}</span>
+                    </NavLink>
                 </nav>
             )}
         </header>
