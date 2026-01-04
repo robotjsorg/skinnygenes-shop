@@ -30,7 +30,7 @@ interface Connection {
 
 const cannabisEvolutionData: StrainNode = {
   id: 'root',
-  name: 'Strainger Seeds Collection',
+  name: 'Skinny Genes Breeds',
   year: 2026,
   type: 'Other',
   parents: [
@@ -160,7 +160,7 @@ const CameraRig = ({ targetNode }: { targetNode: RenderNodeWithConnections | nul
   useFrame((state, delta) => {
     if (targetNode) {
       const { x, y, z } = targetNode.position;
-      const offset = new THREE.Vector3(0, 10, 20);
+      const offset = new THREE.Vector3(0, 5, 10);
       const targetPos = new THREE.Vector3(x, y, z);
       const desiredCamPos = targetPos.clone().add(offset);
       state.camera.position.lerp(desiredCamPos, 4 * delta);
