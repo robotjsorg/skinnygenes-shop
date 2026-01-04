@@ -465,13 +465,15 @@ export default function CannabisEvolutionApp() {
             <meshBasicMaterial color="#222" transparent opacity={0.5} />
           </mesh>
           {nodes.map((node) => (
-            <StrainOrb
-              key={node.id}
-              node={node}
-              searchQuery={search}
-              isFocused={focusedNode?.id === node.id}
-              onSelect={handleSelect}
-            />
+            node.type !== 'Other' && (
+              <StrainOrb
+                key={node.id}
+                node={node}
+                searchQuery={search}
+                isFocused={focusedNode?.id === node.id}
+                onSelect={handleSelect}
+              />
+            )
           ))}
         </group>
         <OrbitControls
