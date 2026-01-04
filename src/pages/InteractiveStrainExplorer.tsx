@@ -212,7 +212,7 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
           color={isDimmed ? new THREE.Color("#444").getHex() : new THREE.Color("white").getHex()}
           lineWidth={isDimmed ? 0.5 : 1}
           opacity={isDimmed ? 0.1 : 0.3}
-          transparent attachArray={undefined} attachObject={undefined} alphaWrite={undefined} derivatives={undefined}/>
+          transparent />
       )}
       <mesh
         ref={meshRef}
@@ -236,7 +236,7 @@ const StrainOrb = ({ node, searchQuery, isFocused, onSelect }: StrainOrbProps) =
         color="white"
         anchorX="center"
         anchorY="middle"
-        fillOpacity={isDimmed ? 0.1 : 1} attachArray={undefined} attachObject={undefined}> 
+        fillOpacity={isDimmed ? 0.1 : 1}>
         {node.name}
       </Text>
     </group>
@@ -258,7 +258,7 @@ const YearMarkers = () => {
           <ringGeometry args={[5, 5.05, 32]} />
           <meshBasicMaterial color="white" opacity={0.05} transparent side={THREE.DoubleSide} />
         </mesh>
-        <Text position={[5.5, 0, 0]} fontSize={0.5} color="#666" anchorX="left" anchorY="middle" attachArray={undefined} attachObject={undefined}>
+        <Text position={[5.5, 0, 0]} fontSize={0.5} color="#666" anchorX="left" anchorY="middle">
           {year}
         </Text>
       </group>
