@@ -3,13 +3,38 @@ import { Container, Title, Text, Button, Group, Image, Grid, Card, Paper, Simple
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
 
+import LandingPageCard from '../components/LandingPageCard';
+
+const cards = [
+  {
+    title: 'Premium Seeds',
+    description: 'High-quality, genetically superior cannabis seeds for growers and enthusiasts.',
+    imageUrl: (import.meta as any).env.BASE_URL + "northernlightsauto.png",
+    link: '/strains',
+    buttonText: 'View Strains',
+  },
+  {
+    title: 'Cann-Thology',
+    description: 'Explore the historical evolution of genetic strains with the 3D phylogenetic tree.',
+    imageUrl: (import.meta as any).env.BASE_URL + "strains.png",
+    link: '/cann-thology',
+    buttonText: 'Visualize Genetics',
+  },
+  {
+    title: 'AI Chatbot',
+    description: 'Use an AI prompt to give valuable feedback on strains and products, get recommendation on seeds and products, and instructions and tips on growing your own cannabis.',
+    imageUrl: (import.meta as any).env.BASE_URL + "homepage.png",
+    link: '/ai-chatbot',
+    buttonText: 'Chat with AI',
+  }
+];
+
 const LandingPage: React.FC = () => {
   return (
-    <Paper shadow="none" withBorder={false}>
+    <>
       <SimpleGrid
         cols={1}
         spacing="xl"
-        mb="xl"
         style={{
           backgroundImage: `url(${(import.meta as any).env.BASE_URL + "chem91problemchild.png"})`,
           backgroundSize: '150%',
@@ -20,9 +45,9 @@ const LandingPage: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        <div className="text-container" style={{ maxWidth: 800 }}>
+        <div className="text-container">
           <Title order={1} size="4rem" mb="md" className="text-container-text">
-            Welcome to Skinny Genes
+            Welcome to Skinny Genes shop
           </Title>
           <Text size="xl" mb="xl" className="text-container-text">
             Discover premium cannabis strains and products for your wellness journey.
@@ -35,60 +60,24 @@ const LandingPage: React.FC = () => {
           </Group>
         </div>
       </SimpleGrid>
-      <Container size="xl" mt="xl">
-        <Grid mt="xl" gutter="lg">
-          <Grid.Col span={{ base: 12, md: 4 }}>
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={(import.meta as any).env.BASE_URL + "northernlightsauto.png"} height={180} alt="Cannabis Seeds" />
-              </Card.Section>
-              <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500}>Premium Seeds</Text>
-              </Group>
-              <Text size="sm">
-                High-quality, genetically superior cannabis seeds for growers and enthusiasts.
-              </Text>
-              <Button fullWidth mt="md" component={Link} to="/strains" style={{ marginTop: 'auto' }} className="button">
-                View Strains
-              </Button>
-            </Card>
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 4 }}>
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={(import.meta as any).env.BASE_URL + "strains.png"} height={180} alt="Interactive Explorer" />
-              </Card.Section>
-              <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500}>Cann-Thology</Text>
-              </Group>
-              <Text size="sm">
-                Explore the historical evolution of genetic strains with the 3D phylogenetic tree.
-              </Text>
-              <Button fullWidth mt="md" component={Link} to="/cann-thology" style={{ marginTop: 'auto' }} className="button">
-                Visualize Genetics
-              </Button>
-            </Card>
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 4 }}>
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={(import.meta as any).env.BASE_URL + "homepage.png"} height={180} alt="Interactive Explorer" />
-              </Card.Section>
-              <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500}>AI Chatbot</Text>
-              </Group>
-              <Text size="sm">
-                Use an AI prompt to give valuable feedback on strains and products, get recommendation on seeds and products, and instructions and tips on growing your own cannabis.
-              </Text>
-              <Button fullWidth mt="md" component={Link} to="/ai-chatbot" style={{ marginTop: 'auto' }} className="button">
-                Chat with AI
-              </Button>
-            </Card>
-          </Grid.Col>
-        </Grid>
+      <Container size="xl" py="xl">
+        <Title order={2} mb="lg">
+          Genetics by Skinny Genes
+        </Title>
+        <SimpleGrid cols={{ base: 1, md: 3 }} spacing="lg">
+          {cards.map(card => (
+            <LandingPageCard
+              key={card.title}
+              title={card.title}
+              description={card.description}
+              imageUrl={card.imageUrl}
+              link={card.link}
+              buttonText={card.buttonText}
+            />
+          ))}
+        </SimpleGrid>
       </Container>
-      <div style={{ paddingBottom: '50px' }}></div>
-    </Paper>
+    </>
   );
 };
 

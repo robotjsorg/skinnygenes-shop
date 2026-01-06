@@ -17,12 +17,9 @@ const Header: React.FC = () => {
 
   return (
     <header className="header">
-      <Title order={1} className="header-title">
-        <NavLink to="/">Skinnygenes Shop</NavLink>
-      </Title>
-      <button className="hamburger-menu" onClick={toggleMenu} aria-label="Toggle navigation">
-        {isOpen ? <HiX size={28} color="white" /> : <HiOutlineMenuAlt3 size={28} color="white" />}
-      </button>
+      <nav className="header-title">
+        <NavLink to="/" className={({ isActive }) => isActive ? "header-title-link active" : "header-title-link"}>Skinny Genes</NavLink>
+      </nav>
       <nav className="header-nav">
         <NavLink to="/products" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Products</NavLink>
         <NavLink to="/strains" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Strains</NavLink>
@@ -30,10 +27,19 @@ const Header: React.FC = () => {
         <NavLink to="/ai-chatbot" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>AI Chatbot</NavLink>
         <NavLink to="/account" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Account</NavLink>
         <NavLink to="/cart" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-          Cart <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} />
-            {totalItemsInCart > 0 && <span className="cart-item-count">{totalItemsInCart}</span>}</span>
+          Cart
+          <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} />
+            {totalItemsInCart > 0 && 
+              <span className="cart-item-count">
+                {totalItemsInCart}
+              </span>
+            }
+          </span>
         </NavLink>
       </nav>
+      <button className="hamburger-menu" onClick={toggleMenu} aria-label="Toggle navigation">
+        {isOpen ? <HiX size={28} color="white" /> : <HiOutlineMenuAlt3 size={28} color="white" />}
+      </button>
       {isOpen && (
         <nav className="mobile-nav">
           <NavLink to="/products" className="mobile-nav-link" onClick={toggleMenu}>Products</NavLink>
@@ -42,8 +48,14 @@ const Header: React.FC = () => {
           <NavLink to="/ai-chatbot" className="mobile-nav-link" onClick={toggleMenu}>AI Chatbot</NavLink>
           <NavLink to="/account" className="mobile-nav-link" onClick={toggleMenu}>Account</NavLink>
           <NavLink to="/cart" className="mobile-nav-link" onClick={toggleMenu}>
-            Cart <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} />
-              {totalItemsInCart > 0 && <span className="cart-item-count">{totalItemsInCart}</span>}</span>
+            Cart
+            <span className="cart-icon-wrapper"><HiOutlineShoppingCart size={20} />
+              {totalItemsInCart > 0 &&
+                <span className="cart-item-count">
+                  {totalItemsInCart}
+                </span>
+              }
+            </span>
           </NavLink>
         </nav>
       )}
