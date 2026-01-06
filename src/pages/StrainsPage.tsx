@@ -37,7 +37,7 @@ const StrainsPage: React.FC = () => {
   return (
     <Container size="xl" py="xl">
       <Title order={1} mb="md" ta="center">
-        Strains Bred by Skinny Genes
+        Strains by Skinny Genes
       </Title>
       <Text size="lg" mb="xl" ta="center" color="dimmed">
         Discover our collection of premium cannabis strains, carefully bred for quality and potency.
