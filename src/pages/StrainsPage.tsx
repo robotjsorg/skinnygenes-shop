@@ -42,18 +42,15 @@ const StrainsPage: React.FC = () => {
       <Text size="lg" mb="xl" ta="center" color="dimmed">
         Discover our collection of premium cannabis strains, carefully bred for quality and potency.
       </Text>
-
       <Text mb="lg">
         Jay Hershfield's journey in growing cannabis began with a passion for the plant and a desire to explore its genetic diversity. Over the years, he has dedicated himself to breeding unique strains that capture the essence of cannabis culture. His commitment to quality and innovation has led him to experiment with various genetics, resulting in a collection of strains that are both potent and flavorful.
       </Text>
       <Text mb="lg">
         As a pioneer in the cannabis breeding community, Jay has focused on creating strains that not only perform well in cultivation but also offer a rich experience for consumers. His work has been recognized by enthusiasts and connoisseurs alike, and he continues to push the boundaries of what is possible in cannabis breeding.
       </Text>
-
       <Title order={2} mb="lg">
-        Available Strains
+        Strains
       </Title>
-
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="lg">
         {strains.map(strain => (
           <StrainCard key={strain.id} strain={strain} />

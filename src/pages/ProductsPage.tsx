@@ -1,6 +1,5 @@
 import React from 'react';
-import { SimpleGrid, Title, Container } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { SimpleGrid, Title, Text, Container } from '@mantine/core';
 import ProductCard from '../components/ProductCard';
 
 const products = [
@@ -33,8 +32,14 @@ const products = [
 const ProductsPage: React.FC = () => {
   return (
     <Container size="xl" py="xl">
-      <Title order={1} mb="xl" ta="center">
-        Our Products
+      <Title order={1} mb="md" ta="center">
+        Skinny Genes Products
+      </Title>
+      <Text size="lg" mb="xl" ta="center" color="dimmed">
+        High-quality cannabis seeds for growers and enthusiasts. Every strain is bred for excellence.
+      </Text>
+      <Title order={2} mb="lg">
+        Products
       </Title>
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="lg">
         {products.map(product => (

@@ -8,21 +8,21 @@ import LandingPageCard from '../components/LandingPageCard';
 const cards = [
   {
     title: 'Premium Seeds',
-    description: 'High-quality, genetically superior cannabis seeds for growers and enthusiasts.',
+    description: 'High-quality cannabis seeds for growers and enthusiasts. Every strain is bred for excellence.',
     imageUrl: (import.meta as any).env.BASE_URL + "northernlightsauto.png",
     link: '/strains',
     buttonText: 'View Strains',
   },
   {
     title: 'Cann-Thology',
-    description: 'Explore the historical evolution of genetic strains with the 3D phylogenetic tree.',
+    description: 'Explore the history of cannabis lineages with the interactive 3D phylogenetic tree.',
     imageUrl: (import.meta as any).env.BASE_URL + "strains.png",
     link: '/cann-thology',
     buttonText: 'Visualize Genetics',
   },
   {
     title: 'AI Chatbot',
-    description: 'Use an AI prompt to give valuable feedback on strains and products, get recommendation on seeds and products, and instructions and tips on growing your own cannabis.',
+    description: 'Give feedback, get product recommendations, and research tips for growing your own cannabis.',
     imageUrl: (import.meta as any).env.BASE_URL + "homepage.png",
     link: '/ai-chatbot',
     buttonText: 'Chat with AI',
@@ -49,9 +49,11 @@ const LandingPage: React.FC = () => {
           <Title order={1} size="4rem" mb="md" className="text-container-text">
             Welcome to Skinny Genes shop
           </Title>
-          <Text size="xl" mb="xl" className="text-container-text">
+          <Text size="xl" className="text-container-text">
             Discover premium cannabis strains and products for your wellness journey.
-            Quality, purity, and innovation in every seed and product.
+          </Text>
+          <Text size="xl" mb="xl" className="text-container-text">
+            Quality, purity, and innovation in every seed.
           </Text>
           <Group justify="center">
             <Button size="lg" component={Link} to="/products" className="button">
