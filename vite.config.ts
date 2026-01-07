@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ command }) => {
   return {
     plugins: [react()],
-    base: command === 'build' ? '/skinnygenes-shop/' : '/',
+    base: command === 'build' ? '/' : '/',
     appType: 'spa',
     build: {
       outDir: 'dist',
