@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom';
+import { createHashRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom';
 import { Center, Loader } from '@mantine/core';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
@@ -43,7 +43,7 @@ const AppLayout = () => {
   );
 };
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <AppLayout />,
@@ -102,7 +102,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-], { basename: (import.meta as any).env.PROD ? '/skinnygenes-shop/' : '/' });
+]);
 
 const App: React.FC = () => {
   return (
