@@ -11,7 +11,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -45,6 +45,11 @@ jobs:
         run: pnpm run build
         env:
           VITE_GEMINI_API_KEY: ${{ secrets.GOOGLE_AI_STUDIO_API }}
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
       - name: Create 404.html for SPA
         run: cp dist/index.html dist/404.html
       - name: Create .nojekyll file
