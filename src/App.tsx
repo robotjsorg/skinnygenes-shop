@@ -1,15 +1,3 @@
-import React from 'react';
-import ComingSoonPage from './pages/ComingSoonPage';
-
-const App: React.FC = () => {
-  return (
-    <ComingSoonPage />
-  );
-};
-
-export default App;
-
-/*
 import React, { Suspense } from 'react';
 import { createHashRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom';
 import { Center, Loader } from '@mantine/core';
@@ -129,4 +117,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-*/
